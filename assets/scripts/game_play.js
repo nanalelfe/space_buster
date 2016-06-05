@@ -21,7 +21,7 @@ function draw() {
 
     ctx.clearRect(0, 0, 1000, 1000);
 
-    ctx.fillStyle = "#000000";
+    ctx.fillStyle = "#FF0000";
     ctx.fillRect(x_coord, y_coord, 50, 50);
 
     if ( window.x_coord < 0 || window.x_coord > 950) {
