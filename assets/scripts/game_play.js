@@ -3,16 +3,19 @@ window.onload = function() {
 	var c = document.getElementById("main");
     window.ctx = c.getContext("2d");
 
-    window.x_coord = 40;
-    window.y_coord = 40;
+    window.x_coord = random_x();
+    window.y_coord = random_y();
 
-    window.dx = 5;
-    window.dy = 5;
+    window.max = 4;
+    window.min = 1;
 
-    setInterval(draw,10);
-    //animate();
+    window.dx = initial_random_direction();
 
+    window.dy = initial_random_direction();
 
+    window.speed = 15;
+
+    setInterval(draw, window.speed);
 }
 
 
@@ -24,37 +27,46 @@ function draw() {
     ctx.fillStyle = "#FF0000";
     ctx.fillRect(x_coord, y_coord, 50, 50);
 
-    if ( window.x_coord < 0 || window.x_coord > 950) {
+    if (window.x_coord < 0){
+        window.dx = random_direction();
+    }
+
+    if (window.x_coord > 950){
+        window.dx = random_direction();
         window.dx = - window.dx;
     } 
-  
-    if ( window.y_coord < 0 || window.y_coord > 590) {
+
+    if (window.y_coord < 0){
+        window.dy = random_direction();
+        //window.dx = - window.dx;
+    }
+
+    if (window.y_coord > 590){
+        window.dy = random_direction();
         window.dy = - window.dy;
-    } 
-         
+    }
+
+
     window.x_coord += window.dx; 
     window.y_coord += window.dy;
 
-    
+    //ctx.translate(window.dx, window.dy);
 }
 
-function animate() {
-    
-    // Always clear the canvas after drawing each frame
-    window.ctx.clearRect(0, 0, 1000, 1000);
-    
-    // Draw here, including conditionals
-    
-    
+var random_direction =  function() {
+    return Math.floor(Math.random() * (window.max - window.min + 1) + window.min);
+}
 
-    draw();
+var initial_random_direction = function() {
+    var max = window.max;
+    var min = - window.max;
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
 
-    ctx.translate(3, 2); 
+function random_x() {
+    return Math.floor(Math.random() * (951));
+}
 
-
-    setTimeout(animate, 33);
-
-    
-    // This will run animate() every 33 ms
-    
+function random_y() {
+    return Math.floor(Math.random() * (591));
 }
