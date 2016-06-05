@@ -3,6 +3,9 @@ window.onload = function() {
     var c = document.getElementById("main");
     window.ctx = c.getContext("2d");
 
+    var canvas_height = c.height;
+    var canvas_width = c.width;
+
     window.max = 4;
     window.min = 1;
 
@@ -10,14 +13,7 @@ window.onload = function() {
 
     push_objects();
 
-    for (var i = 0; i < objects.length; i++){
-        var temp = objects[i];
-        draw(temp.x, temp.y, temp.dx, temp.dy);
-        //window.ctx.clearRect(0, 0, 1000, 1000);
-        //setInterval(draw, window.speed);
-    }
-
-
+    draw_objects();
 
     /*window.x_coord = random_x();
     window.y_coord = random_y();
@@ -32,6 +28,18 @@ window.onload = function() {
     window.speed = 15;
 
     setInterval(draw, window.speed);*/
+
+}
+
+function draw_objects() {
+    window.ctx.clearRect(0, 0, 1000, 1000);
+    for (var i = 0; i < objects.length; i++){
+        //var temp = objects[i];
+        draw(objects[i]);
+    }
+
+    setTimeout(draw_objects, window.speed);
+
 }
 
 var objects = new Array();
@@ -41,7 +49,6 @@ function push_objects() {
     objects.push(new Space_Object());
     objects.push(new Space_Object());
 }
-
 
 var Space_Object = function() {
         this.x = random_x();
@@ -106,78 +113,34 @@ function draw_spaceship() {
     ctx.fillRect(x_coord, y_coord, 50, 50);
 }
 
-function draw(x, y, dx, dy) {
+function draw(obj) {
 
     var ctx = window.ctx;
-    //ctx.clearRect(0, 0, 1000, 1000);
     ctx.fillStyle = "#FF0000";
-    ctx.fillRect(x, y, 50, 50);
+    ctx.fillRect(obj.x, obj.y, 50, 50);
 
-    if (x < 0) {
-        dx = random_direction();
+    if (obj.x < 0) {
+        obj.dx = random_direction();
     }
 
-    if (x > 950){
-        dx = random_direction();
-        dx = - dx;
+    if (obj.x > 950){
+        obj.dx = random_direction();
+        obj.dx = - obj.dx;
     } 
 
-    if (y < 0){
-        dy = random_direction();
+    if (obj.y < 0){
+        obj.dy = random_direction();
         //window.dx = - window.dx;
     }
 
-    if (y > 590){
-        dy = random_direction();
-        dy = - dy;
+    if (obj.y > 590){
+        obj.dy = random_direction();
+        obj.dy = - obj.dy;
     }
 
-
-    x += dx; 
-    y += dy;
-
-    //ctx.translate(3, 2); 
-
-    //setTimeout(animate, 33);
-    setTimeout(function() {
-        draw(x, y, dx, dy)
-    }, window.speed);
-
+    obj.x += obj.dx; 
+    obj.y += obj.dy;
 }
-
-/*function draw() {
-    var ctx = window.ctx;
-
-    ctx.clearRect(0, 0, 1000, 1000);
-
-    ctx.fillStyle = "#FF0000";
-    ctx.fillRect(x_coord, y_coord, 50, 50);
-
-    if (window.x_coord < 0){
-        window.dx = random_direction();
-    }
-
-    if (window.x_coord > 950){
-        window.dx = random_direction();
-        window.dx = - window.dx;
-    } 
-
-    if (window.y_coord < 0){
-        window.dy = random_direction();
-        //window.dx = - window.dx;
-    }
-
-    if (window.y_coord > 590){
-        window.dy = random_direction();
-        window.dy = - window.dy;
-    }
-
-
-    window.x_coord += window.dx; 
-    window.y_coord += window.dy;
-
-    //ctx.translate(window.dx, window.dy);
-}*/
 
 var random_direction =  function() {
     return Math.floor(Math.random() * (window.max - window.min + 1) + window.min);
