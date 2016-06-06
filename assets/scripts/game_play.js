@@ -1,10 +1,9 @@
 window.onload = function() {
     "use strict"; 
-    var c = document.getElementById("main");
+    window.c = document.getElementById("main");
     window.ctx = c.getContext("2d");
 
-    var canvas_height = c.height;
-    var canvas_width = c.width;
+    window.object_num = 10;
 
     window.max = 4;
     window.min = 1;
@@ -14,110 +13,75 @@ window.onload = function() {
     push_objects();
 
     draw_objects();
-
-    /*window.x_coord = random_x();
-    window.y_coord = random_y();
-
-    window.max = 4;
-    window.min = 1;
-
-    window.dx = initial_random_direction();
-
-    window.dy = initial_random_direction();
-
-    window.speed = 15;
-
-    setInterval(draw, window.speed);*/
-
 }
 
 function draw_objects() {
-    window.ctx.clearRect(0, 0, 1000, 1000);
+    window.ctx.clearRect(0, 0, window.c.width, window.c.height);
     for (var i = 0; i < objects.length; i++){
-        //var temp = objects[i];
         draw(objects[i]);
     }
 
     setTimeout(draw_objects, window.speed);
-
 }
 
 var objects = new Array();
 
 function push_objects() {
-    objects.push(new Space_Object());
-    objects.push(new Space_Object());
-    objects.push(new Space_Object());
+    for (var i = 0; i < 3; i++) {
+        var object = new Space_Object(draw_spaceship);
+        objects.push(object);
+    }
+
+    for (var i = 0; i < 2; i++ ){
+        var object = new Space_Object(draw_moon);
+        objects.push(object);
+    }
+    
 }
 
-var Space_Object = function() {
+var Space_Object = function(item_draw) {
         this.x = random_x();
         this.y = random_y();
         this.dx = initial_random_direction();
         this.dy = initial_random_direction();
         this.width = 50;
         this.height = 50;
+        this.item_draw = item_draw;
 }
 
-/*var Space_Object = {
-
-    create: function (draw_function) {
-        var newObject = Object.create(this);
-        newObject.x = random_x();
-        newObject.y = random_y();
-        newObject.dx = initial_random_direction();
-        newObject.dy = initial_random_direction();
-        newObject.width = 50;
-        newObject.height = 50;
-        newObject.drawing_function = draw_function;
-        return newObject;
-    },
-    move: function () {
-        this.x += this.dx;
-        this.y += this.dy;
-    },
-
-    detect_collision: function() {
-        if (this.x < 0){
-            this.dx = random_direction();
-        }
-
-        if (this.x > 950){
-            this.dx = random_direction();
-            this.dx = - this.dx;
-        } 
-
-        if (this.y < 0){
-            this.dy = random_direction();
-            //window.dx = - window.dx;
-        }
-
-        if (this.y > 590){
-            this.dy = random_direction();
-            this.dy = - this.dy;
-        }
-    },
-
-    draw: function() {
-        window.ctx.fillStyle = "#FF0000";
-        window.ctx.fillRect(x_coord, y_coord, 50, 50);
-        this.detect_collision();
-        this.move();
-        setInterval(this.draw, window.speed);
-    }
-
-}; */
-
-function draw_spaceship() {
+function draw_spaceship(x, y) {
     ctx.fillStyle = "#FF0000";
-    ctx.fillRect(x_coord, y_coord, 50, 50);
+    ctx.fillRect(x, y, 50, 50);
 }
+
+function draw_moon(x, y) {
+    ctx.beginPath();
+    ctx.arc(x + 25, y + 25, 25, 0, Math.PI * 2, false);
+    ctx.closePath();
+    //ctx.stroke();
+
+    var grd = ctx.createLinearGradient(0,0, window.c.width, window.c.height);
+
+    grd.addColorStop(0,"pink");
+    grd.addColorStop("0.3","magenta");
+    grd.addColorStop("0.5","turquoise");
+    grd.addColorStop("0.6","green");
+    grd.addColorStop("0.8","blue");
+    grd.addColorStop(1,"#0B0B61");
+
+    ctx.fillStyle = grd;
+    ctx.fill();
+
+}
+
 
 function draw(obj) {
 
     var ctx = window.ctx;
-    ctx.fillStyle = "#FF0000";
-    ctx.fillRect(obj.x, obj.y, 50, 50);
+    obj.item_draw(obj.x, obj.y);
+    /*ctx.fillStyle = "#FF0000";
+    ctx.fillRect(obj.x, obj.y, 50, 50);*/
+
 
     if (obj.x < 0) {
         obj.dx = random_direction();
@@ -130,7 +94,6 @@ function draw(obj) {
 
     if (obj.y < 0){
         obj.dy = random_direction();
-        //window.dx = - window.dx;
     }
 
     if (obj.y > 590){
@@ -142,14 +105,22 @@ function draw(obj) {
     obj.y += obj.dy;
 }
 
-var random_direction =  function() {
+function random_direction() {
     return Math.floor(Math.random() * (window.max - window.min + 1) + window.min);
 }
 
-var initial_random_direction = function() {
+function initial_random_direction() {
     var max = window.max;
     var min = - window.max;
-    return Math.floor(Math.random() * (max - min + 1) + min);
+    var array = new Array();
+    for (var i = min; i <= max; i++){
+        if (i != 0)
+            array.push(i);
+
+    }
+
+    var index = Math.floor(Math.random() * (array.length));
+    return array[index];
 }
 
 function random_x() {
