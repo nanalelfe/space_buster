@@ -28,6 +28,7 @@ function draw_objects() {
     setTimeout(draw_objects, window.speed);
 }
 
+// The array containing the objects
 var objects = new Array();
 
 function push_objects() {
@@ -35,8 +36,6 @@ function push_objects() {
     var num_moons = 3;
     var num_spaceships = 2;
     var num_space_junk = 2;
-
-
 
     for (var i = 0; i < num_spaceships; i++) {
         var object = new Space_Object(draw_spaceship);
@@ -60,6 +59,7 @@ function push_objects() {
     
 }
 
+
 var Space_Object = function(item_draw) {
     this.x = random(0, window.c.width);
     this.y = random(0, window.c.height);
@@ -70,6 +70,8 @@ var Space_Object = function(item_draw) {
     this.item_draw = item_draw;
 }
 
+
+/******************* ITEM DRAWING FUNCTIONS **********************/
 function draw_space_junk(x, y, w, h) {
     ctx.fillStyle = "#FF0000";
     ctx.fillRect(x, y, w, h);
@@ -160,7 +162,11 @@ function draw_star(x, y, w, h) {
     ctx.fill();
 }
 
+/******************* END OF ITEM DRAWING FUNCTIONS **********************/
 
+
+/* This function executes the item drawing functions, detects collision and 
+   changes the dx/dy values accordingly */
 function draw(obj) {
 
     var ctx = window.ctx;
@@ -191,10 +197,16 @@ function draw(obj) {
     obj.y += obj.dy;
 }
 
+
+/******************* RANDOM NUMBER GENERATOR FUNCTIONS **********************/
+
 function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+
+/* This function is needed because the initial value of dx/dy
+can be negative, however cannot be 0. This function takes this into account */
 function initial_random_direction() {
     var max = window.max_delta;
     var min = - window.max_delta;
@@ -207,3 +219,4 @@ function initial_random_direction() {
     var index = Math.floor(Math.random() * (array.length));
     return array[index];
 }
+/******************* END OF RANDOM NUMBER GENERATOR FUNCTIONS **********************/
