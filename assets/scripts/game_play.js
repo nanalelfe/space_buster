@@ -3,6 +3,10 @@ window.onload = function() {
     window.c = document.getElementById("main");
     window.ctx = c.getContext("2d");
 
+    window.level = 1;
+
+    /****** Object variables *******/
+
     window.object_num = 10;
     window.item_num = 4;
 
@@ -14,9 +18,92 @@ window.onload = function() {
 
     window.speed = 15;
 
+    /****** End of Object variables *******/
+
+    /****** Black hole variables *******/
+
+    // event horizon width and height
+    window.event_w = 100;
+    window.event_h = 100;
+
+    // Number of appearences for each blackhole
+    window.aprns_num_blue = 10;
+    window.aprns_num_purp = 5;
+    window.aprns_num_blac = 1;
+
+    // Number of objects each blackhole eats 
+    window.blue_eat = 3;
+    window.purp_eat = 2;
+    window.black_eat = 1;
+
+
+    // Speed at which each blackhole pulls
+    window.blue_delta = 1;
+    window.purp_delta = 3;
+    window.black_delta = 5;
+
+    /* Things to do:
+    - Create a blackhole object, specify which kind of blackhole it is with a string.
+    - Specify fields such as location, # of appearences, # of objects to eat, which 
+    function to call to draw it etc
+    - Create an event horizon object and collision detection for it. 
+
+    */
+
+
     push_objects();
 
     draw_objects();
+
+    /*var img = new Image();
+    img.onload = function() {
+        window.ctx.drawImage(img, 0, 0);
+    }
+    img.src = "assets/images/blackhole.svg";*/
+}
+
+var Space_Object = function(item_draw) {
+    this.x = random(0, window.c.width - window.object_w);
+    this.y = random(0, window.c.height - window.object_h);
+    this.dx = initial_random_direction();
+    this.dy = initial_random_direction();
+    this.width = window.object_w;
+    this.height = window.object_h;
+    this.item_draw = item_draw;
+}
+
+var Blackhole = function(type) {
+    // event horizon coordinates
+    this.event_x = random(0, window.c.width - window.event_w);
+    this.event_y = random(0, window.c.height - window.event_h);
+
+    // coordinates of the center
+    this.x = this.event_x + (window.event_w/2);
+    this.y = this.event_y + (window.event_h/2);
+
+    // type of blackhole
+    this.type = type;
+
+    switch (type){
+        case "blue":
+            this.draw = draw_blue_blackhole;
+            this.appearence = window.aprns_num_blue * window.level;
+            this.num_eat = window.blue_eat;
+            this.pull_speed = window.blue_delta;
+            break;
+        case "purple":
+            this.draw = draw_purple_blackhole;
+            this.appearence = window.aprns_num_purp * window.level;
+            this.num_eat = window.purp_eat;
+            this.pull_speed = window.purp_delta;
+            break;
+        default: // black
+            this.draw = draw_blackhole;
+            this.appearence = window.aprns_num_blac * window.level;
+            this.num_eat = window.black_eat;
+            this.pull_speed = window.black_delta;
+    }
+
 }
 
 function draw_objects() {
@@ -24,6 +111,8 @@ function draw_objects() {
     for (var i = 0; i < objects.length; i++){
         draw(objects[i]);
     }
+
+    draw_purple_blackhole(50, 50);
 
     setTimeout(draw_objects, window.speed);
 }
@@ -60,18 +149,19 @@ function push_objects() {
 }
 
 
-var Space_Object = function(item_draw) {
-    this.x = random(0, window.c.width);
-    this.y = random(0, window.c.height);
-    this.dx = initial_random_direction();
-    this.dy = initial_random_direction();
-    this.width = window.object_w;
-    this.height = window.object_h;
-    this.item_draw = item_draw;
+/******************* ITEM DRAWING FUNCTIONS **********************/
+
+function draw_purple_blackhole(x, y) {
+    var w = window.object_w;
+    var h = window.object_h;
+    ctx.beginPath();
+    ctx.arc(x, y, (w/2), 0, Math.PI * 2, false);
+    ctx.closePath();
+    ctx.fillStyle = "#6C3483";
+    ctx.fill();
+
 }
 
-
-/******************* ITEM DRAWING FUNCTIONS **********************/
 function draw_space_junk(x, y, w, h) {
     ctx.fillStyle = "#FF0000";
     ctx.fillRect(x, y, w, h);
