@@ -26,6 +26,9 @@ window.onload = function() {
     window.event_w = 100;
     window.event_h = 100;
 
+    window.bh_w = 60;
+    window.bh_h = 60;
+
     // Number of appearences for each blackhole
     window.aprns_num_blue = 10;
     window.aprns_num_purp = 5;
@@ -42,6 +45,14 @@ window.onload = function() {
     window.purp_delta = 3;
     window.black_delta = 5;
 
+    // Min and max milliseconds between blackhole appearences
+    window.aprns_min_time = 500;
+    window.aprns_max_time = 3000;
+
+    window.period = 0;
+    window.counter = 0; 
+    window.curr_bh = null;
+
     /* Things to do:
     - Create a blackhole object, specify which kind of blackhole it is with a string.
     - Specify fields such as location, # of appearences, # of objects to eat, which 
@@ -50,8 +61,8 @@ window.onload = function() {
 
     */
 
-
     push_objects();
+    push_blackholes();
 
     draw_objects();
 
@@ -81,24 +92,24 @@ var Blackhole = function(type) {
     this.x = this.event_x + (window.event_w/2);
     this.y = this.event_y + (window.event_h/2);
 
-    // type of blackhole
+    // blue, purple or black type
     this.type = type;
 
     switch (type){
         case "blue":
-            this.draw = draw_blue_blackhole;
+            this.draw_bh = draw_blue_blackhole;
             this.appearence = window.aprns_num_blue * window.level;
             this.num_eat = window.blue_eat;
             this.pull_speed = window.blue_delta;
             break;
         case "purple":
-            this.draw = draw_purple_blackhole;
+            this.draw_bh = draw_purple_blackhole;
             this.appearence = window.aprns_num_purp * window.level;
             this.num_eat = window.purp_eat;
             this.pull_speed = window.purp_delta;
             break;
         default: // black
-            this.draw = draw_blackhole;
+            this.draw_bh = draw_blackhole;
             this.appearence = window.aprns_num_blac * window.level;
             this.num_eat = window.black_eat;
             this.pull_speed = window.black_delta;
@@ -107,18 +118,56 @@ var Blackhole = function(type) {
 }
 
 function draw_objects() {
+
     window.ctx.clearRect(0, 0, window.c.width, window.c.height);
     for (var i = 0; i < objects.length; i++){
         draw(objects[i]);
     }
 
-    draw_purple_blackhole(50, 50);
+
+    if (window.counter == 0) {
+        if (blackholes.length == 0) {
+            push_blackholes();
+        }
+        window.curr_bh = random(0, blackholes.length - 1);
+        var bh = blackholes[window.curr_bh];
+        bh.draw_bh(bh.x, bh.y);
+        period_reset();
+    }
+
+    else {
+        var bh = blackholes[window.curr_bh];
+        bh.draw_bh(bh.x, bh.y);
+        window.counter--;
+    }
+
+    //draw_purple_blackhole(50, 50);
 
     setTimeout(draw_objects, window.speed);
 }
 
-// The array containing the objects
+/********** CONTAINERS **************/
 var objects = new Array();
+var blackholes = new Array();
+/************************************/
+
+
+function push_blackholes(){
+    for (i = 0; i < window.aprns_num_blue; i++) {
+        var bh = new Blackhole("blue");
+        blackholes.push(bh);
+    }
+
+    for (i = 0; i < window.aprns_num_purp; i++) {
+        var bh = new Blackhole("purple");
+        blackholes.push(bh);
+    }
+
+    for (i = 0; i < window.aprns_num_blac; i++) {
+        var bh = new Blackhole("black");
+        blackholes.push(bh);
+    }
+}
 
 function push_objects() {
     var num_stars = 3;
@@ -151,16 +200,43 @@ function push_objects() {
 
 /******************* ITEM DRAWING FUNCTIONS **********************/
 
+/*********** Black holes **************/
+
+function draw_blue_blackhole(x, y) {
+    var w = window.object_w;
+    var h = window.object_h;
+    ctx.beginPath();
+    ctx.arc(x, y, (bh_w/2), 0, Math.PI * 2, false);
+    ctx.closePath();
+    ctx.fillStyle = "#154360";
+    ctx.fill();
+
+}
+
 function draw_purple_blackhole(x, y) {
     var w = window.object_w;
     var h = window.object_h;
     ctx.beginPath();
-    ctx.arc(x, y, (w/2), 0, Math.PI * 2, false);
+    ctx.arc(x, y, (bh_w/2), 0, Math.PI * 2, false);
     ctx.closePath();
-    ctx.fillStyle = "#6C3483";
+    ctx.fillStyle = "#4A235A";
     ctx.fill();
 
 }
+
+function draw_blackhole(x, y) {
+    var w = window.object_w;
+    var h = window.object_h;
+    ctx.beginPath();
+    ctx.arc(x, y, (bh_w/2), 0, Math.PI * 2, false);
+    ctx.closePath();
+    ctx.fillStyle = "#000000";
+    ctx.fill();
+
+}
+
+
+/*********** Space Objects **************/
 
 function draw_space_junk(x, y, w, h) {
     ctx.fillStyle = "#FF0000";
@@ -235,15 +311,15 @@ function draw_star(x, y, w, h) {
     for (i = 0; i < spikes; i++) {
         x = cx + Math.cos(rot) * outerRadius;
         y = cy + Math.sin(rot) * outerRadius;
-        ctx.lineTo(x, y)
-        rot += step
+        ctx.lineTo(x, y);
+        rot += step;
 
         x = cx + Math.cos(rot) * innerRadius;
         y = cy + Math.sin(rot) * innerRadius;
-        ctx.lineTo(x, y)
-        rot += step
+        ctx.lineTo(x, y);
+        rot += step;
     }
-    ctx.lineTo(cx, cy - outerRadius)
+    ctx.lineTo(cx, cy - outerRadius);
     ctx.closePath();
     ctx.lineWidth = 5;
     ctx.strokeStyle = "#D68910"; // darker
@@ -289,6 +365,11 @@ function draw(obj) {
 
 
 /******************* RANDOM NUMBER GENERATOR FUNCTIONS **********************/
+
+function period_reset() {
+    window.period = random(window.aprns_min_time, window.aprns_max_time);
+    window.counter = Math.floor(window.period/window.speed);
+}
 
 function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
