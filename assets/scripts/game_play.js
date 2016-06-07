@@ -203,6 +203,14 @@ function push_objects() {
 /*********** Black holes **************/
 
 function draw_blue_blackhole(x, y) {
+
+    var event_x = x - 50;
+    var event_y = y - 50;
+    ctx.rect(event_x, event_y, 100, 100);
+    ctx.lineWidth="1";
+    ctx.strokeStyle = "#FFFFFF";
+    ctx.stroke();
+
     var w = window.object_w;
     var h = window.object_h;
     ctx.beginPath();
@@ -211,9 +219,22 @@ function draw_blue_blackhole(x, y) {
     ctx.fillStyle = "#154360";
     ctx.fill();
 
+
+
+
+
+
 }
 
 function draw_purple_blackhole(x, y) {
+
+    var event_x = x - 50;
+    var event_y = y - 50;
+    ctx.rect(event_x, event_y, 100, 100);
+    ctx.lineWidth="2";
+    ctx.strokeStyle = "#FFFFFF";
+    ctx.stroke();
+
     var w = window.object_w;
     var h = window.object_h;
     ctx.beginPath();
@@ -225,6 +246,14 @@ function draw_purple_blackhole(x, y) {
 }
 
 function draw_blackhole(x, y) {
+
+    var event_x = x - 50;
+    var event_y = y - 50;
+    ctx.rect(event_x, event_y, 100, 100);
+    ctx.lineWidth="2";
+    ctx.strokeStyle = "#FFFFFF";
+    ctx.stroke();
+
     var w = window.object_w;
     var h = window.object_h;
     ctx.beginPath();
