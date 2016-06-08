@@ -428,9 +428,11 @@ function random_bh() {
 
         //console.log(x_overlap);
 
+        // Wrong because the x and y coords can go back to overlapping with the previous, 
+        // already looped bh.
 
-        while (overlap(x, bh.x, window.event_w) && overlap(y, bh.y, window.event_h)) {
-            console.log(overlap(x, bh.x, window.event_w) && overlap(y, bh.y, window.event_h));
+        while (overlaps(x, bh.x, window.event_w) && overlaps(y, bh.y, window.event_h)) {
+            console.log(overlaps(x, bh.x, window.event_w) && overlaps(y, bh.y, window.event_h));
             x = random(0, window.c.width - window.event_w);
             y = random(0, window.c.height - window.event_h);
         }
@@ -443,7 +445,9 @@ function random_bh() {
 
 }
 
-function overlap(x, bh_x, bh_size) {
+function  
+
+function overlaps(x, bh_x, bh_size) {
 
     return (((bh_x <= x)&&(x <= (bh_x + bh_size))) || ((bh_x <= (x + bh_size)) && ((x + bh_size) <= (bh_x + bh_size))));
 }
