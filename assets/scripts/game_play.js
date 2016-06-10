@@ -164,6 +164,7 @@ function draw_objects() {
 var objects = new Array();
 var blackholes = new Array();  // total amount of blackholes
 var current_bhs = new Array(); // the blackholes present on the canvas
+var total_blackholes = new Array();
 /************************************/
 
 
@@ -171,16 +172,19 @@ function push_blackholes(){
     for (i = 0; i < window.aprns_num_blue; i++) {
         var bh = new Blackhole("blue");
         blackholes.push(bh);
+        total_blackholes.push(bh);
     }
 
     for (i = 0; i < window.aprns_num_purp; i++) {
         var bh = new Blackhole("purple");
         blackholes.push(bh);
+        total_blackholes.push(bh);
     }
 
     for (i = 0; i < window.aprns_num_blac; i++) {
         var bh = new Blackhole("black");
         blackholes.push(bh);
+        total_blackholes.push(bh);
     }
 }
 
@@ -411,31 +415,33 @@ function draw(obj) {
 /******************* RANDOM NUMBER GENERATOR FUNCTIONS **********************/
 
 function period_reset() {
-    window.period = random(window.aprns_min_time, window.aprns_max_time);
+    //window.period = random(window.aprns_min_time, window.aprns_max_time);
+    window.period = 10;
     window.counter = Math.floor(window.period/window.speed);
 }
 
 // Returns [x, y] such that the coordinates don't overlap with another
-// blackhole already created.
 function random_bh() {
     var coord = new Array();
+    
+
     var x = random(0, window.c.width - window.event_w);
     var y = random(0, window.c.height - window.event_h);
 
+    //for (var i = 0; i < blackholes.length; i++)
+    var i = 0;
+    while (i < total_blackholes.length){
+        var bh = total_blackholes[i];
+        
+        var does_overlap = overlaps(x, y, bh.event_x, bh.event_y);
 
-    for (var i = 0; i < blackholes.length; i++){
-        var bh = blackholes[i];
-
-        //console.log(x_overlap);
-
-        // Wrong because the x and y coords can go back to overlapping with the previous, 
-        // already looped bh.
-
-        while (overlaps(x, bh.x, window.event_w) && overlaps(y, bh.y, window.event_h)) {
-            console.log(overlaps(x, bh.x, window.event_w) && overlaps(y, bh.y, window.event_h));
+        if(does_overlap){
             x = random(0, window.c.width - window.event_w);
             y = random(0, window.c.height - window.event_h);
+            i = -1;
         }
+        i++;  
+        
     }
 
     coord.push(x);
@@ -445,11 +451,10 @@ function random_bh() {
 
 }
 
-function  
-
-function overlaps(x, bh_x, bh_size) {
-
-    return (((bh_x <= x)&&(x <= (bh_x + bh_size))) || ((bh_x <= (x + bh_size)) && ((x + bh_size) <= (bh_x + bh_size))));
+function overlaps(x, y, bhx, bhy) {
+    var w = window.event_w; 
+    var h = window.event_h;
+    return !(x > (bhx + w) || (x + w) < bhx || y > (bhy + h) || (y + h) < bhy);
 }
 
 function random(min, max) {
