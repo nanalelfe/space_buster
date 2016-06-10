@@ -4,29 +4,6 @@ window.onload = function() {
     window.ctx = c.getContext("2d");
     var offsetLeft = c.offsetLeft,
         offsetTop = c.offsetTop;
-
-    c.addEventListener("click", function(event){
-        var x = event.pageX - offsetLeft,
-            y = event.pageY - offsetTop;
-
-        current_bhs.forEach(function (bh) {
-            var w = window.event_w,
-                h = window.event_h,
-                bhx = bh.event_x,
-                bhy = bh.event_y;
-
-            console.log(x, y);
-            console.log(bh);
-            
-            console.log(!(x > (bhx + w) || (x) < bhx || y > (bhy + h) || (y) < bhy));
-            if (!(x > (bhx + w) || (x) < bhx || y > (bhy + h) || (y) < bhy)) {
-                console.log("clicked an element");
-            }
-        });
-
-
-    }, false);
-
     
     //return !(x > (bhx + w) || (x) < bhx || y > (bhy + h) || (y) < bhy);
 
@@ -79,6 +56,28 @@ window.onload = function() {
     window.period = 0;
     window.counter = 0; 
     window.curr_bh = null;
+
+    c.addEventListener("click", function(event){
+        var x = event.pageX - offsetLeft,
+            y = event.pageY - offsetTop;
+
+        current_bhs.forEach(function (bh) {
+    
+            console.log(x, y);
+            console.log(bh);
+
+            var dx = x - bh.x,
+                dy = y - bh.y,
+                dist = Math.sqrt(dx*dx + dy*dy);
+
+                if (dist < (bh_w/2)) {
+                   console.log("clicked a blackhole"); 
+                }
+        });
+
+
+    }, false);
+
 
     /* Things to do:
     - Create a blackhole object, specify which kind of blackhole it is with a string.
