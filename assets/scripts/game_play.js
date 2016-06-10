@@ -2,6 +2,24 @@ window.onload = function() {
     "use strict"; 
     window.c = document.getElementById("main");
     window.ctx = c.getContext("2d");
+    var offsetLeft = c.offsetLeft,
+        offsetTop = c.offsetTop;
+
+    c.addEventListener("click", function(event){
+        var x = event.pageX - offsetLeft,
+            y = event.pageY - offsetTop;
+
+        current_bhs.forEach(function (bh) {
+            console.log(x, y);
+            console.log(bh);
+            console.log(y > bh.event_y && y < bh.event_y + bh.event_h && x > bh.event_x && x < bh.event_x + bh.event_w);
+            if (y > bh.event_y && y < bh.event_y + bh.event_h && x > bh.event_x && x < bh.event_x + bh.event_w) {
+                console.log("clicked an element");
+            }
+        });
+
+
+    }, false);
 
     window.level = 1;
 
@@ -139,7 +157,7 @@ function draw_objects() {
         // Also need to make sure that the blackholes don't overlap
         // when they appear 
         if (blackholes.length == 0) {
-            push_blackholes();
+            //push_blackholes();
         }
         console.log("a blackhole has been pushed");
         var i = random(0, blackholes.length - 1);
@@ -158,6 +176,11 @@ function draw_objects() {
     //draw_purple_blackhole(50, 50);
 
     setTimeout(draw_objects, window.speed);
+}
+
+function remove_bh() {
+    //this.removeEventListener("click", this);
+    console.log("blackhole was clicked");
 }
 
 /********** CONTAINERS **************/
@@ -412,29 +435,34 @@ function draw(obj) {
 
 function period_reset() {
     window.period = random(window.aprns_min_time, window.aprns_max_time);
-    window.counter = Math.floor(window.period/window.speed);
+    window.counter = 2000;//Math.floor(window.period/window.speed);
 }
+
+
 
 // Returns [x, y] such that the coordinates don't overlap with another
 // blackhole already created.
 function random_bh() {
     var coord = new Array();
+    var array = new Array();
+    array.concat(blackholes);
+    array.concat(current_bhs);
     var x = random(0, window.c.width - window.event_w);
     var y = random(0, window.c.height - window.event_h);
 
+    var i = 0;
+    while (i < array.length) {
+        var bh = array[i];
+        var does_overlap = overlaps(x, bh.x, window.event_w) && overlaps(y, bh.y, window.event_h);
 
-    for (var i = 0; i < blackholes.length; i++){
-        var bh = blackholes[i];
-
-        //console.log(x_overlap);
-
-        // Wrong because the x and y coords can go back to overlapping with the previous, 
-        // already looped bh.
-
-        while (overlaps(x, bh.x, window.event_w) && overlaps(y, bh.y, window.event_h)) {
-            console.log(overlaps(x, bh.x, window.event_w) && overlaps(y, bh.y, window.event_h));
+        if (!does_overlap) {
             x = random(0, window.c.width - window.event_w);
             y = random(0, window.c.height - window.event_h);
+            i = 0;
+        }
+
+        else {
+            i++;
         }
     }
 
@@ -445,7 +473,6 @@ function random_bh() {
 
 }
 
-function  
 
 function overlaps(x, bh_x, bh_size) {
 
