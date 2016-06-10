@@ -10,16 +10,25 @@ window.onload = function() {
             y = event.pageY - offsetTop;
 
         current_bhs.forEach(function (bh) {
+            var w = window.event_w,
+                h = window.event_h,
+                bhx = bh.event_x,
+                bhy = bh.event_y;
+
             console.log(x, y);
             console.log(bh);
-            console.log(y > bh.event_y && y < bh.event_y + bh.event_h && x > bh.event_x && x < bh.event_x + bh.event_w);
-            if (y > bh.event_y && y < bh.event_y + bh.event_h && x > bh.event_x && x < bh.event_x + bh.event_w) {
+            
+            console.log(!(x > (bhx + w) || (x) < bhx || y > (bhy + h) || (y) < bhy));
+            if (!(x > (bhx + w) || (x) < bhx || y > (bhy + h) || (y) < bhy)) {
                 console.log("clicked an element");
             }
         });
 
 
     }, false);
+
+    
+    //return !(x > (bhx + w) || (x) < bhx || y > (bhy + h) || (y) < bhy);
 
     window.level = 1;
 
@@ -187,6 +196,7 @@ function remove_bh() {
 var objects = new Array();
 var blackholes = new Array();  // total amount of blackholes
 var current_bhs = new Array(); // the blackholes present on the canvas
+var total_blackholes = new Array();
 /************************************/
 
 
@@ -194,16 +204,19 @@ function push_blackholes(){
     for (i = 0; i < window.aprns_num_blue; i++) {
         var bh = new Blackhole("blue");
         blackholes.push(bh);
+        total_blackholes.push(bh);
     }
 
     for (i = 0; i < window.aprns_num_purp; i++) {
         var bh = new Blackhole("purple");
         blackholes.push(bh);
+        total_blackholes.push(bh);
     }
 
     for (i = 0; i < window.aprns_num_blac; i++) {
         var bh = new Blackhole("black");
         blackholes.push(bh);
+        total_blackholes.push(bh);
     }
 }
 
@@ -441,29 +454,26 @@ function period_reset() {
 
 
 // Returns [x, y] such that the coordinates don't overlap with another
-// blackhole already created.
 function random_bh() {
     var coord = new Array();
-    var array = new Array();
-    array.concat(blackholes);
-    array.concat(current_bhs);
+
     var x = random(0, window.c.width - window.event_w);
     var y = random(0, window.c.height - window.event_h);
 
+    //for (var i = 0; i < blackholes.length; i++)
     var i = 0;
-    while (i < array.length) {
-        var bh = array[i];
-        var does_overlap = overlaps(x, bh.x, window.event_w) && overlaps(y, bh.y, window.event_h);
+    while (i < total_blackholes.length){
+        var bh = total_blackholes[i];
+        
+        var does_overlap = overlaps(x, y, bh.event_x, bh.event_y);
 
-        if (!does_overlap) {
+        if(does_overlap){
             x = random(0, window.c.width - window.event_w);
             y = random(0, window.c.height - window.event_h);
-            i = 0;
+            i = -1;
         }
-
-        else {
-            i++;
-        }
+        i++;  
+        
     }
 
     coord.push(x);
@@ -473,10 +483,10 @@ function random_bh() {
 
 }
 
-
-function overlaps(x, bh_x, bh_size) {
-
-    return (((bh_x <= x)&&(x <= (bh_x + bh_size))) || ((bh_x <= (x + bh_size)) && ((x + bh_size) <= (bh_x + bh_size))));
+function overlaps(x, y, bhx, bhy) {
+    var w = window.event_w; 
+    var h = window.event_h;
+    return !(x > (bhx + w) || (x + w) < bhx || y > (bhy + h) || (y + h) < bhy);
 }
 
 function random(min, max) {
