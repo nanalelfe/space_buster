@@ -2,10 +2,6 @@ window.onload = function() {
     "use strict"; 
     window.c = document.getElementById("main");
     window.ctx = c.getContext("2d");
-    var offsetLeft = c.offsetLeft,
-        offsetTop = c.offsetTop;
-    
-    //return !(x > (bhx + w) || (x) < bhx || y > (bhy + h) || (y) < bhy);
 
     window.level = 1;
 
@@ -57,39 +53,11 @@ window.onload = function() {
     window.counter = 0; 
     window.curr_bh = null;
 
-    c.addEventListener("click", function(event){
-        var x = event.pageX - offsetLeft,
-            y = event.pageY - offsetTop;
 
-        current_bhs.forEach(function (bh) {
-    
-            console.log(x, y);
-            console.log(bh);
+    var offsetLeft = c.offsetLeft,
+        offsetTop = c.offsetTop;
 
-            var dx = x - bh.x,
-                dy = y - bh.y,
-                dist = Math.sqrt(dx*dx + dy*dy);
-
-                if (dist < (bh_w/2)) {
-                   remove_bh(bh);
-                }
-        });
-
-
-    }, false);
-
-    function remove_bh(bh) {
-        var i = current_bhs.indexOf(bh);
-        current_bhs.splice(i, 1);
-    }
-
-    /* Things to do:
-    - Create a blackhole object, specify which kind of blackhole it is with a string.
-    - Specify fields such as location, # of appearences, # of objects to eat, which 
-    function to call to draw it etc
-    - Create an event horizon object and collision detection for it. 
-
-    */
+    c.addEventListener("click", user_click, false);
 
     push_objects();
     push_blackholes();
@@ -102,6 +70,7 @@ window.onload = function() {
     }
     img.src = "assets/images/blackhole.svg";*/
 }
+
 
 var Space_Object = function(item_draw) {
     this.x = random(0, window.c.width - window.object_w);
@@ -169,9 +138,8 @@ function draw_objects() {
         // Also need to make sure that the blackholes don't overlap
         // when they appear 
         if (blackholes.length == 0) {
-            //push_blackholes();
+            push_blackholes();
         }
-        console.log("a blackhole has been pushed");
         var i = random(0, blackholes.length - 1);
         var bh = blackholes[i];
         bh.draw_bh(bh.x, bh.y);
@@ -190,10 +158,33 @@ function draw_objects() {
     setTimeout(draw_objects, window.speed);
 }
 
-function remove_bh() {
-    //this.removeEventListener("click", this);
-    console.log("blackhole was clicked");
+/************ CLICK HANDLERS ******************/
+function user_click() {
+    var x = event.pageX - c.offsetLeft,
+        y = event.pageY - c.offsetTop;
+
+    current_bhs.forEach(function (bh) {
+
+        console.log(x, y);
+        console.log(bh);
+
+        var dx = x - bh.x,
+            dy = y - bh.y,
+            dist = Math.sqrt(dx*dx + dy*dy);
+
+            if (dist < (bh_w/2)) {
+               remove_bh(bh);
+            }
+    });
 }
+
+function remove_bh(bh) {
+    var i = current_bhs.indexOf(bh);
+    current_bhs.splice(i, 1);
+}
+
+/************ END OF CLICK HANDLERS ******************/
+
 
 /********** CONTAINERS **************/
 var objects = new Array();
@@ -451,7 +442,7 @@ function draw(obj) {
 
 function period_reset() {
     window.period = random(window.aprns_min_time, window.aprns_max_time);
-    window.counter = 2000;//Math.floor(window.period/window.speed);
+    window.counter = Math.floor(window.period/window.speed);
 }
 
 
