@@ -71,13 +71,17 @@ window.onload = function() {
                 dist = Math.sqrt(dx*dx + dy*dy);
 
                 if (dist < (bh_w/2)) {
-                   console.log("clicked a blackhole"); 
+                   remove_bh(bh);
                 }
         });
 
 
     }, false);
 
+    function remove_bh(bh) {
+        var i = current_bhs.indexOf(bh);
+        current_bhs.splice(i, 1);
+    }
 
     /* Things to do:
     - Create a blackhole object, specify which kind of blackhole it is with a string.
