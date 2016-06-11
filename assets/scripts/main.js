@@ -190,6 +190,12 @@ var main = function (){
 
         // Game run operation
         Game.run = function(){
+            //
+            if (Game.score != window.total_score){
+                Game.score = window.total_score;
+                $("#ib-score").text("Score: " + String(Game.score)); 
+            }
+            
 
             // Check for game over conditions
             // Game ends if timer hits 0 or there are 0 space objects
@@ -234,8 +240,6 @@ var main = function (){
             }
         }, 1000);
 
-        // Score
-        Game.score = window.total_score;
         $("#ib-score").text("Score: " + String(Game.score)); 
 
         // Level
