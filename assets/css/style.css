@@ -1,0 +1,123 @@
+* {
+    box-sizing: border-box;
+}
+/* Clears left/right after end of row */
+.row::after {
+    content: "";
+    clear: both;
+    display: block;
+}
+html {
+    font-family: 'Source Sans Pro', sans-serif;
+
+}
+
+canvas {
+    /*background-color: #000000;*/
+    background-image: url("../images/game_background.gif");
+}
+
+p {
+    padding: 0;
+    margin: 0;
+}
+
+header{
+    background-color: #333333;
+    padding: 1.5%;
+    text-align: center;
+    width: 1005px;
+}
+header h1{
+    color: white;
+    padding: 0;
+    font-style: italic; 
+    font-weight: bold;
+    font-size: 2em;
+
+}
+
+
+button{
+    padding: 0;
+    margin: 0;
+}
+
+#start-page {
+    border: 3px solid #333333;
+    text-align: center;
+}
+
+#start-button, #back-button, #ib-pause, #transition-button {
+    background-color: gray; 
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+#info-bar{
+    border: 3px solid #333333;
+    border-bottom: 0;
+    text-align: center;
+    width: 1005px;
+}
+
+#transition-page{
+    text-align: center;
+    border: 3px solid #333333;
+    background-color: white;
+    height: 150px;
+    width: 200px;
+    position: absolute;
+    z-index: 10;
+    top: 325px;
+    left: 500px;
+}
+
+main{
+    position: relative;
+    width: 1005px;
+ }
+
+h3 {
+    padding: 10px;
+    margin: 0;
+
+}
+.ib-item{
+    min-height: 40px;
+    max-height: 40px;
+}
+
+#viewport{
+    border: 3px solid #333333;
+}
+
+[class*="col-"] {
+    float: left;
+    width: 100%;
+}
+
+/* Column grid */
+.col-d-1 {width: 8.33%;}
+.col-d-2 {width: 16.66%;}
+.col-d-3 {width: 25%;}
+.col-d-4 {width: 33.33%;}
+.col-d-5 {width: 41.66%;}
+.col-d-6 {width: 50%;}
+.col-d-7 {width: 58.33%;}
+.col-d-8 {width: 66.66%;}
+.col-d-9 {width: 75%;}
+.col-d-10 {width: 83.33%;}
+.col-d-11 {width: 91.66%;}
+.col-d-12 {width: 100%;}
+
+body{margin-left: 10%;}
+body{margin-right: 10%;}
+    
