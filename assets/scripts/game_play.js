@@ -16,7 +16,7 @@ window.onload = function() {
     window.max_delta = 4;
     window.min_delta = 1;
 
-    window.speed = 15;
+    window.speed = 20;
 
     /****** End of Object variables *******/
 
@@ -44,9 +44,9 @@ window.onload = function() {
 
 
     // Speed at which each blackhole pulls
-    window.blue_delta = 1;
-    window.purp_delta = 3;
-    window.black_delta = 5;
+    window.blue_delta = 20;
+    window.purp_delta = 10;
+    window.black_delta = 6;
 
     // Min and max milliseconds between blackhole appearences
     window.aprns_min_time = 500;
@@ -128,6 +128,7 @@ function draw_objects() {
     // Draw the moving objects
     for (var i = 0; i < objects.length; i++){
         draw(objects[i]);
+        //is_object_pulled(objects[i]);
     }
 
     // redraw the blackholes that are still supposed to appear on the screen
@@ -162,6 +163,7 @@ function draw_objects() {
 
     setTimeout(draw_objects, window.speed);
 }
+
 
 /************ CLICK HANDLERS ******************/
 function user_click() {
@@ -305,7 +307,6 @@ function draw_purple_blackhole(x, y) {
         window.ctx.drawImage(img, x - 25, y- 25, 60, 60);
     }
     img.src = "assets/images/blackhole.svg";*/
-
 }
 
 function draw_blackhole(x, y) {
@@ -422,6 +423,54 @@ function draw_star(x, y, w, h) {
 
 /******************* END OF ITEM DRAWING FUNCTIONS **********************/
 
+function remove_object(obj) {
+    var i = objects.indexOf(obj);
+    objects.splice(i, 1);
+}
+
+function object_pulled(obj) {
+    var x = obj.x,
+        y = obj.y,
+        h = obj.height,
+        w = obj.width,
+        bhw = window.event_w,
+        bhh = window.event_h,
+        this_bh = null;
+
+    current_bhs.forEach(function(bh) {
+        var bhx = bh.event_x,
+            bhy = bh.event_y;
+        if (!(x > (bhx + bhw) || (x + w) < bhx || y > (bhy + bhh) || (y + h) < bhy)) {
+            this_bh =  bh;
+        }
+    });
+
+
+    if (this_bh != null) {
+
+        var dx = this_bh.x - (obj.x + (window.object_w/2)),
+            dy = this_bh.y - (obj.y + (window.object_h/2)),
+            dist = Math.sqrt(dx*dx + dy*dy);
+
+        if (dist < (bh_w/2)) {
+            remove_object(obj);
+
+        }
+
+        else {
+
+            obj.x += dx/this_bh.pull_speed;
+            obj.y += dy/this_bh.pull_speed;
+        }
+
+        return true;
+    }
+
+    else {
+        return false;
+    }
+
+}
 
 /* This function executes the item drawing functions, detects collision and 
    changes the dx/dy values accordingly */
@@ -432,27 +481,30 @@ function draw(obj) {
     /*ctx.fillStyle = "#FF0000";
     ctx.fillRect(obj.x, obj.y, 50, 50);*/
 
+    if (!object_pulled(obj)) {
 
-    if (obj.x < 0) {
+        if (obj.x < 0) {
         obj.dx = random(min_delta, max_delta);
+        }
+
+        if (obj.x > window.c.width - obj.width){
+            obj.dx = random(min_delta, max_delta);
+            obj.dx = - obj.dx;
+        } 
+
+        if (obj.y < 0){
+            obj.dy = random(min_delta, max_delta);
+        }
+
+        if (obj.y > window.c.height - obj.height){
+            obj.dy = random(min_delta, max_delta);
+            obj.dy = - obj.dy;
+        }
+
+        obj.x += obj.dx; 
+        obj.y += obj.dy;
     }
 
-    if (obj.x > window.c.width - obj.width){
-        obj.dx = random(min_delta, max_delta);
-        obj.dx = - obj.dx;
-    } 
-
-    if (obj.y < 0){
-        obj.dy = random(min_delta, max_delta);
-    }
-
-    if (obj.y > window.c.height - obj.height){
-        obj.dy = random(min_delta, max_delta);
-        obj.dy = - obj.dy;
-    }
-
-    obj.x += obj.dx; 
-    obj.y += obj.dy;
 }
 
 
