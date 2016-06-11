@@ -6,6 +6,7 @@ var main = function (){
 
     $("#game-page").hide();
     $("#transition-page").hide();
+    $("#black-hole-svg").hide();
 
     // Retrieve High Score in html5 local storage, if first time playing
     // Set high score to default value 0. 
@@ -466,11 +467,14 @@ var main = function (){
 
         var w = window.object_w;
         var h = window.object_h;
-        ctx.beginPath();
+        /*ctx.beginPath();
         ctx.arc(x, y, (bh_w/2), 0, Math.PI * 2, false);
         ctx.closePath();
         ctx.fillStyle = "#154360";
-        ctx.fill();
+        ctx.fill();*/
+
+        var img = document.getElementById("black-hole-svg");
+        ctx.drawImage(img, x-25, y-25, 50, 50);
     }
 
     function draw_purple_blackhole(x, y) {
@@ -514,6 +518,8 @@ var main = function (){
         ctx.closePath();
         ctx.fillStyle = "#000000";
         ctx.fill();
+
+
 
     }
 
