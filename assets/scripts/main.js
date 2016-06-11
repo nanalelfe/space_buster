@@ -33,7 +33,7 @@ var main = function (){
 
     // ----------- GAME PAGE --------------// 
     // Global CONSTANTS
-    window.GAME_LENGTH = 11;    // Game time - 1
+    window.GAME_LENGTH = 61;    // Game time - 1
     window.STARTING_SCORE = 200 // Starting score every level
 
     function run_game(){
