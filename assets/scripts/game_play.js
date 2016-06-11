@@ -22,6 +22,9 @@ window.onload = function() {
 
     /****** Black hole variables *******/
 
+    // Max number of blackholes that should appear at any given time
+    window.MAX_BLACKHOLES = 25; 
+
     // event horizon width and height
     window.event_w = 100;
     window.event_h = 100;
@@ -60,7 +63,8 @@ window.onload = function() {
     c.addEventListener("click", user_click, false);
 
     push_objects();
-    push_blackholes();
+    // Not needed, blackholes are created and drawn in sync.
+    //push_blackholes(); 
 
     draw_objects();
 
@@ -133,19 +137,20 @@ function draw_objects() {
     }
 
     if (window.counter == 0) {
-        // Need to remove blackholes from the blackholes-array to
-        // randomize the location again
-        // Also need to make sure that the blackholes don't overlap
-        // when they appear 
-        if (blackholes.length == 0) {
-            push_blackholes();
+        // When counter == 0, it's time to spawn a new blackhole
+        // Get number for type via random generator, create new blackhole
+        // of that type, then add to current_blackholes
+
+        // 1-3 is black, 4-9 is purple, 10-18 is blue
+        // These values can be adjusted and attributed to globals constants 
+        // to change frequency for each color
+
+        if (current_bhs.length <= window.MAX_BLACKHOLES){
+            var blackhole_type = random(1, 18);
+            var blackhole = create_blackhole(blackhole_type); 
+            current_bhs.push(blackhole); 
+            period_reset();
         }
-        var i = random(0, blackholes.length - 1);
-        var bh = blackholes[i];
-        bh.draw_bh(bh.x, bh.y);
-        current_bhs.push(bh);
-        period_reset();
-        blackholes.splice(i, 1); // removes 1 item starting from index i
 
     }
 
@@ -188,12 +193,25 @@ function remove_bh(bh) {
 
 /********** CONTAINERS **************/
 var objects = new Array();
-var blackholes = new Array();  // total amount of blackholes
+//var blackholes = new Array();  // Note needed anymore
 var current_bhs = new Array(); // the blackholes present on the canvas
-var total_blackholes = new Array();
+//var total_blackholes = new Array(); // Note needed anymore
 /************************************/
 
+function create_blackhole(type){
+    var color;
+    if(type <= 3){
+        color = "black";
+    }else if (type <= 9){
+        color = "purple";
+    }else {
+        color = "blue";
+    }
 
+    var bh = new Blackhole(color);
+    return bh; 
+}
+/*
 function push_blackholes(){
     for (i = 0; i < window.aprns_num_blue; i++) {
         var bh = new Blackhole("blue");
@@ -212,7 +230,7 @@ function push_blackholes(){
         blackholes.push(bh);
         total_blackholes.push(bh);
     }
-}
+}*/
 
 function push_objects() {
     var num_stars = 3;
@@ -442,7 +460,7 @@ function draw(obj) {
 
 function period_reset() {
     window.period = random(window.aprns_min_time, window.aprns_max_time);
-    window.counter = Math.floor(window.period/window.speed);
+    window.counter = Math.floor(window.period/window.speed);    
 }
 
 
@@ -456,8 +474,8 @@ function random_bh() {
 
     //for (var i = 0; i < blackholes.length; i++)
     var i = 0;
-    while (i < total_blackholes.length){
-        var bh = total_blackholes[i];
+    while (i < current_bhs.length){
+        var bh = current_bhs[i];
         
         var does_overlap = overlaps(x, y, bh.event_x, bh.event_y);
 
