@@ -48,7 +48,7 @@ button{
     text-align: center;
 }
 
-#start-button, #back-button, #ib-pause, #transition-button{
+#start-button, #back-button, #ib-pause, #transition-button, #reset-score{
     background-color: gray; 
     border: none;
     color: white;

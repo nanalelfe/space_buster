@@ -26,7 +26,10 @@ var main = function (){
         run_game();
     });
 
-
+    $("#reset-score").click(function() {
+        localStorage.high_score = 0;
+        $("#show-score").text(String(localStorage.high_score)); 
+    });
 
     // ----------- GAME PAGE --------------// 
     // Global CONSTANTS
@@ -46,6 +49,7 @@ var main = function (){
         Game.reset = function(){
             objects = new Array();
             current_bhs = new Array();
+            Game.object_num = 10; 
             push_objects(); 
         };
         
@@ -103,7 +107,7 @@ var main = function (){
 
         // Min and max milliseconds between blackhole appearences
         window.aprns_min_time = 500;
-        window.aprns_max_time = 3000;
+        window.aprns_max_time = 800;
 
         window.period = 0;
         window.counter = 0; 
@@ -141,9 +145,17 @@ var main = function (){
             function level_transition(){
                 Game.current_level++;
                 Game.timer = window.GAME_LENGTH;
-                Game.object_num = 10;
+                Game.object_num = window.object_num;
                 Game.over = false;
-
+                if (Game.current_level == 2){
+                    // Speed up black hole spawn times for next level
+                    window.aprns_min_time = 150;
+                    window.aprns_max_time = 400;
+                    
+                    // Speed up object speed for next level
+                    window.max_delta = 8;
+                    window.min_delta = 4;
+                }
                 // Reset objects
                 Game.reset();
 
@@ -188,7 +200,7 @@ var main = function (){
 
         // Game run operation
         Game.run = function(){
-
+            Game.object_num = objects.length;
             // Check for game over conditions
             // Game ends if timer hits 0 or there are 0 space objects
             if(!Game.timer || !Game.object_num){
@@ -224,7 +236,7 @@ var main = function (){
         Game.timer = window.GAME_LENGTH;
         setInterval(function() {
             if(Game.timer > 0){
-                if(!Game.pause){
+                if(!Game.pause && !Game.over){
                     Game.timer--;   
                 }
                 
@@ -583,6 +595,7 @@ var main = function (){
     function remove_object(obj) {
         var i = objects.indexOf(obj);
         objects.splice(i, 1);
+        
     }
 
     function object_pulled(obj) {
