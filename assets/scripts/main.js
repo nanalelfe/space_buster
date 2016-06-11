@@ -15,7 +15,7 @@ var main = function (){
         }
         $("#show-score").text(String(localStorage.high_score)); 
     } else {
-        $("#show-score").text("Local Storage NotSupported");
+        $("#show-score").text("Local Storage Not Supported");
     }
     
     // Start button, replace start-page with game-page
@@ -30,7 +30,7 @@ var main = function (){
 
     // ----------- GAME PAGE --------------// 
     // Global CONSTANTS
-    window.GAME_LENGTH = 11;    // Game time - 1
+    window.GAME_LENGTH = 61;    // Game time - 1
     window.STARTING_SCORE = 200 // Starting score every level
 
     function run_game(){
@@ -53,10 +53,12 @@ var main = function (){
         // ----------------- NANA'S ONLOAD VARIABLES --------------------// 
         // --------------------------------------------------------------//
 
+
         window.c = document.getElementById("main");
         window.ctx = c.getContext("2d");
 
         window.level = 1;
+        window.total_score = window.STARTING_SCORE;
 
         /****** Object variables *******/
 
@@ -101,6 +103,8 @@ var main = function (){
         window.purp_delta = 10;
         window.black_delta = 6;
 
+        window.bh_eating_pts = -50;
+
         // Min and max milliseconds between blackhole appearences
         window.aprns_min_time = 500;
         window.aprns_max_time = 3000;
@@ -126,8 +130,6 @@ var main = function (){
                 Game.pause = false;
             }
         });
-
-
         // --------------------------------------------------------------//
         // -------------- END OF  NANA'S ONLOAD VARIABLES ---------------// 
         // --------------------------------------------------------------//
@@ -228,11 +230,12 @@ var main = function (){
                     Game.timer--;   
                 }
                 
-                $("#timer-display").text(String(Game.timer) + " Seconds");  
+                $("#timer-display").text(String(Game.timer) + " Seconds"); 
             }
         }, 1000);
 
         // Score
+        Game.score = window.total_score;
         $("#ib-score").text("Score: " + String(Game.score)); 
 
         // Level
@@ -273,18 +276,21 @@ var main = function (){
                 this.appearence = window.aprns_num_blue * window.level;
                 this.eat_limit = window.blue_eat;
                 this.pull_speed = window.blue_delta;
+                this.points = 5;
                 break;
             case "purple":
                 this.draw_bh = draw_purple_blackhole;
                 this.appearence = window.aprns_num_purp * window.level;
                 this.eat_limit = window.purp_eat;
                 this.pull_speed = window.purp_delta;
+                this.points = 10;
                 break;
             default: // black
                 this.draw_bh = draw_blackhole;
                 this.appearence = window.aprns_num_blac * window.level;
                 this.eat_limit = window.black_eat;
                 this.pull_speed = window.black_delta;
+                this.points = 20;
         }
     }
 
@@ -361,17 +367,19 @@ var main = function (){
                 dist = Math.sqrt(dx*dx + dy*dy);
 
                 if (dist < (bh_w/2)) {
-                   remove_bh(bh);
+                    window.total_score += bh.points;
+                    remove_bh(bh);
+
                 }
         });
     }
+
+    /************ END OF CLICK HANDLERS ******************/
 
     function remove_bh(bh) {
         var i = current_bhs.indexOf(bh);
         current_bhs.splice(i, 1);
     }
-
-    /************ END OF CLICK HANDLERS ******************/
 
 
     /********** CONTAINERS **************/
@@ -612,6 +620,7 @@ var main = function (){
             if (dist < (bh_w/2)) {
                 remove_object(obj);
                 this_bh.eaten++;
+                window.total_score += bh_eating_pts;
             }
 
             else {
