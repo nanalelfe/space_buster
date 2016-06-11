@@ -546,7 +546,53 @@ var main = function (){
 	}
 
 	/******************* END OF ITEM DRAWING FUNCTIONS **********************/
+	function remove_object(obj) {
+	    var i = objects.indexOf(obj);
+	    objects.splice(i, 1);
+	}
 
+	function object_pulled(obj) {
+	    var x = obj.x,
+	        y = obj.y,
+	        h = obj.height,
+	        w = obj.width,
+	        bhw = window.event_w,
+	        bhh = window.event_h,
+	        this_bh = null;
+
+	    current_bhs.forEach(function(bh) {
+	        var bhx = bh.event_x,
+	            bhy = bh.event_y;
+	        if (!(x > (bhx + bhw) || (x + w) < bhx || y > (bhy + bhh) || (y + h) < bhy)) {
+	            this_bh =  bh;
+	        }
+	    });
+
+
+	    if (this_bh != null) {
+
+	        var dx = this_bh.x - (obj.x + (window.object_w/2)),
+	            dy = this_bh.y - (obj.y + (window.object_h/2)),
+	            dist = Math.sqrt(dx*dx + dy*dy);
+
+	        if (dist < (bh_w/2)) {
+	            remove_object(obj);
+
+	        }
+
+	        else {
+
+	            obj.x += dx/this_bh.pull_speed;
+	            obj.y += dy/this_bh.pull_speed;
+	        }
+
+	        return true;
+	    }
+
+	    else {
+	        return false;
+	    }
+	}
 
 	/* This function executes the item drawing functions, detects collision and 
 	   changes the dx/dy values accordingly */
@@ -557,27 +603,30 @@ var main = function (){
 	    /*ctx.fillStyle = "#FF0000";
 	    ctx.fillRect(obj.x, obj.y, 50, 50);*/
 
+	    if (!object_pulled(obj)) {
 
-	    if (obj.x < 0) {
+	        if (obj.x < 0) {
 	        obj.dx = random(min_delta, max_delta);
+	        }
+
+	        if (obj.x > window.c.width - obj.width){
+	            obj.dx = random(min_delta, max_delta);
+	            obj.dx = - obj.dx;
+	        } 
+
+	        if (obj.y < 0){
+	            obj.dy = random(min_delta, max_delta);
+	        }
+
+	        if (obj.y > window.c.height - obj.height){
+	            obj.dy = random(min_delta, max_delta);
+	            obj.dy = - obj.dy;
+	        }
+
+	        obj.x += obj.dx; 
+	        obj.y += obj.dy;
 	    }
 
-	    if (obj.x > window.c.width - obj.width){
-	        obj.dx = random(min_delta, max_delta);
-	        obj.dx = - obj.dx;
-	    } 
-
-	    if (obj.y < 0){
-	        obj.dy = random(min_delta, max_delta);
-	    }
-
-	    if (obj.y > window.c.height - obj.height){
-	        obj.dy = random(min_delta, max_delta);
-	        obj.dy = - obj.dy;
-	    }
-
-	    obj.x += obj.dx; 
-	    obj.y += obj.dy;
 	}
 
 
