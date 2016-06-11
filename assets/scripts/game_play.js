@@ -98,32 +98,44 @@ var Blackhole = function(type) {
 
     // blue, purple or black type
     this.type = type;
+    this.eaten = 0;
 
     switch (type){
         case "blue":
             this.draw_bh = draw_blue_blackhole;
             this.appearence = window.aprns_num_blue * window.level;
-            this.num_eat = window.blue_eat;
+            this.eat_limit = window.blue_eat;
             this.pull_speed = window.blue_delta;
             break;
         case "purple":
             this.draw_bh = draw_purple_blackhole;
             this.appearence = window.aprns_num_purp * window.level;
-            this.num_eat = window.purp_eat;
+            this.eat_limit = window.purp_eat;
             this.pull_speed = window.purp_delta;
             break;
         default: // black
             this.draw_bh = draw_blackhole;
             this.appearence = window.aprns_num_blac * window.level;
-            this.num_eat = window.black_eat;
+            this.eat_limit = window.black_eat;
             this.pull_speed = window.black_delta;
     }
 
 }
 
+function check_bh_limit() {
+    current_bhs.forEach(function(bh) {
+        if (bh.eaten >= bh.eat_limit) {
+            remove_bh(bh);
+        }
+    });
+}
+
 function draw_objects() {
 
     window.ctx.clearRect(0, 0, window.c.width, window.c.height);
+
+    // Check if the blackholes reached eating limit
+    check_bh_limit();
 
     // Draw the moving objects
     for (var i = 0; i < objects.length; i++){
@@ -158,8 +170,6 @@ function draw_objects() {
     else {
         window.counter--;
     }
-
-    //draw_purple_blackhole(50, 50);
 
     setTimeout(draw_objects, window.speed);
 }
@@ -445,7 +455,6 @@ function object_pulled(obj) {
         }
     });
 
-
     if (this_bh != null) {
 
         var dx = this_bh.x - (obj.x + (window.object_w/2)),
@@ -454,9 +463,8 @@ function object_pulled(obj) {
 
         if (dist < (bh_w/2)) {
             remove_object(obj);
-
+            this_bh.eaten++;
         }
-
         else {
 
             obj.x += dx/this_bh.pull_speed;
