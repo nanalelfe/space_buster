@@ -56,7 +56,6 @@ window.onload = function() {
     window.counter = 0; 
     window.curr_bh = null;
 
-
     var offsetLeft = c.offsetLeft,
         offsetTop = c.offsetTop;
 
