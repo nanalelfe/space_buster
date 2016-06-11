@@ -22,16 +22,16 @@ var main = function (){
     $("#start-button").click(function() {
         $("#start-page").hide();
         $("#game-page").show();
+
         run_game();
     });
 
 
+
     // ----------- GAME PAGE --------------// 
     // Global CONSTANTS
-    window.GAME_LENGTH = 61;    // Game time - 1
+    window.GAME_LENGTH = 11;    // Game time - 1
     window.STARTING_SCORE = 200 // Starting score every level
-
-
 
     function run_game(){
 
@@ -41,8 +41,14 @@ var main = function (){
         Game.object_num = 10; 
         Game.score = window.STARTING_SCORE;
         Game.timer = window.GAME_LENGTH; 
-        Game.over = false; 
-
+        Game.over = false;
+        Game.pause = false; 
+        Game.reset = function(){
+            objects = new Array();
+            current_bhs = new Array();
+            push_objects(); 
+        };
+        
         // --------------------------------------------------------------//
         // ----------------- NANA'S ONLOAD VARIABLES --------------------// 
         // --------------------------------------------------------------//
@@ -108,7 +114,19 @@ var main = function (){
 
         c.addEventListener("click", user_click, false);
 
-        push_objects();
+        Game.reset();
+
+        // Set pause click event: 
+        $("#ib-pause").click(function() {
+            if(Game.pause == false){
+                c.removeEventListener("click", user_click, false);
+                Game.pause = true;
+            }else {
+                c.addEventListener("click", user_click, false);
+                Game.pause = false;
+            }
+        });
+
 
         // --------------------------------------------------------------//
         // -------------- END OF  NANA'S ONLOAD VARIABLES ---------------// 
@@ -125,6 +143,10 @@ var main = function (){
                 Game.timer = window.GAME_LENGTH;
                 Game.object_num = 10;
                 Game.over = false;
+
+                // Reset objects
+                Game.reset();
+
                 Game.loop = setInterval(Game.run, 33);
                 $("#transition-page").hide();
                 $("#game-page").show();
@@ -179,7 +201,10 @@ var main = function (){
                 console.log("Game over!");
                 Game.transition();
             }
-            draw_objects();
+            if(!Game.pause){
+                draw_objects();
+            }
+            
         }
 
         // Game initial Loop runs ~30fps
@@ -199,7 +224,10 @@ var main = function (){
         Game.timer = window.GAME_LENGTH;
         setInterval(function() {
             if(Game.timer > 0){
-                Game.timer--; 
+                if(!Game.pause){
+                    Game.timer--;   
+                }
+                
                 $("#timer-display").text(String(Game.timer) + " Seconds");  
             }
         }, 1000);
@@ -211,20 +239,19 @@ var main = function (){
         $("#ib-level").text("Level: " + String(Game.current_level));
     }
 
-
     /************************************************/
     /* --------------- GAME FUNCTIONS ------------- */ 
     /************************************************/
     
     var Space_Object = function(item_draw) {
-    this.x = random(0, window.c.width - window.object_w);
-    this.y = random(0, window.c.height - window.object_h);
-    this.dx = initial_random_direction();
-    this.dy = initial_random_direction();
-    this.width = window.object_w;
-    this.height = window.object_h;
-    this.item_draw = item_draw;
-}
+        this.x = random(0, window.c.width - window.object_w);
+        this.y = random(0, window.c.height - window.object_h);
+        this.dx = initial_random_direction();
+        this.dy = initial_random_direction();
+        this.width = window.object_w;
+        this.height = window.object_h;
+        this.item_draw = item_draw;
+    }
 
     var Blackhole = function(type) {
         // event horizon coordinates
@@ -259,7 +286,6 @@ var main = function (){
                 this.eat_limit = window.black_eat;
                 this.pull_speed = window.black_delta;
         }
-
     }
 
     function check_bh_limit() {
@@ -269,7 +295,6 @@ var main = function (){
             }
         });
     }
-
 
     function draw_objects() {
 
@@ -351,9 +376,7 @@ var main = function (){
 
     /********** CONTAINERS **************/
     var objects = new Array();
-    //var blackholes = new Array();  // Note needed anymore
     var current_bhs = new Array(); // the blackholes present on the canvas
-    //var total_blackholes = new Array(); // Note needed anymore
     /************************************/
 
     function create_blackhole(type){
@@ -397,7 +420,6 @@ var main = function (){
         }
         
     }
-
 
     /******************* ITEM DRAWING FUNCTIONS **********************/
 
@@ -464,7 +486,6 @@ var main = function (){
         ctx.fill();
 
     }
-
 
     /*********** Space Objects **************/
 
@@ -639,9 +660,7 @@ var main = function (){
             obj.x += obj.dx; 
             obj.y += obj.dy;
         }
-
     }
-
 
     /******************* RANDOM NUMBER GENERATOR FUNCTIONS **********************/
 
