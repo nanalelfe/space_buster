@@ -33,7 +33,7 @@ var main = function (){
 
     // ----------- GAME PAGE --------------// 
     // Global CONSTANTS
-    window.GAME_LENGTH = 61;    // Game time - 1
+    window.GAME_LENGTH = 11;    // Game time - 1
     window.STARTING_SCORE = 200 // Starting score every level
 
     function run_game(){
@@ -103,9 +103,13 @@ var main = function (){
 
 
         // Speed at which each blackhole pulls
-        window.blue_delta = 20;
-        window.purp_delta = 10;
-        window.black_delta = 6;
+        //window.blue_delta = 20;
+        //window.purp_delta = 10;
+        //window.black_delta = 6;
+
+        window.blue_delta = 60;
+        window.purp_delta = 40;
+        window.black_delta = 24;
 
         window.bh_eating_pts = -50;
 
@@ -164,11 +168,13 @@ var main = function (){
                 Game.loop = setInterval(Game.run, 33);
                 $("#transition-page").hide();
                 $("#game-page").show();
+                $("#ib-level").text("Level: " + String(Game.current_level));
             }
             function return_transition(){
                 $("#transition-page").hide();
                 $("#game-page").hide();
                 $("#start-page").show();
+                $("#show-score").text(String(localStorage.high_score)); 
             }
 
             var trans_msg, button_msg;
