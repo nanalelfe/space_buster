@@ -217,14 +217,14 @@ var main = function (){
     /************************************************/
     
     var Space_Object = function(item_draw) {
-    this.x = random(0, window.c.width - window.object_w);
-    this.y = random(0, window.c.height - window.object_h);
-    this.dx = initial_random_direction();
-    this.dy = initial_random_direction();
-    this.width = window.object_w;
-    this.height = window.object_h;
-    this.item_draw = item_draw;
-}
+        this.x = random(0, window.c.width - window.object_w);
+        this.y = random(0, window.c.height - window.object_h);
+        this.dx = initial_random_direction();
+        this.dy = initial_random_direction();
+        this.width = window.object_w;
+        this.height = window.object_h;
+        this.item_draw = item_draw;
+    }
 
     var Blackhole = function(type) {
         // event horizon coordinates
