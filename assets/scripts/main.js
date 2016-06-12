@@ -6,7 +6,9 @@ var main = function (){
 
     $("#game-page").hide();
     $("#transition-page").hide();
-    $("#black-hole-svg").hide();
+    $("#bh-svg-blu").hide();
+    $("#bh-svg-blk").hide();
+    $("#bh-svg-prp").hide();
 
     // Retrieve High Score in html5 local storage, if first time playing
     // Set high score to default value 0. 
@@ -348,12 +350,12 @@ var main = function (){
             // Get number for type via random generator, create new blackhole
             // of that type, then add to current_blackholes
 
-            // 1-3 is black, 4-9 is purple, 10-18 is blue
+            // 1-3 is black, 4-9 is purple, 10-23 is blue
             // These values can be adjusted and attributed to globals constants 
             // to change frequency for each color
 
             if (current_bhs.length <= window.MAX_BLACKHOLES){
-                var blackhole_type = random(1, 18);
+                var blackhole_type = random(1, 23);
                 var blackhole = create_blackhole(blackhole_type); 
                 current_bhs.push(blackhole); 
                 period_reset();
@@ -491,10 +493,10 @@ var main = function (){
 
         var event_x = x - 50;
         var event_y = y - 50;
-        ctx.rect(event_x, event_y, 100, 100);
+        /*ctx.rect(event_x, event_y, 100, 100);
         ctx.lineWidth="1";
         ctx.strokeStyle = "#FFFFFF";
-        ctx.stroke();
+        ctx.stroke();*/
 
         var w = window.object_w;
         var h = window.object_h;
@@ -504,7 +506,7 @@ var main = function (){
         ctx.fillStyle = "#154360";
         ctx.fill();*/
 
-        var img = document.getElementById("black-hole-svg");
+        var img = document.getElementById("bh-svg-blu");
         ctx.drawImage(img, x-25, y-25, 50, 50);
     }
 
@@ -512,24 +514,21 @@ var main = function (){
 
         var event_x = x - 50;
         var event_y = y - 50;
-        ctx.rect(event_x, event_y, 100, 100);
+        /*ctx.rect(event_x, event_y, 100, 100);
         ctx.lineWidth="1";
         ctx.strokeStyle = "#FFFFFF";
-        ctx.stroke();
+        ctx.stroke();*/
 
         var w = window.object_w;
         var h = window.object_h;
-        ctx.beginPath();
+        /*ctx.beginPath();
         ctx.arc(x, y, (bh_w/2), 0, Math.PI * 2, false);
         ctx.closePath();
         ctx.fillStyle = "#4A235A";
-        ctx.fill();
+        ctx.fill();*/
 
-        /*var img = new Image();
-        img.onload = function() {
-            window.ctx.drawImage(img, x - 25, y- 25, 60, 60);
-        }
-        img.src = "assets/images/blackhole.svg";*/
+        var img = document.getElementById("bh-svg-prp");
+        ctx.drawImage(img, x-25, y-25, 50, 50);
 
     }
 
@@ -537,20 +536,21 @@ var main = function (){
 
         var event_x = x - 50;
         var event_y = y - 50;
-        ctx.rect(event_x, event_y, 100, 100);
+        /*ctx.rect(event_x, event_y, 100, 100);
         ctx.lineWidth="1";
         ctx.strokeStyle = "#FFFFFF";
-        ctx.stroke();
+        ctx.stroke();*/
 
         var w = window.object_w;
         var h = window.object_h;
-        ctx.beginPath();
+        /*ctx.beginPath();
         ctx.arc(x, y, (bh_w/2), 0, Math.PI * 2, false);
         ctx.closePath();
         ctx.fillStyle = "#000000";
-        ctx.fill();
+        ctx.fill();*/
 
-
+        var img = document.getElementById("bh-svg-blk");
+        ctx.drawImage(img, x-25, y-25, 50, 50);
 
     }
 
