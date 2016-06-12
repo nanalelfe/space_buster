@@ -515,6 +515,9 @@ var main = function (){
         object = new Space_Object(draw_alien);
         objects.push(object);
 
+        object = new Space_Object(draw_alien2);
+        objects.push(object);
+
     }
         
 
@@ -665,14 +668,108 @@ var main = function (){
 
         ctx.beginPath();
         ctx.rect(x + (2/8)*w, y + (3/8)*h, w/8, h/8);    
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "black";
         ctx.fill();
 
         ctx.beginPath();
         ctx.rect(x + (5/8)*w, y + (3/8)*h, w/8, h/8);
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "black";
         ctx.fill();
 
+    }
+
+    function draw_alien2(x, y, w, h) {
+
+        ctx.beginPath();
+        ctx.rect(x + (1/8)*w, y + (7/8)*h, w/8, h/8);
+        ctx.strokeStyle = "#CF9865";
+        ctx.stroke();
+        ctx.fillStyle = "#CF9865";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x, y + (2/8)*h, w/8, h*(6/8));
+        ctx.strokeStyle = "#CF9865";
+        ctx.stroke();
+        ctx.fillStyle = "#CF9865";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (6/8)*w, y + (7/8)*h, w/8, h/8);
+        ctx.strokeStyle = "#CF9865";
+        ctx.stroke();
+        ctx.fillStyle = "#CF9865";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + w*(7/8), y + (2/8)*h, w/8, h*(6/8));
+        ctx.strokeStyle = "#CF9865";
+        ctx.stroke();
+        ctx.fillStyle = "#CF9865";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (3/8)*w, y + (6/8)*h, w/4, h/8);
+        ctx.strokeStyle = "#CF9865";
+        ctx.stroke();
+        ctx.fillStyle = "#CF9865";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (2/8)*w, y + (2/8)*h, w/2, h/2);
+        ctx.strokeStyle = "#CF9865";
+        ctx.stroke();
+        ctx.fillStyle = "#CF9865";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (1/8)*w, y + (3/8)*h, w/8, h/4);
+        ctx.strokeStyle = "#CF9865";
+        ctx.stroke();
+        ctx.fillStyle = "#CF9865";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (6/8)*w, y + (3/8)*h, w/8, h/4);
+        ctx.strokeStyle = "#CF9865";
+        ctx.stroke();
+        ctx.fillStyle = "#CF9865";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (3/8)*w, y + (1/8)*h, w/4, h/8);
+        ctx.strokeStyle = "#CF9865";
+        ctx.stroke();
+        ctx.fillStyle = "#CF9865";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (2/8)*w, y, w/8, h/8);
+        ctx.strokeStyle = "#CF9865";
+        ctx.stroke();
+        ctx.fillStyle = "#CF9865";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (5/8)*w, y, w/8, h/8);
+        ctx.strokeStyle = "#CF9865";
+        ctx.stroke();
+        ctx.fillStyle = "#CF9865";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (2/8)*w, y + (3/8)*h, w/8, h/8);
+        ctx.strokeStyle = "#CF9865";
+        ctx.stroke();
+        ctx.fillStyle = "black";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (5/8)*w, y + (3/8)*h, w/8, h/8);
+        ctx.strokeStyle = "#CF9865";
+        ctx.stroke();
+        ctx.fillStyle = "black";
+        ctx.fill();
     }
 
     function draw_astronaut(x, y, w, h) {
