@@ -426,7 +426,7 @@ var main = function (){
 
     function push_objects() {
         var num_stars = 2;
-        var num_moons = 2;
+        var num_moons = 1;
         var num_spaceships = 2;
         var num_space_junk = 2;
 
@@ -450,12 +450,15 @@ var main = function (){
             objects.push(object);
         }
 
-        for (var i = 0; i < 1; i++) {
+        for (var i = 0; i < 2; i++) {
             var object = new Space_Object(draw_spaceship3);
             objects.push(object);
         }
 
         var object = new Space_Object(draw_astronaut);
+        objects.push(object);
+
+        var object = new Space_Object(draw_planet2);
         objects.push(object);
 
 
@@ -697,6 +700,30 @@ var main = function (){
         ctx.bezierCurveTo(x - h, y + h - 15, x + 2*w, y + h - 15, x + w, y + (h/2) - 5);
         ctx.lineWidth = 5;
         ctx.strokeStyle = "maroon";
+        ctx.stroke();
+
+    }
+
+    function draw_planet2 (x, y, w, h) {
+        ctx.beginPath();
+        ctx.ellipse(x + (w/2), y + (h/2), 35, 8, Math.PI*(3/4), 0, Math.PI, false);
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(x + (w/2), y + (h/2), (w/3), 0, Math.PI * 2, false);
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.fillStyle = "blue";
+        ctx.fill();
+
+
+        ctx.beginPath();
+        ctx.ellipse(x + (w/2), y + (h/2), 35, 8, Math.PI*(3/4), 0, Math.PI, true);
+        ctx.strokeStyle = "red";
+        ctx.lineWidth = 3;
         ctx.stroke();
 
     }
