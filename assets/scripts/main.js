@@ -425,8 +425,8 @@ var main = function (){
     }
 
     function push_objects() {
-        var num_stars = 3;
-        var num_moons = 3;
+        var num_stars = 2;
+        var num_moons = 2;
         var num_spaceships = 2;
         var num_space_junk = 2;
 
@@ -449,6 +449,13 @@ var main = function (){
             var object = new Space_Object(draw_star);
             objects.push(object);
         }
+
+        for (var i = 0; i < num_stars; i++) {
+            var object = new Space_Object(draw_spaceship3);
+            objects.push(object);
+        }
+
+
         
     }
 
@@ -530,12 +537,36 @@ var main = function (){
         ctx.fillRect(x, y, w, h);
     }
 
+    function draw_spaceship3(x, y, w, h) {
+        ctx.beginPath();
+        ctx.ellipse(x + (w/2), y + (h - 15), 25, 15, 0, 0, 2*Math.PI);
+        ctx.stroke();
+        ctx.fillStyle = "red";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.ellipse(x+ (w/2), y + (h/2), 15, 25, 0, 0, Math.PI, true);
+        ctx.stroke();
+        ctx.fillStyle = "blue";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.ellipse(x+ (w/2), y + (h/2), 15, 5, 0, 0, Math.PI, false);
+        ctx.stroke();
+        ctx.fillStyle = "blue";
+        ctx.fill();
+    }
+
     function draw_spaceship2 (x, y, w, h) {
         ctx.fillStyle = "blue";
         ctx.fillRect(x + (w/4), y + (h/4), w/2, h/2);
+        ctx.strokeStyle = "black";
+        ctx.stroke();
+
 
         ctx.beginPath();
         ctx.arc(x + (w/2), y + (h/4), h/4 , 0, Math.PI, true);
+        ctx.stroke();
         ctx.fillStyle = "cyan";
         ctx.fill();
 
@@ -543,6 +574,7 @@ var main = function (){
         ctx.moveTo(x + (w/4), y + (h/4));
         ctx.lineTo(x, y + ((3/4)*h));
         ctx.lineTo(x + ((1/4)*w) ,y + ((3/4)*h));
+        ctx.stroke();
         ctx.fillStyle = "red";
         ctx.fill();
 
@@ -550,6 +582,7 @@ var main = function (){
         ctx.moveTo(x + ((3/4)*w), y + ((1/4)*h));
         ctx.lineTo(x + w, y + ((3/4)*h));
         ctx.lineTo(x + ((3/4)*w), y + ((3/4)*h));
+        ctx.stroke();
         ctx.fillStyle = "red";
         ctx.fill();
 
@@ -558,6 +591,7 @@ var main = function (){
         ctx.lineTo(x + ((1/4)*w), y + h);
         ctx.lineTo(x + ((3/4)*w), y + h);
         ctx.lineTo(x + ((5/8)*w), y + ((3/4)*h));
+        ctx.stroke();
         ctx.fillStyle = "yellow";
         ctx.fill();
 
