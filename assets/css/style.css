@@ -1,76 +1,69 @@
 * {
     box-sizing: border-box;
 }
+
 /* Clears left/right after end of row */
 .row::after {
     content: "";
     clear: both;
     display: block;
 }
+
 html {
     font-family: 'Source Sans Pro', sans-serif;
-
 }
 
 canvas {
     /*background-color: #000000;*/
     background-image: url("../images/game_background.gif");
 }
-
 p {
     padding: 0;
     margin: 0;
 }
 
+/* Top bar */
 header{
     background-color: #333333;
     padding: 1.5%;
     text-align: center;
     width: 1005px;
-
 }
+
 header h1{
     color: white;
     padding: 0;
     font-style: italic; 
     font-weight: bold;
     font-size: 2em;
-
 }
+/* Top bar end */
 
+h3 {
+    padding: 10px;
+    margin: 0;
+}
 
 button{
     padding: 0;
     margin: 0;
 }
 
-#start-page {
-    border: 3px solid #333333;
-    text-align: center;
+body {
+    background-color: #d0d0d0;
     
-    
-
 }
 
-#start-button, #back-button, #ib-pause, #transition-button, #reset-score{
-    background-color: gray; 
-    border: none;
-    color: white;
-    padding: 5px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-}
-
-#info-bar{
-    border: 3px solid #333333;
-    border-bottom: 0;
-    text-align: center;
+main{
+    position: relative;
     width: 1005px;
+ }
 
+#start-page {
+    /*border: 3px solid #333333;*/
+    
+    text-align: center;
+    background-color: #fff;
 }
 
 #transition-page{
@@ -85,24 +78,35 @@ button{
     left: 400px;
 }
 
-main{
-    position: relative;
-    width: 1005px;
- }
-
-
-h3 {
-    padding: 10px;
-    margin: 0;
-
-}
 .ib-item{
     min-height: 40px;
     max-height: 40px;
 }
 
+#info-bar{
+    /*border: 3px solid #333333;*/
+    border-bottom: 0;
+    text-align: center;
+    width: 1005px;
+    background-color: #fff;
+}
+
 #viewport{
-    border: 3px solid #333333;
+    /*border: 3px solid #333333;*/
+}
+
+/* All buttons used */
+#start-button, #back-button, #ib-pause, #transition-button, #reset-score{
+    background-color: gray; 
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
 }
 
 [class*="col-"] {

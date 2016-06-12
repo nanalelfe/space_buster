@@ -36,7 +36,7 @@ var main = function (){
 
     // ----------- GAME PAGE --------------// 
     // Global CONSTANTS
-    window.GAME_LENGTH = 61;    // Game time - 1
+    window.GAME_LENGTH = 60;    // Game time 
     window.STARTING_SCORE = 200 // Starting score every level
 
     function run_game(){
@@ -49,12 +49,37 @@ var main = function (){
         Game.timer = window.GAME_LENGTH; 
         Game.over = false;
         Game.pause = false; 
+
+        // Resets the game, setting all pertinent values back to default
         Game.reset = function(){
+
+            // Set timer to 0 in info bar
+            $("#timer-display").text(String(Game.timer) + " Seconds");
+
+            // Empty objects and blackhole data structures
             objects = new Array();
             current_bhs = new Array();
-            Game.object_num = 10; 
+
+            // Reload new objects, reset timer and game over status
+            Game.timer = window.GAME_LENGTH;
+            Game.object_num = window.object_num;
+            Game.over = false; 
             push_objects(); 
         };
+
+        // This starts the Game timer. The timer is displayed on the 
+        // info bar. It returns the id of the interval (used for clearing). 
+        Game.run_timer = function(){
+            return setInterval(function() {
+                if(Game.timer > 0){
+                    if(!Game.pause && !Game.over){
+                        Game.timer--;   
+                    }
+                    
+                    $("#timer-display").text(String(Game.timer) + " Seconds"); 
+                }
+            }, 1000);
+        }
         
         // --------------------------------------------------------------//
         // ----------------- NANA'S ONLOAD VARIABLES --------------------// 
@@ -152,10 +177,11 @@ var main = function (){
                 }
             }
             function level_transition(){
+
+                // Update next level counter
                 Game.current_level++;
-                Game.timer = window.GAME_LENGTH;
-                Game.object_num = window.object_num;
-                Game.over = false;
+
+                // Adjust speeds accordingly for level for difficulty
                 if (Game.current_level == 2){
                     // Speed up black hole spawn times for next level
                     window.aprns_min_time = 150;
@@ -168,10 +194,14 @@ var main = function (){
                 // Reset objects
                 Game.reset();
 
-                Game.loop = setInterval(Game.run, 33);
+                // Retart Game loop and game timer (see function), retrieve id for clearing
+                Game.loop = setInterval(Game.run, 33);                
+                Game.time_interval_id = Game.run_timer();
+
                 $("#transition-page").hide();
                 $("#game-page").show();
                 $("#ib-level").text("Level: " + String(Game.current_level));
+                $("#show-score").text(String(localStorage.high_score)); 
             }
             function return_transition(){
                 $("#transition-page").hide();
@@ -213,6 +243,7 @@ var main = function (){
         Game.run = function(){
             Game.object_num = objects.length;
             
+            // Updates thes core in info bar
             if (Game.score != window.total_score){
                 Game.score = window.total_score;
                 $("#ib-score").text("Score: " + String(Game.score)); 
@@ -227,6 +258,7 @@ var main = function (){
             // If game over, end loop and transition
             if (Game.over){
                 clearInterval(Game.loop);
+                clearInterval(Game.time_interval_id);
                 console.log("Game over!");
                 Game.transition();
             }
@@ -251,15 +283,9 @@ var main = function (){
 
         // Timer 
         Game.timer = window.GAME_LENGTH;
-        setInterval(function() {
-            if(Game.timer > 0){
-                if(!Game.pause && !Game.over){
-                    Game.timer--;   
-                }
-                
-                $("#timer-display").text(String(Game.timer) + " Seconds"); 
-            }
-        }, 1000);
+
+        // Start game timer (see function), retrieve id for clearing
+        Game.time_interval_id = Game.run_timer();
 
         $("#ib-score").text("Score: " + String(Game.score)); 
 
@@ -486,7 +512,6 @@ var main = function (){
 
 
         
-    }
 
     /******************* ITEM DRAWING FUNCTIONS **********************/
 
