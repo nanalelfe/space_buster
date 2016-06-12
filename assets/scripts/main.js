@@ -441,7 +441,7 @@ var main = function (){
         }
 
         for (var i = 0; i < num_space_junk; i++) {
-            var object = new Space_Object(draw_space_junk);
+            var object = new Space_Object(draw_planet);
             objects.push(object);
         }
 
@@ -578,6 +578,45 @@ var main = function (){
         ctx.stroke();
     }
 
+    function draw_planet(x, y, w, h) {
+        ctx.beginPath();
+        ctx.arc(x + (w/2), y + (h/2), (w/2), 0, Math.PI * 2, false);
+        ctx.closePath();
+        //ctx.stroke();
+
+        var grd = ctx.createLinearGradient(0,0, window.c.width, window.c.height);
+
+        /*grd.addColorStop(0,"pink");
+        grd.addColorStop("0.3","magenta");
+        grd.addColorStop("0.5","turquoise");
+        grd.addColorStop("0.6","green");
+        grd.addColorStop("0.8","blue");
+        grd.addColorStop(1,"#0B0B61");*/
+
+        grd.addColorStop(0,"#C0392B");
+        grd.addColorStop("0.1","#884EA0");
+        grd.addColorStop("0.2","turquoise");
+        grd.addColorStop("0.3","#48C9B0");
+        grd.addColorStop("0.4","#45B39D");
+        grd.addColorStop("0.5","pink");
+        grd.addColorStop("0.6","#F9E79F");
+        grd.addColorStop("0.7","#9C640C");
+        grd.addColorStop("0.8","red");
+        grd.addColorStop("0.9","#95A5A6");
+        grd.addColorStop(1,"red");
+
+        ctx.fillStyle = grd;
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(x, y + (h/2) - 5);
+        ctx.bezierCurveTo(x - h, y + h - 15, x + 2*w, y + h - 15, x + w, y + (h/2) - 5);
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "maroon";
+        ctx.stroke();
+
+    }
+
     function draw_moon(x, y, w, h) {
         ctx.beginPath();
         ctx.arc(x + (w/2), y + (h/2), (w/2), 0, Math.PI * 2, false);
@@ -607,6 +646,13 @@ var main = function (){
 
         ctx.fillStyle = grd;
         ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(x, y + (h/2) - 5);
+        ctx.bezierCurveTo(x - h, y + h - 15, x + 2*w, y + h - 15, x + w, y + (h/2) - 5);
+        ctx.lineWidth = 5;
+
+        ctx.stroke();
 
         /*var background = new Image();
         background.src = "moon_texture.png";
