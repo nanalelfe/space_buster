@@ -481,6 +481,9 @@ var main = function (){
         object = new Space_Object(draw_satellite);
         objects.push(object);
 
+        object = new Space_Object(draw_alien);
+        objects.push(object);
+
 
         
     }
@@ -555,6 +558,92 @@ var main = function (){
     }
 
     /*********** Space Objects **************/
+
+    function draw_alien(x, y, w, h) {
+        ctx.beginPath();
+        ctx.rect(x, y + (7/8)*h, w/8, h/8);  
+        ctx.fillStyle = "#41DC34";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (2/8)*w, y + (7/8)*h, w/8, h/8);
+        ctx.fillStyle = "#41DC34";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (5/8)*w, y + (7/8)*h, w/8, h/8);
+        ctx.fillStyle = "#41DC34";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (7/8)*w, y + (7/8)*h, w/8, h/8);
+        ctx.fillStyle = "#41DC34";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (1/8)*w, y + (6/8)*h, w/8, h/8);
+        ctx.fillStyle = "#41DC34";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (3/8)*w, y + (6/8)*h, w/4, h/8);
+        ctx.fillStyle = "#41DC34";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (6/8)*w, y + (6/8)*h, w/8, h/8);
+        ctx.fillStyle = "#41DC34";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (2/8)*w, y + (5/8)*h, w/8, h/8);
+        ctx.fillStyle = "#41DC34";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (5/8)*w, y + (5/8)*h, w/8, h/8);
+        ctx.fillStyle = "#41DC34";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x , y + (3/8)*h, w, h/4);
+        ctx.strokeStyle = "#41DC34";
+        ctx.stroke();
+        ctx.fillStyle = "#41DC34";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (1/8)*w, y + (2/8)*h, w*(6/8), h/8);
+        ctx.strokeStyle = "#41DC34";
+        ctx.stroke();
+        ctx.fillStyle = "#41DC34";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (2/8)*w, y + (1/8)*h, w*(4/8), h/8);
+        ctx.strokeStyle = "#41DC34";
+        ctx.stroke();
+        ctx.fillStyle = "#41DC34";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (3/8)*w, y , w*(2/8), h/8);
+        ctx.strokeStyle = "#41DC34";
+        ctx.stroke();
+        ctx.fillStyle = "#41DC34";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (2/8)*w, y + (3/8)*h, w/8, h/8);    
+        ctx.fillStyle = "white";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (5/8)*w, y + (3/8)*h, w/8, h/8);
+        ctx.fillStyle = "white";
+        ctx.fill();
+
+    }
 
     function draw_astronaut(x, y, w, h) {
         ctx.beginPath();
