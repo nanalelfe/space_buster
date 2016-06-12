@@ -431,12 +431,12 @@ var main = function (){
         var num_space_junk = 2;
 
         for (var i = 0; i < num_spaceships; i++) {
-            var object = new Space_Object(draw_spaceship);
+            var object = new Space_Object(draw_spaceship2);
             objects.push(object);
         }
 
         for (var i = 0; i < num_moons; i++ ){
-            var object = new Space_Object(draw_moon);
+            var object = new Space_Object(draw_moon2);
             objects.push(object);
         }
 
@@ -528,6 +528,54 @@ var main = function (){
     function draw_space_junk(x, y, w, h) {
         ctx.fillStyle = "#FF0000";
         ctx.fillRect(x, y, w, h);
+    }
+
+    function draw_spaceship2 (x, y, w, h) {
+        ctx.fillStyle = "blue";
+        ctx.fillRect(x + (w/4), y + (h/4), w/2, h/2);
+
+        ctx.beginPath();
+        ctx.arc(x + (w/2), y + (h/4), h/4 , 0, Math.PI, true);
+        ctx.fillStyle = "cyan";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(x + (w/4), y + (h/4));
+        ctx.lineTo(x, y + ((3/4)*h));
+        ctx.lineTo(x + ((1/4)*w) ,y + ((3/4)*h));
+        ctx.fillStyle = "red";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(x + ((3/4)*w), y + ((1/4)*h));
+        ctx.lineTo(x + w, y + ((3/4)*h));
+        ctx.lineTo(x + ((3/4)*w), y + ((3/4)*h));
+        ctx.fillStyle = "red";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(x + ((3/8)*w), y + ((3/4)*h));
+        ctx.lineTo(x + ((1/4)*w), y + h);
+        ctx.lineTo(x + ((3/4)*w), y + h);
+        ctx.lineTo(x + ((5/8)*w), y + ((3/4)*h));
+        ctx.fillStyle = "yellow";
+        ctx.fill();
+
+        
+    }
+
+    function draw_moon2(x, y, w, h) {
+        ctx.beginPath();
+        ctx.arc(x + (w/2), y + (h/2), (w/2), (3/2)*Math.PI, (1/6)*Math.PI, true);
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = "yellow";
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(x + w*(2.8/3), y + (h/3.8), (w/2), (7/6)*Math.PI, (1/2)*Math.PI,  true);
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = "yellow";
+        ctx.stroke();
     }
 
     function draw_moon(x, y, w, h) {
