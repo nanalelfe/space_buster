@@ -282,6 +282,7 @@ var main = function (){
         $("#back-button").click(function() {
             $("#start-page").show();
             $("#game-page").hide();
+            $("#pause-page").hide();
             Game.pause = true;
         });
 
