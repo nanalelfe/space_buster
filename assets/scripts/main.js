@@ -430,7 +430,7 @@ var main = function (){
         var num_spaceships = 2;
         var num_space_junk = 2;
 
-        for (var i = 0; i < num_spaceships; i++) {
+        /*for (var i = 0; i < num_spaceships; i++) {
             var object = new Space_Object(draw_spaceship2);
             objects.push(object);
         }
@@ -453,12 +453,30 @@ var main = function (){
         for (var i = 0; i < 2; i++) {
             var object = new Space_Object(draw_spaceship3);
             objects.push(object);
-        }
+        }*/
 
-        var object = new Space_Object(draw_astronaut);
+        var object = new Space_Object(draw_spaceship2);
         objects.push(object);
 
-        var object = new Space_Object(draw_planet2);
+        object = new Space_Object(draw_spaceship3);
+        objects.push(object);
+
+        object = new Space_Object(draw_moon2);
+        objects.push(object);
+
+        object = new Space_Object(draw_planet);
+        objects.push(object);
+
+        object = new Space_Object(draw_astronaut);
+        objects.push(object);
+
+        object = new Space_Object(draw_planet2);
+        objects.push(object);
+
+        object = new Space_Object(draw_star);
+        objects.push(object);
+
+        object = new Space_Object(draw_satellite);
         objects.push(object);
 
 
@@ -583,6 +601,88 @@ var main = function (){
         ctx.strokeStyle = "gray";
         ctx.stroke();
 
+    }
+
+    function draw_satellite(x, y, w, h) {
+        ctx.beginPath();
+        ctx.moveTo(x + (1/8)*w, y);
+        ctx.lineTo(x + 24 ,y +  17);
+        ctx.lineTo(x + 17, y + 24);
+        ctx.lineTo(x, y + (1/8)*h);
+        ctx.lineTo(x + (1/8)*w, y);
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.fillStyle = "#009999";
+        ctx.fill(); 
+
+        ctx.beginPath();
+        ctx.moveTo(x + w, y + (7/8)*h);
+        ctx.lineTo(x + 35, y + 28);
+        ctx.lineTo(x + 27, y + 35);
+        ctx.lineTo(x + (7/8)*w, y + h);
+        ctx.lineTo(x + w, y + (7/8)*h);
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.fillStyle = "#009999";
+        ctx.fill(); 
+
+
+        ctx.beginPath();
+        ctx.moveTo(x + 26, y + 19);
+        ctx.lineTo(x + 32, y +25);
+        ctx.lineTo(x + 18, y + 40);
+        ctx.lineTo(x + 12, y + 34);
+        ctx.lineTo(x + 26, y + 19);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "black";
+        ctx.stroke();
+        ctx.fillStyle = "DarkSlateGray";
+        ctx.fill();
+
+
+        ctx.beginPath();
+        ctx.moveTo(x + 30, y + 22);
+        ctx.lineTo(x + w*(25/36), y + (2.7/8)*h);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "black";
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(x + 22, y + 22);
+        ctx.lineTo(x+ 20, y + 20);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "black";
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(x + 29, y + 29);
+        ctx.lineTo(x + 31, y + 31);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "black";
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(x + w*(25/36), y + (2.7/8)*h, 1.5, 0, Math.PI*2, true);
+        ctx.closePath();
+        ctx.strokeStyle = "black";
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(x + w*(25/36), y + (2.7/8)*h, 5, Math.PI*(1/4), Math.PI*(7/6), true);
+        ctx.strokeStyle = "DarkBlue";
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(x + w*(25/36), y + (2.7/8)*h, 10, Math.PI*(1/4), Math.PI*(7/6), true);
+        ctx.strokeStyle = "DarkBlue";
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(x + w*(25/36), y + (2.7/8)*h, 15, Math.PI*(1/4), Math.PI*(7/6), true);
+        ctx.strokeStyle = "DarkBlue";
+        ctx.stroke();
     }
 
     function draw_space_junk(x, y, w, h) {
