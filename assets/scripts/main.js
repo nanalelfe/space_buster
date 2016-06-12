@@ -646,7 +646,7 @@ var main = function (){
         ctx.moveTo(x + 30, y + 22);
         ctx.lineTo(x + w*(25/36), y + (2.7/8)*h);
         ctx.lineWidth = 2;
-        ctx.strokeStyle = "black";
+        ctx.strokeStyle = "white";
         ctx.stroke();
 
         ctx.beginPath();
@@ -666,22 +666,22 @@ var main = function (){
         ctx.beginPath();
         ctx.arc(x + w*(25/36), y + (2.7/8)*h, 1.5, 0, Math.PI*2, true);
         ctx.closePath();
-        ctx.strokeStyle = "black";
+        ctx.strokeStyle = "white";
         ctx.stroke();
 
         ctx.beginPath();
         ctx.arc(x + w*(25/36), y + (2.7/8)*h, 5, Math.PI*(1/4), Math.PI*(7/6), true);
-        ctx.strokeStyle = "DarkBlue";
+        ctx.strokeStyle = "white";
         ctx.stroke();
 
         ctx.beginPath();
         ctx.arc(x + w*(25/36), y + (2.7/8)*h, 10, Math.PI*(1/4), Math.PI*(7/6), true);
-        ctx.strokeStyle = "DarkBlue";
+        ctx.strokeStyle = "white";
         ctx.stroke();
 
         ctx.beginPath();
         ctx.arc(x + w*(25/36), y + (2.7/8)*h, 15, Math.PI*(1/4), Math.PI*(7/6), true);
-        ctx.strokeStyle = "DarkBlue";
+        ctx.strokeStyle = "white";
         ctx.stroke();
     }
 
