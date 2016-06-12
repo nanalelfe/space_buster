@@ -450,10 +450,13 @@ var main = function (){
             objects.push(object);
         }
 
-        for (var i = 0; i < num_stars; i++) {
+        for (var i = 0; i < 1; i++) {
             var object = new Space_Object(draw_spaceship3);
             objects.push(object);
         }
+
+        var object = new Space_Object(draw_astronaut);
+        objects.push(object);
 
 
         
@@ -531,6 +534,53 @@ var main = function (){
     }
 
     /*********** Space Objects **************/
+
+    function draw_astronaut(x, y, w, h) {
+        ctx.beginPath();
+        ctx.rect(x + (1/4)*w, y + 10, w/2, (9/16)*h);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "black";
+        ctx.stroke();
+        ctx.fillStyle = "white";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.ellipse(x + 25, y + 10, (w/4), 10, 0, 0, Math.PI*2);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "black";
+        ctx.stroke();
+        ctx.fillStyle = "lightblue";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(x + (1/4)*w, y + (3/8)*h);
+        ctx.lineTo(x, y + (5/8)*h);
+        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = "gray";
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(x + (3/4)*w, y + (3/8)*h);
+        ctx.lineTo(x + w, y + (1/8)*h);
+        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = "gray";
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(x + (3/8)*w, y + (6/8)*h);
+        ctx.lineTo(x + (3/8)*w, y + h);
+        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = "gray";
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(x + (5/8)*w, y + (6/8)*h);
+        ctx.lineTo(x + (5/8)*w, y + h);
+        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = "gray";
+        ctx.stroke();
+
+    }
 
     function draw_space_junk(x, y, w, h) {
         ctx.fillStyle = "#FF0000";
