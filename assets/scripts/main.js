@@ -510,7 +510,7 @@ var main = function (){
         object = new Space_Object(draw_alien);
         objects.push(object);
 
-
+    }
         
 
     /******************* ITEM DRAWING FUNCTIONS **********************/
