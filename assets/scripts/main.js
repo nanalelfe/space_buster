@@ -9,6 +9,7 @@ var main = function (){
     $("#bh-svg-blu").hide();
     $("#bh-svg-blk").hide();
     $("#bh-svg-prp").hide();
+    $("#pause-page").hide();
 
     // Retrieve High Score in html5 local storage, if first time playing
     // Set high score to default value 0. 
@@ -160,9 +161,11 @@ var main = function (){
         $("#ib-pause").click(function() {
             if(Game.pause == false){
                 c.removeEventListener("click", user_click, false);
+                $("#pause-page").show();
                 Game.pause = true;
             }else {
                 c.addEventListener("click", user_click, false);
+                $("#pause-page").hide();
                 Game.pause = false;
             }
         });
@@ -279,6 +282,7 @@ var main = function (){
         $("#back-button").click(function() {
             $("#start-page").show();
             $("#game-page").hide();
+            Game.pause = true;
         });
 
         // Timer 
