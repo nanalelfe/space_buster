@@ -27,8 +27,14 @@ var main = function (){
     // Retrieve High Score in html5 local storage, if first time playing
     // Set high score to default value 0. 
     if(typeof(Storage) !== "undefined") {
-        if (!localStorage.hs_1 || localStorage.hs_2 || localStorage.hs_3){
-            reset_scores();
+        if (!localStorage.hs_1){
+            localStorage.hs_1 = 0;
+        }
+        if (!localStorage.hs_2){
+            localStorage.hs_2 = 0;
+        }
+        if (!localStorage.hs_3){
+            localStorage.hs_3 = 0;
         }
         //$("#show-score").text(String(localStorage.high_score)); 
         display_high_scores(); 
@@ -49,8 +55,9 @@ var main = function (){
         //localStorage.high_score = 0;
         //$("#show-score").text(String(localStorage.high_score)); 
         reset_scores();
-        display_high_scores();
         //localStorage.clear();
+
+        display_high_scores();
 
     });
     // ----------- TOGGLE HOW TO PLAY PAGE --------------//
