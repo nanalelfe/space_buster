@@ -110,10 +110,6 @@ var main = function (){
             }, 1000);
         }
         
-        // --------------------------------------------------------------//
-        // ----------------- NANA'S ONLOAD VARIABLES --------------------// 
-        // --------------------------------------------------------------//
-
         window.c = document.getElementById("main");
         window.ctx = c.getContext("2d");
 
@@ -123,11 +119,11 @@ var main = function (){
         /****** Object variables *******/
 
         window.object_num = 10;
-        window.item_num = 4;
 
         window.object_w = 50;
         window.object_h = 50;
 
+        // Object speed limits
         window.max_delta = 4;
         window.min_delta = 1;
 
@@ -144,10 +140,11 @@ var main = function (){
         window.event_w = 100;
         window.event_h = 100;
 
+        // blackhole width and height
         window.bh_w = 50;
         window.bh_h = 50;
 
-        // Number of appearences for each blackhole
+        // Number of appearences for each blackhole type
         window.aprns_num_blue = 10;
         window.aprns_num_purp = 5;
         window.aprns_num_blac = 1;
@@ -158,25 +155,26 @@ var main = function (){
         window.black_eat = 1;
 
 
-        // Speed at which each blackhole pulls
+        // 1/Speed at which each blackhole pulls
         window.blue_delta = 60;
         window.purp_delta = 40;
         window.black_delta = 24;
 
+        // Points gained when blackhole pulls object
         window.bh_eating_pts = -50;
 
         // Min and max milliseconds between blackhole appearences
         window.aprns_min_time = 500;
         window.aprns_max_time = 800;
 
+        /****** End of Black hole variables *******/
+
+        // The time needed to elapse between each black hole (random)
         window.period = 0;
         window.counter = 0; 
-        window.curr_bh = null;
 
         var offsetLeft = c.offsetLeft,
             offsetTop = c.offsetTop;
-
-        c.addEventListener("click", user_click, false);
 
         Game.reset();
 
@@ -194,9 +192,6 @@ var main = function (){
                 Game.pause = false;
             }
         });
-        // --------------------------------------------------------------//
-        // -------------- END OF  NANA'S ONLOAD VARIABLES ---------------// 
-        // --------------------------------------------------------------//
 
         Game.transition = function(){
             function compare_score(){
