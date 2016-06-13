@@ -12,13 +12,26 @@ var main = function (){
     $("#pause-page").hide();
     $("#instruction-page").hide();
 
+    // ---------- High score --------------// 
+    function display_high_scores(){
+        $("#show-score-1").text(String(localStorage.hs_1)); 
+        $("#show-score-2").text(String(localStorage.hs_2)); 
+        $("#show-score-3").text(String(localStorage.hs_3)); 
+    }
+    function reset_scores(){
+        localStorage.hs_1 = 0;
+        localStorage.hs_2 = 0;
+        localStorage.hs_3 = 0; 
+    }
+
     // Retrieve High Score in html5 local storage, if first time playing
     // Set high score to default value 0. 
     if(typeof(Storage) !== "undefined") {
-        if (!localStorage.high_score){
-            localStorage.high_score = 0;
+        if (!localStorage.hs_1 || localStorage.hs_2 || localStorage.hs_3){
+            reset_scores();
         }
-        $("#show-score").text(String(localStorage.high_score)); 
+        //$("#show-score").text(String(localStorage.high_score)); 
+        display_high_scores(); 
     } else {
         $("#show-score").text("Local Storage Not Supported");
     }
@@ -33,8 +46,12 @@ var main = function (){
     });
 
     $("#reset-score").click(function() {
-        localStorage.high_score = 0;
-        $("#show-score").text(String(localStorage.high_score)); 
+        //localStorage.high_score = 0;
+        //$("#show-score").text(String(localStorage.high_score)); 
+        reset_scores();
+        display_high_scores();
+        //localStorage.clear();
+
     });
     // ----------- TOGGLE HOW TO PLAY PAGE --------------//
 
@@ -44,7 +61,7 @@ var main = function (){
 
     // ----------- GAME PAGE --------------// 
     // Global CONSTANTS
-    window.GAME_LENGTH = 60;    // Game time 
+    window.GAME_LENGTH = 10;    // Game time 
     window.STARTING_SCORE = 200 // Starting score every level
 
     function run_game(){
@@ -178,8 +195,15 @@ var main = function (){
 
         Game.transition = function(){
             function compare_score(){
-                if(Game.score > localStorage.high_score){
-                    localStorage.high_score = Game.score;
+                if(Game.score > localStorage.hs_1){
+                    localStorage.hs_3 = localStorage.hs_2;
+                    localStorage.hs_2 = localStorage.hs_1;
+                    localStorage.hs_1 = Game.score;
+                }else if(Game.score > localStorage.hs_2){
+                    localStorage.hs_3 = localStorage.hs_2;
+                    localStorage.hs_2 = Game.score;
+                }else if(Game.score > localStorage.hs_3){
+                    localStorage.hs_3 = Game.score;
                 }
             }
             function level_transition(){
@@ -211,13 +235,15 @@ var main = function (){
                 $("#transition-page").hide();
                 $("#game-page").show();
                 $("#ib-level").text("Level: " + String(Game.current_level));
-                $("#show-score").text(String(localStorage.high_score)); 
+                //$("#show-score").text(String(localStorage.high_score));
+                display_high_scores();
             }
             function return_transition(){
                 $("#transition-page").hide();
                 $("#game-page").hide();
                 $("#start-page").show();
-                $("#show-score").text(String(localStorage.high_score)); 
+                //$("#show-score").text(String(localStorage.high_score));
+                display_high_scores(); 
             }
 
             var trans_msg, button_msg;
