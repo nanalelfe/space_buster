@@ -283,7 +283,10 @@ var main = function (){
             $("#start-page").show();
             $("#game-page").hide();
             $("#pause-page").hide();
+            
             Game.pause = true;
+            
+            
         });
 
         // Timer 
