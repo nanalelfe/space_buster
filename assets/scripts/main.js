@@ -14,8 +14,8 @@ var main = function (){
 
     // ---------- High score --------------// 
     function display_high_scores(){
-        $("#show-score-1").text(String(localStorage.hs_1)); 
-        $("#show-score-2").text(String(localStorage.hs_2)); 
+        $("#show-score-1").text(String(localStorage.hs_1));
+        $("#show-score-2").text(String(localStorage.hs_2));
         $("#show-score-3").text(String(localStorage.hs_3)); 
     }
     function reset_scores(){
@@ -183,10 +183,12 @@ var main = function (){
         // Set pause click event: 
         $("#ib-pause-button").click(function() {
             if(Game.pause == false){
+                $("#ib-pause-button").text("Resume");
                 c.removeEventListener("click", user_click, false);
                 $("#pause-page").show();
                 Game.pause = true;
             }else {
+                $("#ib-pause-button").text("Pause");
                 c.addEventListener("click", user_click, false);
                 $("#pause-page").hide();
                 Game.pause = false;
