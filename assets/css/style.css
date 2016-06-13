@@ -13,11 +13,11 @@ html {font-family: 'Source Sans Pro', sans-serif;}
 
 .canvas-bg-default {
     /*background-color: #000000;*/
-    background-image: url("../images/game_background.gif");
+    background-image: url("../images/game_background.png");
 }
 .canvas-bg-lvl2 {
     /*background-color: #000000;*/
-    background-image: url("../images/bg_lvl2.png");
+    background-image: url("../images/game_background_2.gif");
 }
 p {
     padding: 0;
