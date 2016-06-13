@@ -881,58 +881,62 @@ var main = function (){
         ctx.beginPath();
         ctx.ellipse(x + (w/2), y + (h - 15), 25, 15, 0, 0, 2*Math.PI);
         ctx.stroke();
-        ctx.fillStyle = "red";
+        ctx.fillStyle = "#df4400";
         ctx.fill();
 
         ctx.beginPath();
         ctx.ellipse(x+ (w/2), y + (h/2), 15, 25, 0, 0, Math.PI, true);
         ctx.stroke();
-        ctx.fillStyle = "blue";
+        ctx.fillStyle = "#50ffd1";
         ctx.fill();
 
         ctx.beginPath();
         ctx.ellipse(x+ (w/2), y + (h/2), 15, 5, 0, 0, Math.PI, false);
         ctx.stroke();
-        ctx.fillStyle = "blue";
+        ctx.fillStyle = "#50ffd1";
         ctx.fill();
     }
 
     function draw_spaceship2 (x, y, w, h) {
-        ctx.fillStyle = "blue";
+        // Body
+        ctx.fillStyle = "#b4726f";
         ctx.fillRect(x + (w/4), y + (h/4), w/2, h/2);
         ctx.strokeStyle = "black";
         ctx.stroke();
 
-
+        // Head
         ctx.beginPath();
         ctx.arc(x + (w/2), y + (h/4), h/4 , 0, Math.PI, true);
         ctx.stroke();
-        ctx.fillStyle = "cyan";
+        ctx.fillStyle = "#b5b5b5";
         ctx.fill();
 
+        // Wing 1
         ctx.beginPath();
         ctx.moveTo(x + (w/4), y + (h/4));
         ctx.lineTo(x, y + ((3/4)*h));
         ctx.lineTo(x + ((1/4)*w) ,y + ((3/4)*h));
         ctx.stroke();
-        ctx.fillStyle = "red";
+        ctx.fillStyle = "#b73f00";
         ctx.fill();
 
+        // Wing 2
         ctx.beginPath();
         ctx.moveTo(x + ((3/4)*w), y + ((1/4)*h));
         ctx.lineTo(x + w, y + ((3/4)*h));
         ctx.lineTo(x + ((3/4)*w), y + ((3/4)*h));
         ctx.stroke();
-        ctx.fillStyle = "red";
+        ctx.fillStyle = "#b73f00";
         ctx.fill();
 
+        // Tail
         ctx.beginPath();
         ctx.moveTo(x + ((3/8)*w), y + ((3/4)*h));
         ctx.lineTo(x + ((1/4)*w), y + h);
         ctx.lineTo(x + ((3/4)*w), y + h);
         ctx.lineTo(x + ((5/8)*w), y + ((3/4)*h));
         ctx.stroke();
-        ctx.fillStyle = "yellow";
+        ctx.fillStyle = "#8dad85";
         ctx.fill();
 
         
