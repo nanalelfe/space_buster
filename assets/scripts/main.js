@@ -987,36 +987,58 @@ var main = function (){
     }
 
     function draw_star(x, y, w, h) {
-        var rot = Math.PI / 2 * 3;
-        var cx = x + (w/2);
-        var cy = y + (h/2);
-        var x = x;
-        var y = y;
-        var spikes = 10;
-        var outerRadius = (w/2);
-        var innerRadius = (w/10);
-        var step = Math.PI / spikes;
-
-        ctx.strokeSyle = "#000";
         ctx.beginPath();
-        ctx.moveTo(cx, cy - outerRadius)
-        for (i = 0; i < spikes; i++) {
-            x = cx + Math.cos(rot) * outerRadius;
-            y = cy + Math.sin(rot) * outerRadius;
-            ctx.lineTo(x, y);
-            rot += step;
+        ctx.rect(x + (8/17)*w, y, w/17, h/17);
+        ctx.rect(x + (7/17)*w, y + (1/17)*h, w*(1/17), h*(2/17));
+        ctx.rect(x + (9/17)*w, y + (1/17)*h, w*(1/17), h*(2/17));
+        ctx.rect(x + (6/17)*w, y + (3/17)*h, w*(1/17), h*(2/17));
+        ctx.rect(x + (10/17)*w, y + (3/17)*h, w*(1/17), h*(2/17));
+        ctx.rect(x + (5/17)*w, y + (5/17)*h, w/17, h/17);
+        ctx.rect(x + (11/17)*w, y + (5/17)*h, w/17, h/17);
 
-            x = cx + Math.cos(rot) * innerRadius;
-            y = cy + Math.sin(rot) * innerRadius;
-            ctx.lineTo(x, y);
-            rot += step;
-        }
-        ctx.lineTo(cx, cy - outerRadius);
-        ctx.closePath();
-        ctx.lineWidth = 5;
-        ctx.strokeStyle = "#D68910"; // darker
-        ctx.stroke(); 
-        ctx.fillStyle = "#F1C40F"; // lighter
+        ctx.rect(x + (8/17)*w, y + (16/17)*h, w/17, h/17);
+        ctx.rect(x + (7/17)*w, y + (14/17)*h, w*(1/17), h*(2/17));
+        ctx.rect(x + (9/17)*w, y + (14/17)*h, w*(1/17), h*(2/17));
+        ctx.rect(x + (6/17)*w, y + (12/17)*h, w*(1/17), h*(2/17));
+        ctx.rect(x + (10/17)*w, y + (12/17)*h, w*(1/17), h*(2/17));
+        ctx.rect(x + (5/17)*w, y + (11/17)*h, w/17, h/17);
+        ctx.rect(x + (11/17)*w, y + (11/17)*h, w/17, h/17);
+
+        ctx.rect(x, y + (8/17)*w, w/17, h/17);
+        ctx.rect(x + (1/17)*h, y  + (7/17)*w, w*(2/17), h*(1/17));
+        ctx.rect(x + (1/17)*h, y + (9/17)*w, w*(2/17), h*(1/17));
+        ctx.rect(x + (3/17)*h, y + (6/17)*w , w*(2/17), h*(1/17));
+        ctx.rect(x + (3/17)*h , y + (10/17)*w, w*(2/17), h*(1/17));
+        ctx.rect(x + (5/17)*h, y + (5/17)*w, w/17, h/17);
+        ctx.rect(x + (5/17)*h, y + (11/17)*w, w/17, h/17);
+
+        ctx.rect(x + (16/17)*w, y + (8/17)*w, w/17, h/17);
+        ctx.rect(x + (14/17)*h, y  + (7/17)*w, w*(2/17), h*(1/17));
+        ctx.rect(x + (14/17)*h, y + (9/17)*w, w*(2/17), h*(1/17));
+        ctx.rect(x + (12/17)*h, y + (6/17)*w , w*(2/17), h*(1/17));
+        ctx.rect(x + (12/17)*h , y + (10/17)*w, w*(2/17), h*(1/17));
+        ctx.rect(x + (11/17)*h, y + (5/17)*w, w/17, h/17);
+        ctx.rect(x +  (11/17)*h, y + (11/17)*w, w/17, h/17);
+        ctx.strokeStyle = "#6E2C00";
+        ctx.stroke();
+        ctx.fillStyle = "#F39C12";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (5/17)*w, y + (6/17)*h, w*(7/17), h*(5/17));
+        ctx.rect(x + (3/17)*w, y + (7/17)*h, w*(2/17), h*(3/17));
+        ctx.rect(x + (12/17)*w, y + (7/17)*h, w*(2/17), h*(3/17));
+        ctx.rect(x + (1/17)*w, y + (8/17)*h, w*(2/17), h*(1/17));
+        ctx.rect(x + (14/17)*w, y + (8/17)*h, w*(2/17), h*(1/17));
+        ctx.rect(x + (6/17)*w, y + (5/17)*h, w*(5/17), h*(1/17));
+        ctx.rect(x + (6/17)*w, y + (11/17)*h, w*(5/17), h*(1/17));
+        ctx.rect(x + (7/17)*w, y + (3/17)*h, w*(3/17), h*(2/17));
+        ctx.rect(x + (7/17)*w, y + (12/17)*h, w*(3/17), h*(2/17));
+        ctx.rect(x + (8/17)*w, y + (1/17)*h, w*(1/17), h*(2/17));
+        ctx.rect(x + (8/17)*w, y + (14/17)*h, w*(1/17), h*(2/17));
+        ctx.strokeStyle = "#CA6F1E";
+        ctx.stroke();
+        ctx.fillStyle = "#F1C40F";
         ctx.fill();
     }
 
