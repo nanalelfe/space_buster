@@ -189,6 +189,10 @@ var main = function (){
 
                 // Adjust speeds accordingly for level for difficulty
                 if (Game.current_level == 2){
+                    // Change to new background
+                    $(".canvas-bg-default").addClass("canvas-bg-lvl2").removeClass("canvas-bg-default");
+              
+
                     // Speed up black hole spawn times for next level
                     window.aprns_min_time = 150;
                     window.aprns_max_time = 400;
