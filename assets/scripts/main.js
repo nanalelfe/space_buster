@@ -132,10 +132,6 @@ var main = function (){
 
 
         // Speed at which each blackhole pulls
-        //window.blue_delta = 20;
-        //window.purp_delta = 10;
-        //window.black_delta = 6;
-
         window.blue_delta = 60;
         window.purp_delta = 40;
         window.black_delta = 24;
@@ -365,7 +361,8 @@ var main = function (){
 
         window.ctx.clearRect(0, 0, window.c.width, window.c.height);
 
-        // Check if the blackholes reached eating limit
+        // Check if the blackholes reached eating limit, 
+        // in which case they disappear
         check_bh_limit();
 
         // Draw the moving objects
@@ -380,18 +377,18 @@ var main = function (){
         }
 
         if (window.counter == 0) {
-            // When counter == 0, it's time to spawn a new blackhole
-            // Get number for type via random generator, create new blackhole
-            // of that type, then add to current_blackholes
 
-            // 1-3 is black, 4-9 is purple, 10-23 is blue
-            // These values can be adjusted and attributed to globals constants 
-            // to change frequency for each color
+            if (bh_types.length <= 0) {
+                push_types();
+            }
+            // When counter == 0, it's time to spawn a new blackhole
 
             if (current_bhs.length <= window.MAX_BLACKHOLES){
-                var blackhole_type = random(1, 23);
-                var blackhole = create_blackhole(blackhole_type); 
-                current_bhs.push(blackhole); 
+                var i = random(0, bh_types.length);
+                var type = bh_types[i];
+                var bh = new Blackhole(type); 
+                current_bhs.push(bh); 
+                bh_types.slice(i, 1);
                 period_reset();
             }
 
@@ -400,10 +397,6 @@ var main = function (){
         else {
             window.counter--;
         }
-
-        //draw_purple_blackhole(50, 50);
-
-        //setTimeout(draw_objects, window.speed);
     }
 
     /************ CLICK HANDLERS ******************/
@@ -417,10 +410,6 @@ var main = function (){
         //    y = event.pageY - c.offsetTop;
 
         current_bhs.forEach(function (bh) {
-
-            console.log(x, y);
-            console.log(bh);
-
             var dx = x - bh.x,
                 dy = y - bh.y,
                 dist = Math.sqrt(dx*dx + dy*dy);
@@ -440,25 +429,28 @@ var main = function (){
         current_bhs.splice(i, 1);
     }
 
+    function push_types() {
+        var blue = 10,
+            purple = 6,
+            black = 1;
+
+        for (var i = 0; i < blue; i++) 
+            bh_types.push("blue");
+
+        for (var i = 0; i < purple; i++) 
+            bh_types.push("purple");
+
+        for (var i = 0; i < black; i++) 
+            bh_types.push("black");
+        
+    }
+
 
     /********** CONTAINERS **************/
     var objects = new Array();
     var current_bhs = new Array(); // the blackholes present on the canvas
+    var bh_types = new Array();
     /************************************/
-
-    function create_blackhole(type){
-        var color;
-        if(type <= 3){
-            color = "black";
-        }else if (type <= 9){
-            color = "purple";
-        }else {
-            color = "blue";
-        }
-
-        var bh = new Blackhole(color);
-        return bh; 
-    }
 
     function push_objects() {
 
@@ -643,10 +635,6 @@ var main = function (){
         return array[index];
     }
     /******************* END OF RANDOM NUMBER GENERATOR FUNCTIONS **********************/
-    
-    /************************************************/
-    /* ----------- End of GAME Functions ---------- */ 
-    /************************************************/
 
     /******************* SPRITE DRAWING FUNCTIONS **********************/
 
@@ -1046,6 +1034,10 @@ var main = function (){
     }
 
     /******************* END OF SPRITE DRAWING FUNCTIONS **********************/
+
+    /************************************************/
+    /* ----------- End of GAME Functions ---------- */ 
+    /************************************************/
 
 };
 
