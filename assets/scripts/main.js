@@ -494,7 +494,7 @@ var main = function (){
         object = new Space_Object(draw_spaceship3);
         objects.push(object);
 
-        object = new Space_Object(draw_moon2);
+        object = new Space_Object(draw_asteroid);
         objects.push(object);
 
         object = new Space_Object(draw_planet);
@@ -591,6 +591,7 @@ var main = function (){
     }
 
     /*********** Space Objects **************/
+
 
     function draw_alien(x, y, w, h) {
         ctx.beginPath();
@@ -942,18 +943,24 @@ var main = function (){
         
     }
 
-    function draw_moon2(x, y, w, h) {
-        ctx.beginPath();
-        ctx.arc(x + (w/2), y + (h/2), (w/2), (3/2)*Math.PI, (1/6)*Math.PI, true);
-        ctx.lineWidth = 4;
-        ctx.strokeStyle = "yellow";
-        ctx.stroke();
+    function draw_asteroid(x, y, w, h) {
 
         ctx.beginPath();
-        ctx.arc(x + w*(2.8/3), y + (h/3.8), (w/2), (7/6)*Math.PI, (1/2)*Math.PI,  true);
-        ctx.lineWidth = 4;
-        ctx.strokeStyle = "yellow";
+        ctx.rect(x + (1/8)*w, y + (1/8)*h, w*(6/8), h*(6/8));
+        ctx.rect(x, y + (4/8)*h, w*(1/8), h*(3/8));
+        ctx.rect(x + (1/8)*w, y + (7/8)*h, w*(4/8), h*(1/8));
+        ctx.rect(x + (2/8)*w, y, w*(4/8), h*(1/8));
+        ctx.rect(x + (7/8)*w, y + (2/8)*h, w*(1/8), h*(4/8));
         ctx.stroke();
+        ctx.fillStyle = "DarkSlateGray";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (4/8)*w, y + (1/8)*h, w/8, h/8);
+        ctx.rect(x + (2/8)*w, y + (5/8)*h, w/8, h/8);
+        ctx.rect(x + (5/8)*w, y + (4/8)*h, w/8, h/8);
+        ctx.fillStyle = "black";
+        ctx.fill();
     }
 
     function draw_planet(x, y, w, h) {
