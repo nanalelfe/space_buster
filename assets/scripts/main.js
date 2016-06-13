@@ -774,48 +774,23 @@ var main = function (){
 
     function draw_astronaut(x, y, w, h) {
         ctx.beginPath();
-        ctx.rect(x + (1/4)*w, y + 10, w/2, (9/16)*h);
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = "black";
-        ctx.stroke();
-        ctx.fillStyle = "white";
+        ctx.rect(x + (2/8)*w, y, w/2, h*(5/8));
+        ctx.rect(x + (1/8)*w, y + (1/8)*h, w/8, h*(2/8));
+        ctx.rect(x + (6/8)*w, y + (1/8)*h, w/8, h*(2/8));
+        ctx.rect(x, y + (2/8)*h, w/8, h*(3/8));
+        ctx.rect(x + (7/8)*w, y + (2/8)*h, w/8, h*(3/8));
+        ctx.rect(x + (2/8)*w, y + (5/8)*h, w/8, h*(3/8));
+        ctx.rect(x + (5/8)*w, y + (5/8)*h, w/8, h*(3/8));
+        ctx.rect(x + (1/8)*w, y + (7/8)*h, w/8, h/8);
+        ctx.rect(x + (6/8)*w, y + (7/8)*h, w/8, h/8);
+        ctx.fillStyle = "gray";
         ctx.fill();
 
         ctx.beginPath();
-        ctx.ellipse(x + 25, y + 10, (w/4), 10, 0, 0, Math.PI*2);
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = "black";
-        ctx.stroke();
-        ctx.fillStyle = "lightblue";
+        ctx.rect(x + (3/8)*w, y + (1/8)*h, w/4, h/8);
+        ctx.fillStyle = "black";
         ctx.fill();
 
-        ctx.beginPath();
-        ctx.moveTo(x + (1/4)*w, y + (3/8)*h);
-        ctx.lineTo(x, y + (5/8)*h);
-        ctx.lineWidth = 2.5;
-        ctx.strokeStyle = "gray";
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.moveTo(x + (3/4)*w, y + (3/8)*h);
-        ctx.lineTo(x + w, y + (1/8)*h);
-        ctx.lineWidth = 2.5;
-        ctx.strokeStyle = "gray";
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.moveTo(x + (3/8)*w, y + (6/8)*h);
-        ctx.lineTo(x + (3/8)*w, y + h);
-        ctx.lineWidth = 2.5;
-        ctx.strokeStyle = "gray";
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.moveTo(x + (5/8)*w, y + (6/8)*h);
-        ctx.lineTo(x + (5/8)*w, y + h);
-        ctx.lineWidth = 2.5;
-        ctx.strokeStyle = "gray";
-        ctx.stroke();
 
     }
 
