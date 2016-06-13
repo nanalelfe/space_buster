@@ -139,10 +139,6 @@ var main = function (){
 
 
         // Speed at which each blackhole pulls
-        //window.blue_delta = 20;
-        //window.purp_delta = 10;
-        //window.black_delta = 6;
-
         window.blue_delta = 60;
         window.purp_delta = 40;
         window.black_delta = 24;
@@ -372,7 +368,8 @@ var main = function (){
 
         window.ctx.clearRect(0, 0, window.c.width, window.c.height);
 
-        // Check if the blackholes reached eating limit
+        // Check if the blackholes reached eating limit, 
+        // in which case they disappear
         check_bh_limit();
 
         // Draw the moving objects
@@ -387,18 +384,18 @@ var main = function (){
         }
 
         if (window.counter == 0) {
-            // When counter == 0, it's time to spawn a new blackhole
-            // Get number for type via random generator, create new blackhole
-            // of that type, then add to current_blackholes
 
-            // 1-3 is black, 4-9 is purple, 10-23 is blue
-            // These values can be adjusted and attributed to globals constants 
-            // to change frequency for each color
+            if (bh_types.length <= 0) {
+                push_types();
+            }
+            // When counter == 0, it's time to spawn a new blackhole
 
             if (current_bhs.length <= window.MAX_BLACKHOLES){
-                var blackhole_type = random(1, 23);
-                var blackhole = create_blackhole(blackhole_type); 
-                current_bhs.push(blackhole); 
+                var i = random(0, bh_types.length);
+                var type = bh_types[i];
+                var bh = new Blackhole(type); 
+                current_bhs.push(bh); 
+                bh_types.slice(i, 1);
                 period_reset();
             }
 
@@ -407,10 +404,6 @@ var main = function (){
         else {
             window.counter--;
         }
-
-        //draw_purple_blackhole(50, 50);
-
-        //setTimeout(draw_objects, window.speed);
     }
 
     /************ CLICK HANDLERS ******************/
@@ -424,10 +417,6 @@ var main = function (){
         //    y = event.pageY - c.offsetTop;
 
         current_bhs.forEach(function (bh) {
-
-            console.log(x, y);
-            console.log(bh);
-
             var dx = x - bh.x,
                 dy = y - bh.y,
                 dist = Math.sqrt(dx*dx + dy*dy);
@@ -447,25 +436,28 @@ var main = function (){
         current_bhs.splice(i, 1);
     }
 
+    function push_types() {
+        var blue = 10,
+            purple = 6,
+            black = 1;
+
+        for (var i = 0; i < blue; i++) 
+            bh_types.push("blue");
+
+        for (var i = 0; i < purple; i++) 
+            bh_types.push("purple");
+
+        for (var i = 0; i < black; i++) 
+            bh_types.push("black");
+        
+    }
+
 
     /********** CONTAINERS **************/
     var objects = new Array();
     var current_bhs = new Array(); // the blackholes present on the canvas
+    var bh_types = new Array();
     /************************************/
-
-    function create_blackhole(type){
-        var color;
-        if(type <= 3){
-            color = "black";
-        }else if (type <= 9){
-            color = "purple";
-        }else {
-            color = "blue";
-        }
-
-        var bh = new Blackhole(color);
-        return bh; 
-    }
 
     function push_objects() {
 
@@ -650,10 +642,6 @@ var main = function (){
         return array[index];
     }
     /******************* END OF RANDOM NUMBER GENERATOR FUNCTIONS **********************/
-    
-    /************************************************/
-    /* ----------- End of GAME Functions ---------- */ 
-    /************************************************/
 
     /******************* SPRITE DRAWING FUNCTIONS **********************/
 
@@ -997,40 +985,66 @@ var main = function (){
     }
 
     function draw_star(x, y, w, h) {
-        var rot = Math.PI / 2 * 3;
-        var cx = x + (w/2);
-        var cy = y + (h/2);
-        var x = x;
-        var y = y;
-        var spikes = 10;
-        var outerRadius = (w/2);
-        var innerRadius = (w/10);
-        var step = Math.PI / spikes;
-
-        ctx.strokeSyle = "#000";
         ctx.beginPath();
-        ctx.moveTo(cx, cy - outerRadius)
-        for (i = 0; i < spikes; i++) {
-            x = cx + Math.cos(rot) * outerRadius;
-            y = cy + Math.sin(rot) * outerRadius;
-            ctx.lineTo(x, y);
-            rot += step;
+        ctx.rect(x + (8/17)*w, y, w/17, h/17);
+        ctx.rect(x + (7/17)*w, y + (1/17)*h, w*(1/17), h*(2/17));
+        ctx.rect(x + (9/17)*w, y + (1/17)*h, w*(1/17), h*(2/17));
+        ctx.rect(x + (6/17)*w, y + (3/17)*h, w*(1/17), h*(2/17));
+        ctx.rect(x + (10/17)*w, y + (3/17)*h, w*(1/17), h*(2/17));
+        ctx.rect(x + (5/17)*w, y + (5/17)*h, w/17, h/17);
+        ctx.rect(x + (11/17)*w, y + (5/17)*h, w/17, h/17);
 
-            x = cx + Math.cos(rot) * innerRadius;
-            y = cy + Math.sin(rot) * innerRadius;
-            ctx.lineTo(x, y);
-            rot += step;
-        }
-        ctx.lineTo(cx, cy - outerRadius);
-        ctx.closePath();
-        ctx.lineWidth = 5;
-        ctx.strokeStyle = "#D68910"; // darker
-        ctx.stroke(); 
-        ctx.fillStyle = "#F1C40F"; // lighter
+        ctx.rect(x + (8/17)*w, y + (16/17)*h, w/17, h/17);
+        ctx.rect(x + (7/17)*w, y + (14/17)*h, w*(1/17), h*(2/17));
+        ctx.rect(x + (9/17)*w, y + (14/17)*h, w*(1/17), h*(2/17));
+        ctx.rect(x + (6/17)*w, y + (12/17)*h, w*(1/17), h*(2/17));
+        ctx.rect(x + (10/17)*w, y + (12/17)*h, w*(1/17), h*(2/17));
+        ctx.rect(x + (5/17)*w, y + (11/17)*h, w/17, h/17);
+        ctx.rect(x + (11/17)*w, y + (11/17)*h, w/17, h/17);
+
+        ctx.rect(x, y + (8/17)*w, w/17, h/17);
+        ctx.rect(x + (1/17)*h, y  + (7/17)*w, w*(2/17), h*(1/17));
+        ctx.rect(x + (1/17)*h, y + (9/17)*w, w*(2/17), h*(1/17));
+        ctx.rect(x + (3/17)*h, y + (6/17)*w , w*(2/17), h*(1/17));
+        ctx.rect(x + (3/17)*h , y + (10/17)*w, w*(2/17), h*(1/17));
+        ctx.rect(x + (5/17)*h, y + (5/17)*w, w/17, h/17);
+        ctx.rect(x + (5/17)*h, y + (11/17)*w, w/17, h/17);
+
+        ctx.rect(x + (16/17)*w, y + (8/17)*w, w/17, h/17);
+        ctx.rect(x + (14/17)*h, y  + (7/17)*w, w*(2/17), h*(1/17));
+        ctx.rect(x + (14/17)*h, y + (9/17)*w, w*(2/17), h*(1/17));
+        ctx.rect(x + (12/17)*h, y + (6/17)*w , w*(2/17), h*(1/17));
+        ctx.rect(x + (12/17)*h , y + (10/17)*w, w*(2/17), h*(1/17));
+        ctx.rect(x + (11/17)*h, y + (5/17)*w, w/17, h/17);
+        ctx.rect(x +  (11/17)*h, y + (11/17)*w, w/17, h/17);
+        ctx.strokeStyle = "#6E2C00";
+        ctx.stroke();
+        ctx.fillStyle = "#F39C12";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.rect(x + (5/17)*w, y + (6/17)*h, w*(7/17), h*(5/17));
+        ctx.rect(x + (3/17)*w, y + (7/17)*h, w*(2/17), h*(3/17));
+        ctx.rect(x + (12/17)*w, y + (7/17)*h, w*(2/17), h*(3/17));
+        ctx.rect(x + (1/17)*w, y + (8/17)*h, w*(2/17), h*(1/17));
+        ctx.rect(x + (14/17)*w, y + (8/17)*h, w*(2/17), h*(1/17));
+        ctx.rect(x + (6/17)*w, y + (5/17)*h, w*(5/17), h*(1/17));
+        ctx.rect(x + (6/17)*w, y + (11/17)*h, w*(5/17), h*(1/17));
+        ctx.rect(x + (7/17)*w, y + (3/17)*h, w*(3/17), h*(2/17));
+        ctx.rect(x + (7/17)*w, y + (12/17)*h, w*(3/17), h*(2/17));
+        ctx.rect(x + (8/17)*w, y + (1/17)*h, w*(1/17), h*(2/17));
+        ctx.rect(x + (8/17)*w, y + (14/17)*h, w*(1/17), h*(2/17));
+        ctx.strokeStyle = "#CA6F1E";
+        ctx.stroke();
+        ctx.fillStyle = "#F1C40F";
         ctx.fill();
     }
 
     /******************* END OF SPRITE DRAWING FUNCTIONS **********************/
+
+    /************************************************/
+    /* ----------- End of GAME Functions ---------- */ 
+    /************************************************/
 
 };
 
