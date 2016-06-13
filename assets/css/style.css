@@ -40,7 +40,7 @@ button{
 .show{display: block;}
 
 body {
-    position: fixed;
+    position: absolute;
     left: 25%;
     background-color: #d0d0d0;
 }
