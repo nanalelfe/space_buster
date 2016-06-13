@@ -278,13 +278,16 @@ var main = function (){
         /* ------------------INFO - BAR --------------- */ 
         /************************************************/
 
-        // Back button, re-directs to Start
+        /*// Back button, re-directs to Start
         $("#back-button").click(function() {
             $("#start-page").show();
             $("#game-page").hide();
             $("#pause-page").hide();
+            
             Game.pause = true;
-        });
+            
+            
+        });*/
 
         // Timer 
         Game.timer = window.GAME_LENGTH;

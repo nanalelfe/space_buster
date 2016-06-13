@@ -2,7 +2,9 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <link href='https://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
         <title>Space Buster!</title>
+
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
         <!-- Fix onload stuff -->
         <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
@@ -11,67 +13,74 @@
     </head>
     
     <body>
-        <header><h1> Space Buster! </h1></header>
-        
+        <!-- This div adds shadow to header & main content without overlap --> 
+        <div id="body-shadow-container">
+            <header>
+            <h1> Space Buster! </h1>
+            </header>
+            
 
-        <main>
-            <!-- ############## START PAGE ########### --> 
-            <div id="start-page">
-                    <div id="high-score">
-                        <h2> HIGH SCORE: </h2>
-                        <h2 id="show-score"></h2>
-                    </div>
-                    <button id="start-button"> START </button>
-                    <button id="reset-score"> Reset Score </button>
+            <main>
+                <!-- ############## START PAGE ########### --> 
+                <div id="start-page">
+                        <div id="high-score">
+                            <h2> HIGH SCORE: </h2>
+                            <h2 id="show-score"></h2>
+                        </div>
+                        <button id="start-button"> START </button>
+                        <button id="reset-score"> Reset Score </button>
 
-            </div>
-
-            <!-- ############## GAME PAGE ########### --> 
-            <div id="game-page">
-
-                <div id="info-bar" class="row"> <!-- Begin Info Bar -->
-                    
-                    <div class="col-d-2 ib-item">
-                        <button id="back-button">Back to Start</button>
-                    </div>
-                    <div class="col-d-2 ib-item">
-                        <h3 id="ib-level">Level</h3>
-                    </div>
-                    <div class="col-d-3 ib-item">
-                        <h3 id="ib-score">Score:</h3>
-                    </div>
-                    <div class="col-d-2 ib-item">
-                        <button id="ib-pause">Pause</button>
-                    </div>
-                    <div class="col-d-3 ib-item">
-                        <h3>Timer: <span id="timer-display"></span></h3>
-                    </div>
-                
-                </div> <!-- End of info Bar -->
-
-                <div id="viewport">
-                    <canvas id="main" width="1000" height="600">
-                        <!-- Place a warning here as a fallback for older browsers -->
-                    </canvas>
                 </div>
 
-            </div>
-            <!-- ############## TRANSITION PAGE ########### --> 
+                <!-- ############## GAME PAGE ########### --> 
+                <div id="game-page">
 
-            <div id="transition-page"> 
-                <h3 id="transition-message"></h3>
-                <h3 id="transition-score"></h3>
-                <button id="transition-button"></button>
-            </div>
+                    <div id="info-bar" class="row"> <!-- Begin Info Bar -->
+                        
+                        <!-- <div class="col-d-2 ib-item">
+                            <button id="back-button">Back to Start</button>
+                        </div> -->
+                        <div class="col-d-4 ib-item">
+                            <h3 id="ib-level">Level</h3>
+                        </div>
+                        <div class="col-d-3 ib-item">
+                            <h3 id="ib-score">Score:</h3>
+                        </div>
+                        <div class="col-d-2 ib-item">
+                            <button id="ib-pause">Pause</button>
+                        </div>
+                        <div class="col-d-3 ib-item">
+                            <h3>Timer: <span id="timer-display"></span></h3>
+                        </div>
+                    
+                    </div> <!-- End of info Bar -->
 
-            <div id="pause-page"> 
-                <h3 id="pause-message">PAUSED</h3>
-            </div>
+                    <div id="viewport">
+                        <canvas id="main" width="1000" height="600">
+                            <!-- Place a warning here as a fallback for older browsers -->
+                        </canvas>
+                    </div>
 
-            <img id="bh-svg-blu" src="assets/images/blackhole_blue.svg" alt="blue black hole">
-            <img id="bh-svg-prp" src="assets/images/blackhole_purple.svg" alt="purple black hole">
-            <img id="bh-svg-blk" src="assets/images/blackhole_black.svg" alt="black blackhole">
-        </main>
+                </div>
+                <!-- ############## TRANSITION PAGE ########### --> 
 
+                <div id="transition-page"> 
+                    <h3 id="transition-message"></h3>
+                    <h3 id="transition-score"></h3>
+                    <button id="transition-button"></button>
+                </div>
+
+                <div id="pause-page"> 
+                    <h3 id="pause-message">PAUSED</h3>
+                </div>
+
+                <img id="bh-svg-blu" src="assets/images/blackhole_blue.svg" alt="blue black hole">
+                <img id="bh-svg-prp" src="assets/images/blackhole_purple.svg" alt="purple black hole">
+                <img id="bh-svg-blk" src="assets/images/blackhole_black.svg" alt="black blackhole">
+            </main>
+            <footer>
+                <p>By: <em>Nargiza Nosirova</em> and <em>Humair Khan</em></p>
+            </footer>
+        </div>
     </body>
 </html> 

@@ -22,23 +22,6 @@ p {
     margin: 0;
 }
 
-/* Top bar */
-header{
-    background-color: #333333;
-    padding: 1.5%;
-    text-align: center;
-    width: 1005px;
-}
-
-header h1{
-    color: white;
-    padding: 0;
-    font-style: italic; 
-    font-weight: bold;
-    font-size: 2em;
-}
-/* Top bar end */
-
 h3 {
     padding: 10px;
     margin: 0;
@@ -50,13 +33,36 @@ button{
 }
 
 body {
+    position: fixed;
+    left: 25%;
     background-color: #d0d0d0;
-    
+
 }
+#body-shadow-container{box-shadow: 10px 8px 20px #aeaeae;}
+
+/* Top bar */
+header{
+    background-color: #242424;
+    padding: 1%;
+    text-align: center;
+    width: 1000px;
+       
+}
+
+header h1{
+    font-family: 'Audiowide', cursive;
+    color: #ff7200;
+    padding: 0;
+    margin: 0;
+    font-weight: bold;
+    font-size: 3em;
+}
+/* Top bar end */
 
 main{
     position: relative;
-    width: 1005px;
+    width: 1000px;
+    background-color: white;
  }
 
 #start-page {
@@ -103,14 +109,30 @@ main{
     /*border: 3px solid #333333;*/
     border-bottom: 0;
     text-align: center;
-    width: 1005px;
-    background-color: #fff;
+    width: 1000px;
+    background-color: #3a3a3a;
+    color: #5ddbff;
 }
 
 #viewport{
     /*border: 3px solid #333333;*/
+    height: 600px;
 }
 
+
+footer {
+    background-color: #222222;
+    text-align: center;
+    padding: 25px;
+    color: white;
+    
+}
+
+/* emphasis settings */
+
+footer em{
+    color: #ff7200;
+}
 /* All buttons used */
 #start-button, #back-button, #ib-pause, #transition-button, #reset-score{
     background-color: gray; 
@@ -150,12 +172,14 @@ main{
 .col-d-11 {width: 91.66%;}
 .col-d-12 {width: 100%;}
 
+/*
 @media only screen and (min-width: 1024px) {
     body{margin-left: 0;}
     body{margin-right: 0;}
 }
 @media only screen and (min-width: 1280px) {
-    body{margin-left: 20%;}
-    body{margin-right: 20%;}
-}
+    body{margin-left: auto;}
+    body{margin-right: auto;}
+}*/
+
     
