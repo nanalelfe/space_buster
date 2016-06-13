@@ -188,6 +188,8 @@ var main = function (){
         var offsetLeft = c.offsetLeft,
             offsetTop = c.offsetTop;
 
+        // Initiate on click event
+        c.addEventListener("click", user_click, false);
         Game.reset();
 
         // Set pause click event: 
@@ -666,6 +668,31 @@ var main = function (){
     /******************* SPRITE DRAWING FUNCTIONS **********************/
 
     /*********** Black holes **************/
+    var TO_RADIANS = Math.PI/180;
+    var blue_rotation_counter = 0;
+    var purp_rotation_counter = 0;
+    var black_rotation_counter = 0;
+    function drawRotatedImage(image, x, y, angle)
+    { 
+        // save the current co-ordinate system 
+        // before we screw with it
+        ctx.save(); 
+
+        // move to the middle of where we want to draw our image
+        ctx.translate(x, y);
+
+        // rotate around that point, converting our 
+        // angle from degrees to radians 
+        ctx.rotate(angle * TO_RADIANS);
+        ctx.scale(0.1,0.1);
+
+        // draw it up and to the left by half the width
+        // and height of the image 
+        ctx.drawImage(image, -(image.width/2), -(image.height/2));
+
+        // and restore the co-ords to how they were when we began
+        ctx.restore(); 
+    }
 
     function draw_blue_blackhole(x, y) {
 
@@ -676,7 +703,15 @@ var main = function (){
         var h = window.object_h;
 
         var img = document.getElementById("bh-svg-blu");
-        ctx.drawImage(img, x-25, y-25, 50, 50);
+        
+        blue_rotation_counter += 2;
+        if(blue_rotation_counter >= 361){
+            blue_rotation_counter = 0;
+        }
+        drawRotatedImage(img, x, y, blue_rotation_counter);
+
+
+        //ctx.drawImage(img, x-25, y-25, 50, 50);
     }
 
     function draw_purple_blackhole(x, y) {
@@ -688,7 +723,13 @@ var main = function (){
         var h = window.object_h;
 
         var img = document.getElementById("bh-svg-prp");
-        ctx.drawImage(img, x-25, y-25, 50, 50);
+
+        purp_rotation_counter += 2;
+        if(purp_rotation_counter >= 361){
+            purp_rotation_counter = 0;
+        }
+        drawRotatedImage(img, x, y, purp_rotation_counter);
+        //ctx.drawImage(img, x-25, y-25, 50, 50);
     }
 
     function draw_blackhole(x, y) {
@@ -700,9 +741,15 @@ var main = function (){
         var h = window.object_h;
 
         var img = document.getElementById("bh-svg-blk");
-        ctx.drawImage(img, x-25, y-25, 50, 50);
-    }
+        
+        black_rotation_counter += 2;
+        if(black_rotation_counter >= 361){
+            black_rotation_counter = 0;
+        }
+        drawRotatedImage(img, x, y, black_rotation_counter);
 
+        //ctx.drawImage(img, x-25, y-25, 50, 50);
+    }
     /*********** Space Objects **************/
 
 
