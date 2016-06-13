@@ -878,18 +878,21 @@ var main = function (){
     }
 
     function draw_spaceship1 (x, y, w, h) {
+        //Body
         ctx.beginPath();
         ctx.ellipse(x + (w/2), y + (h - 15), 25, 15, 0, 0, 2*Math.PI);
         ctx.stroke();
         ctx.fillStyle = "#df4400";
         ctx.fill();
 
+        // Head
         ctx.beginPath();
         ctx.ellipse(x+ (w/2), y + (h/2), 15, 25, 0, 0, Math.PI, true);
         ctx.stroke();
         ctx.fillStyle = "#50ffd1";
         ctx.fill();
 
+        // Head
         ctx.beginPath();
         ctx.ellipse(x+ (w/2), y + (h/2), 15, 5, 0, 0, Math.PI, false);
         ctx.stroke();
@@ -995,24 +998,26 @@ var main = function (){
     }
 
     function draw_planet2 (x, y, w, h) {
+        // Ring
         ctx.beginPath();
         ctx.ellipse(x + (w/2), y + (h/2), 35, 8, Math.PI*(3/4), 0, Math.PI, false);
-        ctx.strokeStyle = "red";
+        ctx.strokeStyle = "#ffcb29";
         ctx.lineWidth = 3;
         ctx.stroke();
 
+        // Body
         ctx.beginPath();
         ctx.arc(x + (w/2), y + (h/2), (w/3), 0, Math.PI * 2, false);
         ctx.strokeStyle = "black";
         ctx.lineWidth = 1;
         ctx.stroke();
-        ctx.fillStyle = "blue";
+        ctx.fillStyle = "#f05885";
         ctx.fill();
 
-
+        // Ring
         ctx.beginPath();
         ctx.ellipse(x + (w/2), y + (h/2), 35, 8, Math.PI*(3/4), 0, Math.PI, true);
-        ctx.strokeStyle = "red";
+        ctx.strokeStyle = "#ffcb29";
         ctx.lineWidth = 3;
         ctx.stroke();
 
