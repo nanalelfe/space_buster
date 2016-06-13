@@ -36,7 +36,6 @@ var main = function (){
         if (!localStorage.hs_3){
             localStorage.hs_3 = 0;
         }
-        //$("#show-score").text(String(localStorage.high_score)); 
         display_high_scores(); 
     } else {
         $("#show-score").text("Local Storage Not Supported");
@@ -52,8 +51,6 @@ var main = function (){
     });
 
     $("#reset-score").click(function() {
-        //localStorage.high_score = 0;
-        //$("#show-score").text(String(localStorage.high_score)); 
         reset_scores();
         //localStorage.clear();
 
@@ -73,7 +70,7 @@ var main = function (){
 
     function run_game(){
 
-        // --------------- The Game ---------------------//
+        // --------------- The Game Object ---------------------//
         var Game = {}; 
         Game.current_level = 1; 
         Game.object_num = 10; 
@@ -116,7 +113,6 @@ var main = function (){
         // --------------------------------------------------------------//
         // ----------------- NANA'S ONLOAD VARIABLES --------------------// 
         // --------------------------------------------------------------//
-
 
         window.c = document.getElementById("main");
         window.ctx = c.getContext("2d");
@@ -242,14 +238,12 @@ var main = function (){
                 $("#transition-page").hide();
                 $("#game-page").show();
                 $("#ib-level").text("Level: " + String(Game.current_level));
-                //$("#show-score").text(String(localStorage.high_score));
                 display_high_scores();
             }
             function return_transition(){
                 $("#transition-page").hide();
                 $("#game-page").hide();
                 $("#start-page").show();
-                //$("#show-score").text(String(localStorage.high_score));
                 display_high_scores(); 
             }
 
@@ -317,18 +311,6 @@ var main = function (){
         /************************************************/
         /* ------------------INFO - BAR --------------- */ 
         /************************************************/
-
-        /*// Back button, re-directs to Start
-        $("#back-button").click(function() {
-            $("#start-page").show();
-            $("#game-page").hide();
-            $("#pause-page").hide();
-            
-            Game.pause = true;
-            
-            
-        });*/
-
         // Timer 
         Game.timer = window.GAME_LENGTH;
 
@@ -343,8 +325,7 @@ var main = function (){
 
     /************************************************/
     /* --------------- GAME FUNCTIONS ------------- */ 
-    /************************************************/
-    
+    /************************************************/ 
     var Space_Object = function(item_draw) {
         this.x = random(0, window.c.width - window.object_w);
         this.y = random(0, window.c.height - window.object_h);
@@ -426,7 +407,6 @@ var main = function (){
                 push_types();
             }
             // When counter == 0, it's time to spawn a new blackhole
-
             if (current_bhs.length <= window.MAX_BLACKHOLES){
                 var i = random(0, bh_types.length);
                 var type = bh_types[i];
@@ -435,7 +415,6 @@ var main = function (){
                 bh_types.slice(i, 1);
                 period_reset();
             }
-
         }
 
         else {
@@ -486,9 +465,7 @@ var main = function (){
 
         for (var i = 0; i < black; i++) 
             bh_types.push("black");
-        
     }
-
 
     /********** CONTAINERS **************/
     var objects = new Array();
@@ -527,11 +504,8 @@ var main = function (){
 
         /* Alien 2 */
         objects.push(new Space_Object(draw_alien2));
-
     }
         
-
-    
     function remove_object(obj) {
         var i = objects.indexOf(obj);
         objects.splice(i, 1);
@@ -706,7 +680,6 @@ var main = function (){
 
         var img = document.getElementById("bh-svg-prp");
         ctx.drawImage(img, x-25, y-25, 50, 50);
-
     }
 
     function draw_blackhole(x, y) {
@@ -719,7 +692,6 @@ var main = function (){
 
         var img = document.getElementById("bh-svg-blk");
         ctx.drawImage(img, x-25, y-25, 50, 50);
-
     }
 
     /*********** Space Objects **************/
@@ -751,7 +723,6 @@ var main = function (){
         ctx.rect(x + (5/8)*w, y + (3/8)*h, w/8, h/8);  
         ctx.fillStyle = "black";
         ctx.fill();
-
     }
 
     function draw_alien2(x, y, w, h) {
@@ -779,7 +750,6 @@ var main = function (){
         ctx.rect(x + (5/8)*w, y + (3/8)*h, w/8, h/8);
         ctx.fillStyle = "black";
         ctx.fill();
-
     }
 
     function draw_astronaut(x, y, w, h) {
@@ -800,8 +770,6 @@ var main = function (){
         ctx.rect(x + (3/8)*w, y + (1/8)*h, w/4, h/8);
         ctx.fillStyle = "black";
         ctx.fill();
-
-
     }
 
     function draw_satellite(x, y, w, h) {
@@ -948,8 +916,6 @@ var main = function (){
         ctx.stroke();
         ctx.fillStyle = "#8dad85";
         ctx.fill();
-
-        
     }
 
     function draw_asteroid(x, y, w, h) {
@@ -1001,7 +967,6 @@ var main = function (){
         ctx.lineWidth = 5;
         ctx.strokeStyle = "maroon";
         ctx.stroke();
-
     }
 
     function draw_planet2 (x, y, w, h) {
@@ -1027,7 +992,6 @@ var main = function (){
         ctx.strokeStyle = "#ffcb29";
         ctx.lineWidth = 3;
         ctx.stroke();
-
     }
 
     function draw_star(x, y, w, h) {
