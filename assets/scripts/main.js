@@ -435,7 +435,6 @@ var main = function (){
 
     /************ CLICK HANDLERS ******************/
     function user_click() {
-        console.log("blah");
 
         var parentOffset = $(this).parent().offset();
         var x = event.pageX - parentOffset.left;
