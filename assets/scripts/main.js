@@ -15,8 +15,18 @@ var main = function (){
     // ---------- High score --------------// 
     function display_high_scores(){
         $("#show-score-1").text(String(localStorage.hs_1));
-        $("#show-score-2").text(String(localStorage.hs_2));
-        $("#show-score-3").text(String(localStorage.hs_3)); 
+        if(localStorage.hs_2 == 0){
+            $("#show-score-2").text("");
+        }else{
+            $("#show-score-2").text(String(localStorage.hs_2));
+        }
+        if(localStorage.hs_3 == 0){
+            $("#show-score-3").text("");
+        }else{
+           $("#show-score-3").text(String(localStorage.hs_3));  
+        }
+        
+        
     }
     function reset_scores(){
         localStorage.hs_1 = 0;
@@ -43,6 +53,8 @@ var main = function (){
     
     // Start button, replace start-page with game-page
     $("#start-button").click(function() {
+        // Set default levle background
+        $("#main").addClass("canvas-bg-default").removeClass("canvas-bg-lvl2");
         $("#start-page").hide();
         $("#instruction-page").hide();
         $("#game-page").show();
@@ -214,7 +226,7 @@ var main = function (){
                 // Adjust speeds accordingly for level for difficulty
                 if (Game.current_level == 2){
                     // Change to new background
-                    $(".canvas-bg-default").addClass("canvas-bg-lvl2").removeClass("canvas-bg-default");
+                    $("#main").addClass("canvas-bg-lvl2").removeClass("canvas-bg-default");
               
 
                     // Speed up black hole spawn times for next level
