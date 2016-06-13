@@ -18,8 +18,6 @@
             <header>
             <h1> Space Buster! </h1>
             </header>
-            
-
             <main>
                 <!-- ############## START PAGE ########### --> 
                 <div id="start-page">
@@ -27,8 +25,9 @@
                             <h2> HIGH SCORE: </h2>
                             <h2 id="show-score"></h2>
                         </div>
-                        <button id="start-button"> START </button>
-                        <button id="reset-score"> Reset Score </button>
+                        <button id="start-button" class="button"> START </button>
+                        <button id="reset-score" class="button"> Reset Score </button>
+                        <button id="instruction-button" class="button"> How to play </button>
 
                 </div>
 
@@ -36,18 +35,15 @@
                 <div id="game-page">
 
                     <div id="info-bar" class="row"> <!-- Begin Info Bar -->
-                        
-                        <!-- <div class="col-d-2 ib-item">
-                            <button id="back-button">Back to Start</button>
-                        </div> -->
                         <div class="col-d-4 ib-item">
-                            <h3 id="ib-level">Level</h3>
+                            <button id="ib-pause-button" class="button">Pause</button>
                         </div>
                         <div class="col-d-3 ib-item">
-                            <h3 id="ib-score">Score:</h3>
+                            <h3 id="ib-level">Level</h3>
+                            
                         </div>
                         <div class="col-d-2 ib-item">
-                            <button id="ib-pause">Pause</button>
+                            <h3 id="ib-score">Score:</h3>
                         </div>
                         <div class="col-d-3 ib-item">
                             <h3>Timer: <span id="timer-display"></span></h3>
@@ -62,24 +58,50 @@
                     </div>
 
                 </div>
-                <!-- ############## TRANSITION PAGE ########### --> 
+
+                <!-- ############## TRANSITION POP UP ########### --> 
 
                 <div id="transition-page"> 
                     <h3 id="transition-message"></h3>
                     <h3 id="transition-score"></h3>
-                    <button id="transition-button"></button>
+                    <button id="transition-button" class="button"></button>
                 </div>
 
+                <!-- ############## PAUSE POP-UP ########### -->
                 <div id="pause-page"> 
                     <h3 id="pause-message">PAUSED</h3>
                 </div>
 
+                <div id="instruction-page">
+                    <h2> How to play: </h2>
+                    <p><em>Description:</em> Before you is a solar system filled with all sorts of objects: planets, moons, nebulae, asteroids, spacecraft, space junk, and more. However, black holes appear every few seconds and start to <em>pull objects</em> towards them! If an object hits the centre of a black hole, the black hole eats it, meaning a <em>loss of 50 points</em> from your starting total of <em>200 points</em>. Additionally, once a black hole has had its fill, it will <em>disappear</em> back into the ether.</p>
+                    
+                    <p>The game is time-based, and each level lasts 60 seconds. The game moves on to the next level or ends if it’s the last level when the time is up or when the black holes have eaten all of the objects in the solar system. If at least one object remains, you can move on to the next level.</p>
+
+                    <p>There are three types of black holes in the game: 
+                    <ul>
+                        <li>blue (slow pull)</li>
+                        <li>purple (medium pull)</li>
+                        <li>black (fast pull)</li>
+                    </ul>
+                    Each time you destroy (mouse click) a blackhole, you receive points (but all objects it’s eaten are gone forever): 
+                    <ul>
+                        <li>5 for blue</li>
+                        <li>10 for purple</li>
+                        <li>20 for black</li>
+                    </ul>
+                    Once a black hole has eaten a certain number of
+                    objects – 3 for blue, 2 for purple, and 1 for black - it will disappear, meaning you
+                    lose the opportunity to earn points.</p>
+                </div>
+
+                <!-- ############## IMAGES PULLED FOR CANVAS ########### -->
                 <img id="bh-svg-blu" src="assets/images/blackhole_blue.svg" alt="blue black hole">
                 <img id="bh-svg-prp" src="assets/images/blackhole_purple.svg" alt="purple black hole">
                 <img id="bh-svg-blk" src="assets/images/blackhole_black.svg" alt="black blackhole">
             </main>
             <footer>
-                <p>By: <em>Nargiza Nosirova</em> and <em>Humair Khan</em></p>
+                <p>By: <a href="https://github.com/nanalelfe">Nargiza Nosirova</a> and <a href="https://github.com/HumairAK">Humair Khan</a></p>
             </footer>
         </div>
     </body>

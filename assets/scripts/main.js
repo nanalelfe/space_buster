@@ -10,6 +10,7 @@ var main = function (){
     $("#bh-svg-blk").hide();
     $("#bh-svg-prp").hide();
     $("#pause-page").hide();
+    $("#instruction-page").hide();
 
     // Retrieve High Score in html5 local storage, if first time playing
     // Set high score to default value 0. 
@@ -25,6 +26,7 @@ var main = function (){
     // Start button, replace start-page with game-page
     $("#start-button").click(function() {
         $("#start-page").hide();
+        $("#instruction-page").hide();
         $("#game-page").show();
 
         run_game();
@@ -33,6 +35,11 @@ var main = function (){
     $("#reset-score").click(function() {
         localStorage.high_score = 0;
         $("#show-score").text(String(localStorage.high_score)); 
+    });
+    // ----------- TOGGLE HOW TO PLAY PAGE --------------//
+
+    $("#instruction-button").click(function(){
+        $("#instruction-page").toggle();
     });
 
     // ----------- GAME PAGE --------------// 
@@ -158,7 +165,7 @@ var main = function (){
         Game.reset();
 
         // Set pause click event: 
-        $("#ib-pause").click(function() {
+        $("#ib-pause-button").click(function() {
             if(Game.pause == false){
                 c.removeEventListener("click", user_click, false);
                 $("#pause-page").show();
