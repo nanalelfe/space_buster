@@ -164,7 +164,7 @@ var main = function (){
 
         // Number of appearences for each blackhole type
         window.aprns_num_blue = 10;
-        window.aprns_num_purp = 5;
+        window.aprns_num_purp = 6;
         window.aprns_num_blac = 1;
 
         // Number of objects each blackhole eats 
@@ -344,6 +344,18 @@ var main = function (){
     /* --------------- GAME FUNCTIONS ------------- */ 
     /************************************************/ 
 
+    /********** CONTAINERS **************/
+    // Contains all the space objects on canvas
+    var objects = new Array();
+
+    // Contains all blackholes on canvas
+    var current_bhs = new Array();
+
+    // Contains the types of the blackholes that need to appear on the canvas.
+    // Required to keep track of the frequency of the different blackholes.
+    var bh_types = new Array();
+    /************************************/
+
     /**
      * Represents a space object. Gets sucked in my blackholes
      * if too close to them.
@@ -397,9 +409,12 @@ var main = function (){
         switch (type){
             case "blue":
                 this.draw_bh = draw_blue_blackhole;
+                // Frequency of appearence for this type of blackhole
                 this.appearence = window.aprns_num_blue * window.level;
+                // Space object eating limit
                 this.eat_limit = window.blue_eat;
                 this.pull_speed = window.blue_delta;
+                // Points earned for destroying this type
                 this.points = 5;
                 break;
             case "purple":
@@ -418,6 +433,11 @@ var main = function (){
         }
     }
 
+    /**
+     * Checks whether there are any blackholes that have reached their eating
+     * limit. If so, removes blackhole. 
+     * @function
+     */
     function check_bh_limit() {
         current_bhs.forEach(function(bh) {
             if (bh.eaten >= bh.eat_limit) {
@@ -426,15 +446,17 @@ var main = function (){
         });
     }
 
+    /**
+     * Draws all the sprites in the game. 
+     * @function
+     */
     function draw_objects() {
 
         window.ctx.clearRect(0, 0, window.c.width, window.c.height);
 
-        // Check if the blackholes reached eating limit, 
-        // in which case they disappear
         check_bh_limit();
 
-        // Draw the moving objects
+        // Draw the space objects
         for (var i = 0; i < objects.length; i++){
             draw(objects[i]);
         }
@@ -445,17 +467,20 @@ var main = function (){
             bh.draw_bh(bh.x, bh.y, bh);
         }
 
+        // When counter reaches 0, it's time to spawn another blackhole. 
         if (window.counter == 0) {
 
             if (bh_types.length <= 0) {
                 push_types();
             }
-            // When counter == 0, it's time to spawn a new blackhole
             if (current_bhs.length <= window.MAX_BLACKHOLES){
                 var i = random(0, bh_types.length);
-                var type = bh_types[i];
+                var type = bh_types[i]; // pick random type
                 var bh = new Blackhole(type); 
                 current_bhs.push(bh); 
+
+                // Remove that type from the array, to guarantee difference
+                // in frequency between the different blackholes
                 bh_types.slice(i, 1);
                 period_reset();
             }
@@ -467,14 +492,17 @@ var main = function (){
     }
 
     /************ CLICK HANDLERS ******************/
+
+    /**
+     * Enables user mouse click. When a blackhole is clicked, removes
+     * blackhole.
+     * @function
+     */
     function user_click() {
 
         var parentOffset = $(this).parent().offset();
         var x = event.pageX - parentOffset.left;
         var y = event.pageY - parentOffset.top;
-
-        //var x = event.pageX - c.offsetLeft,
-        //    y = event.pageY - c.offsetTop;
 
         current_bhs.forEach(function (bh) {
             var dx = x - bh.x,
@@ -491,15 +519,25 @@ var main = function (){
 
     /************ END OF CLICK HANDLERS ******************/
 
+    /**
+     * Removes a blackhole.
+     * @function
+     * @param {Blackhole} bh - The blackhole object to be removed.
+     */
     function remove_bh(bh) {
         var i = current_bhs.indexOf(bh);
         current_bhs.splice(i, 1);
     }
 
+    /**
+     * Pushes blackhole types into the bh_types array according to their 
+     * appearence frequency. 
+     * @function
+     */
     function push_types() {
-        var blue = 10,
-            purple = 6,
-            black = 1;
+        var blue = window.aprns_num_blue,
+            purple = window.aprns_num_purp,
+            black = window.aprns_num_blac;
 
         for (var i = 0; i < blue; i++) 
             bh_types.push("blue");
@@ -511,12 +549,10 @@ var main = function (){
             bh_types.push("black");
     }
 
-    /********** CONTAINERS **************/
-    var objects = new Array();
-    var current_bhs = new Array(); // the blackholes present on the canvas
-    var bh_types = new Array();
-    /************************************/
-
+    /**
+     * Pushes all the space objects needed to the objects array. 
+     * @function
+     */
     function push_objects() {
 
         /* Spaceship 1 */
@@ -550,12 +586,24 @@ var main = function (){
         objects.push(new Space_Object(draw_alien2));
     }
         
+    /**
+     * Removes a space object.
+     * @function
+     * @param {Space_Object} obj - The space object to be removed.
+     */
     function remove_object(obj) {
         var i = objects.indexOf(obj);
         objects.splice(i, 1);
         
     }
 
+    /**
+     * Returns whether the space object obj has been pulled by any blackhole. 
+     * If true, animates the object pulling and disappearence. 
+     * @function
+     * @param {Space_Object} obj - The space object
+     * @returns {boolean}
+     */
     function object_pulled(obj) {
         var x = obj.x,
             y = obj.y,
@@ -568,7 +616,8 @@ var main = function (){
         current_bhs.forEach(function(bh) {
             var bhx = bh.event_x,
                 bhy = bh.event_y;
-            if (!(x > (bhx + bhw) || (x + w) < bhx || y > (bhy + bhh) || (y + h) < bhy)) {
+            if (!(x > (bhx + bhw) || (x + w) < bhx
+                || y > (bhy + bhh) || (y + h) < bhy)) {
                 this_bh =  bh;
             }
         });
@@ -600,14 +649,16 @@ var main = function (){
         }
     }
 
-    /* This function executes the item drawing functions, detects collision and 
-       changes the dx/dy values accordingly */
+    /**
+     * Executes the space object drawing functions, detects collision and 
+     * changes the dx/dy values accordingly. 
+     * @function
+     * @param {Space_Object} obj - The space object to be drawn
+     */
     function draw(obj) {
 
         var ctx = window.ctx;
         obj.item_draw(obj.x, obj.y, obj.width, obj.height);
-        /*ctx.fillStyle = "#FF0000";
-        ctx.fillRect(obj.x, obj.y, 50, 50);*/
 
         if (!object_pulled(obj)) {
 
@@ -634,21 +685,23 @@ var main = function (){
         }
     }
 
-    /******************* RANDOM NUMBER GENERATOR FUNCTIONS **********************/
+    /******************* RANDOM NUMBER GENERATOR FUNCTIONS ********************/
 
+    /**
+     * Generates a random time period between the appearence of blackholes. 
+     * @function
+     */
     function period_reset() {
         window.period = random(window.aprns_min_time, window.aprns_max_time);
         window.counter = Math.floor(window.period/window.speed);    
     }
 
-    // Returns [x, y] such that the coordinates don't overlap with another
     function random_bh() {
         var coord = new Array();
 
         var x = random(0, window.c.width - window.event_w);
         var y = random(0, window.c.height - window.event_h);
 
-        //for (var i = 0; i < blackholes.length; i++)
         var i = 0;
         while (i < current_bhs.length){
             var bh = current_bhs[i];
@@ -696,9 +749,9 @@ var main = function (){
         var index = Math.floor(Math.random() * (array.length));
         return array[index];
     }
-    /******************* END OF RANDOM NUMBER GENERATOR FUNCTIONS **********************/
+    /*************** END OF RANDOM NUMBER GENERATOR FUNCTIONS *****************/
 
-    /******************* SPRITE DRAWING FUNCTIONS **********************/
+    /******************* SPRITE DRAWING FUNCTIONS *****************************/
 
     /*********** Black holes **************/
     var convert_radians = Math.PI/180;
@@ -721,6 +774,13 @@ var main = function (){
         ctx.restore(); 
     }
 
+    /**
+     * Draws a blue blackhole bh on the canvas given the coordinates x and y.
+     * @function
+     * @param {Number} x - The x coordinate
+     * @param {Number} y - The y coordinate
+     * @param {Blackhole} bh - The blackhole to be drawn
+     */
     function draw_blue_blackhole(x, y, bh) {
         var event_x = x - 50;
         var event_y = y - 50;
@@ -733,6 +793,13 @@ var main = function (){
         rotate_and_draw(img, x, y, bh.rotation_counter);   
     }
 
+    /**
+     * Draws a purple blackhole bh on the canvas given the coordinates x and y.
+     * @function
+     * @param {Number} x - The x coordinate
+     * @param {Number} y - The y coordinate
+     * @param {Blackhole} bh - The blackhole to be drawn
+     */
     function draw_purple_blackhole(x, y, bh) {
         var event_x = x - 50;
         var event_y = y - 50;
@@ -745,6 +812,13 @@ var main = function (){
         rotate_and_draw(img, x, y, bh.rotation_counter);
     }
 
+    /**
+     * Draws a black blackhole bh on the canvas given the coordinates x and y.
+     * @function
+     * @param {Number} x - The x coordinate
+     * @param {Number} y - The y coordinate
+     * @param {Blackhole} bh - The blackhole to be drawn
+     */
     function draw_blackhole(x, y, bh) {
         var event_x = x - 50;
         var event_y = y - 50;
@@ -757,9 +831,19 @@ var main = function (){
         bh.update_rotation();
         rotate_and_draw(img, x, y, bh.rotation_counter);
     }
+
+
     /*********** Space Objects **************/
 
 
+    /**
+     * Draws an alien 1 on canvas given coordinates x, y, width w and height h. 
+     * @function
+     * @param {Number} x - The x coordinate
+     * @param {Number} y - The y coordinate
+     * @param {Number} w - The width of the object
+     * @param {Number} h - The height of the object
+     */
     function draw_alien1(x, y, w, h) {
         ctx.beginPath();
         ctx.rect(x, y + (7/8)*h, w/8, h/8);  
@@ -788,6 +872,14 @@ var main = function (){
         ctx.fill();
     }
 
+    /**
+     * Draws an alien 2 on canvas given coordinates x, y, width w and height h. 
+     * @function
+     * @param {Number} x - The x coordinate
+     * @param {Number} y - The y coordinate
+     * @param {Number} w - The width of the object
+     * @param {Number} h - The height of the object
+     */
     function draw_alien2(x, y, w, h) {
 
         ctx.beginPath();
@@ -815,6 +907,14 @@ var main = function (){
         ctx.fill();
     }
 
+    /**
+     * Draws an astronaut on canvas given coordinates x, y, width w and height h. 
+     * @function
+     * @param {Number} x - The x coordinate
+     * @param {Number} y - The y coordinate
+     * @param {Number} w - The width of the object
+     * @param {Number} h - The height of the object
+     */
     function draw_astronaut(x, y, w, h) {
         ctx.beginPath();
         ctx.rect(x + (2/8)*w, y, w/2, h*(5/8));
@@ -835,6 +935,14 @@ var main = function (){
         ctx.fill();
     }
 
+    /**
+     * Draws a satellite on canvas given coordinates x, y, width w and height h. 
+     * @function
+     * @param {Number} x - The x coordinate
+     * @param {Number} y - The y coordinate
+     * @param {Number} w - The width of the object
+     * @param {Number} h - The height of the object
+     */
     function draw_satellite(x, y, w, h) {
         ctx.beginPath();
         ctx.moveTo(x + (1/8)*w, y);
@@ -915,6 +1023,14 @@ var main = function (){
         ctx.stroke();
     }
 
+    /**
+     * Draws a spaceship 1 on canvas given coordinates x, y, width w and height h. 
+     * @function
+     * @param {Number} x - The x coordinate
+     * @param {Number} y - The y coordinate
+     * @param {Number} w - The width of the object
+     * @param {Number} h - The height of the object
+     */
     function draw_spaceship1 (x, y, w, h) {
         //Body
         ctx.beginPath();
@@ -938,6 +1054,14 @@ var main = function (){
         ctx.fill();
     }
 
+    /**
+     * Draws an spaceship 2 on canvas given coordinates x, y, width w and height h. 
+     * @function
+     * @param {Number} x - The x coordinate
+     * @param {Number} y - The y coordinate
+     * @param {Number} w - The width of the object
+     * @param {Number} h - The height of the object
+     */
     function draw_spaceship2 (x, y, w, h) {
         // Body
         ctx.fillStyle = "#b4726f";
@@ -981,6 +1105,14 @@ var main = function (){
         ctx.fill();
     }
 
+    /**
+     * Draws an asteroid on canvas given coordinates x, y, width w and height h. 
+     * @function
+     * @param {Number} x - The x coordinate
+     * @param {Number} y - The y coordinate
+     * @param {Number} w - The width of the object
+     * @param {Number} h - The height of the object
+     */
     function draw_asteroid(x, y, w, h) {
 
         ctx.beginPath();
@@ -1001,6 +1133,14 @@ var main = function (){
         ctx.fill();
     }
 
+    /**
+     * Draws a planet 1 on canvas given coordinates x, y, width w and height h. 
+     * @function
+     * @param {Number} x - The x coordinate
+     * @param {Number} y - The y coordinate
+     * @param {Number} w - The width of the object
+     * @param {Number} h - The height of the object
+     */
     function draw_planet1(x, y, w, h) {
 
         ctx.beginPath();
@@ -1032,6 +1172,14 @@ var main = function (){
         ctx.stroke();
     }
 
+    /**
+     * Draws a planet 2 on canvas given coordinates x, y, width w and height h. 
+     * @function
+     * @param {Number} x - The x coordinate
+     * @param {Number} y - The y coordinate
+     * @param {Number} w - The width of the object
+     * @param {Number} h - The height of the object
+     */
     function draw_planet2 (x, y, w, h) {
         // Ring
         ctx.beginPath();
@@ -1057,6 +1205,14 @@ var main = function (){
         ctx.stroke();
     }
 
+    /**
+     * Draws a star on canvas given coordinates x, y, width w and height h. 
+     * @function
+     * @param {Number} x - The x coordinate
+     * @param {Number} y - The y coordinate
+     * @param {Number} w - The width of the object
+     * @param {Number} h - The height of the object
+     */
     function draw_star(x, y, w, h) {
         ctx.beginPath();
         ctx.rect(x + (8/17)*w, y, w/17, h/17);
