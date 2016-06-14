@@ -687,9 +687,6 @@ var main = function (){
 
     /*********** Black holes **************/
     var convert_radians = Math.PI/180;
-    var blue_rotation_counter = 0;
-    var purp_rotation_counter = 0;
-    var black_rotation_counter = 0;
     function rotate_and_draw(img, x, y, angle_amnt)
     { 
         // save co-ords 
