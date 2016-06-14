@@ -367,6 +367,18 @@ var main = function (){
         this.type = type;
         this.eaten = 0;
 
+        // Each bh needs it's unique rotation counter
+        this.rotation_counter = 0;
+
+        // Update rotation (for rotation animation)
+        this.update_rotation = function (){
+            this.rotation_counter += 2;
+            if(this.rotation_counter >= 361){
+                this.rotation_counter = 0;
+            }
+
+        };
+
         switch (type){
             case "blue":
                 this.draw_bh = draw_blue_blackhole;
@@ -415,7 +427,7 @@ var main = function (){
         // redraw the blackholes that are still supposed to appear on the screen
         for (var i = 0; i < current_bhs.length; i ++) {
             var bh = current_bhs[i];
-            bh.draw_bh(bh.x, bh.y);
+            bh.draw_bh(bh.x, bh.y, bh);
         }
 
         if (window.counter == 0) {
@@ -674,34 +686,30 @@ var main = function (){
     /******************* SPRITE DRAWING FUNCTIONS **********************/
 
     /*********** Black holes **************/
-    var TO_RADIANS = Math.PI/180;
+    var convert_radians = Math.PI/180;
     var blue_rotation_counter = 0;
     var purp_rotation_counter = 0;
     var black_rotation_counter = 0;
-    function drawRotatedImage(image, x, y, angle)
+    function rotate_and_draw(img, x, y, angle_amnt)
     { 
-        // save the current co-ordinate system 
-        // before we screw with it
+        // save co-ords 
         ctx.save(); 
 
-        // move to the middle of where we want to draw our image
+        // move to center
         ctx.translate(x, y);
 
-        // rotate around that point, converting our 
-        // angle from degrees to radians 
-        ctx.rotate(angle * TO_RADIANS);
+        // rotate from point
+        ctx.rotate(angle_amnt * convert_radians);
         ctx.scale(0.1,0.1);
 
-        // draw it up and to the left by half the width
-        // and height of the image 
-        ctx.drawImage(image, -(image.width/2), -(image.height/2));
+        // draw in shifted area
+        ctx.drawImage(img, -(img.width/2), -(img.height/2));
 
-        // and restore the co-ords to how they were when we began
+        // restore co-ords
         ctx.restore(); 
     }
 
-    function draw_blue_blackhole(x, y) {
-
+    function draw_blue_blackhole(x, y, bh) {
         var event_x = x - 50;
         var event_y = y - 50;
 
@@ -709,19 +717,11 @@ var main = function (){
         var h = window.object_h;
 
         var img = document.getElementById("bh-svg-blu");
-        
-        blue_rotation_counter += 2;
-        if(blue_rotation_counter >= 361){
-            blue_rotation_counter = 0;
-        }
-        drawRotatedImage(img, x, y, blue_rotation_counter);
-
-
-        //ctx.drawImage(img, x-25, y-25, 50, 50);
+        bh.update_rotation();
+        rotate_and_draw(img, x, y, bh.rotation_counter);   
     }
 
-    function draw_purple_blackhole(x, y) {
-
+    function draw_purple_blackhole(x, y, bh) {
         var event_x = x - 50;
         var event_y = y - 50;
 
@@ -729,17 +729,11 @@ var main = function (){
         var h = window.object_h;
 
         var img = document.getElementById("bh-svg-prp");
-
-        purp_rotation_counter += 2;
-        if(purp_rotation_counter >= 361){
-            purp_rotation_counter = 0;
-        }
-        drawRotatedImage(img, x, y, purp_rotation_counter);
-        //ctx.drawImage(img, x-25, y-25, 50, 50);
+        bh.update_rotation();
+        rotate_and_draw(img, x, y, bh.rotation_counter);
     }
 
-    function draw_blackhole(x, y) {
-
+    function draw_blackhole(x, y, bh) {
         var event_x = x - 50;
         var event_y = y - 50;
 
@@ -748,13 +742,8 @@ var main = function (){
 
         var img = document.getElementById("bh-svg-blk");
         
-        black_rotation_counter += 2;
-        if(black_rotation_counter >= 361){
-            black_rotation_counter = 0;
-        }
-        drawRotatedImage(img, x, y, black_rotation_counter);
-
-        //ctx.drawImage(img, x-25, y-25, 50, 50);
+        bh.update_rotation();
+        rotate_and_draw(img, x, y, bh.rotation_counter);
     }
     /*********** Space Objects **************/
 
