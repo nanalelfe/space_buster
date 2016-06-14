@@ -13,14 +13,20 @@ var main = function (){
     $("#instruction-page").hide();
 
     // ---------- High score --------------// 
+    window.MINIMUM_SCORE = -1000; // Less than the lowest score possible
+
     function display_high_scores(){
-        $("#show-score-1").text(String(localStorage.hs_1));
-        if(localStorage.hs_2 == 0){
+        if(localStorage.hs_1 == window.MINIMUM_SCORE){
+            $("#show-score-1").text("0");
+        }else{
+            $("#show-score-1").text(String(localStorage.hs_1));
+        }
+        if(localStorage.hs_2 == window.MINIMUM_SCORE){
             $("#show-score-2").text("");
         }else{
             $("#show-score-2").text(String(localStorage.hs_2));
         }
-        if(localStorage.hs_3 == 0){
+        if(localStorage.hs_3 == window.MINIMUM_SCORE){
             $("#show-score-3").text("");
         }else{
            $("#show-score-3").text(String(localStorage.hs_3));  
@@ -29,22 +35,22 @@ var main = function (){
         
     }
     function reset_scores(){
-        localStorage.hs_1 = 0;
-        localStorage.hs_2 = 0;
-        localStorage.hs_3 = 0; 
+        localStorage.hs_1 = window.MINIMUM_SCORE;
+        localStorage.hs_2 = window.MINIMUM_SCORE;
+        localStorage.hs_3 = window.MINIMUM_SCORE; 
     }
 
     // Retrieve High Score in html5 local storage, if first time playing
     // Set high score to default value 0. 
     if(typeof(Storage) !== "undefined") {
         if (!localStorage.hs_1){
-            localStorage.hs_1 = 0;
+            localStorage.hs_1 = window.MINIMUM_SCORE;
         }
         if (!localStorage.hs_2){
-            localStorage.hs_2 = 0;
+            localStorage.hs_2 = window.MINIMUM_SCORE;
         }
         if (!localStorage.hs_3){
-            localStorage.hs_3 = 0;
+            localStorage.hs_3 = window.MINIMUM_SCORE;
         }
         display_high_scores(); 
     } else {
