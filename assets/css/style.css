@@ -40,10 +40,12 @@ button{
 .show{display: block;}
 
 body {
-    position: absolute;
-    left: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #d0d0d0;
 }
+
 #body-shadow-container{box-shadow: 10px 8px 20px #aeaeae;}
 
 /* Top bar */
@@ -203,14 +205,5 @@ a:hover {
 .col-d-11 {width: 91.66%;}
 .col-d-12 {width: 100%;}
 
-/*
-@media only screen and (min-width: 1024px) {
-    body{margin-left: 0;}
-    body{margin-right: 0;}
-}
-@media only screen and (min-width: 1280px) {
-    body{margin-left: auto;}
-    body{margin-right: auto;}
-}*/
 
     
