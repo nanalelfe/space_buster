@@ -343,6 +343,14 @@ var main = function (){
     /************************************************/
     /* --------------- GAME FUNCTIONS ------------- */ 
     /************************************************/ 
+
+    /**
+     * Represents a space object. Gets sucked in my blackholes
+     * if too close to them.
+     * @constructor
+     * @param {function} item_draw - The function that draws the space
+     * object on the canvas.
+     */
     var Space_Object = function(item_draw) {
         this.x = random(0, window.c.width - window.object_w);
         this.y = random(0, window.c.height - window.object_h);
@@ -353,21 +361,28 @@ var main = function (){
         this.item_draw = item_draw;
     }
 
+    /**
+     * Represents a blackhole. 
+     * @constructor
+     * @param {string} type - Type of the blackhole: blue, purple or black.
+     */
     var Blackhole = function(type) {
-        // event horizon coordinates
-        var coords = random_bh();
-        this.event_x = coords[0];//random(0, window.c.width - window.event_w);
-        this.event_y = coords[1];//random(0, window.c.height - window.event_h);
 
-        // coordinates of the center
+        // Randomly generated event horizon coordinates
+        var coords = random_bh();
+        this.event_x = coords[0];
+        this.event_y = coords[1];
+
+        // coordinates of the center of the blackhole
         this.x = this.event_x + (window.event_w/2);
         this.y = this.event_y + (window.event_h/2);
 
-        // blue, purple or black type
         this.type = type;
+
+        // Number of objects eaten so far
         this.eaten = 0;
 
-        // Each bh needs it's unique rotation counter
+        // Each bh needs its unique rotation counter
         this.rotation_counter = 0;
 
         // Update rotation (for rotation animation)
