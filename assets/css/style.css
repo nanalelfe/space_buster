@@ -8,17 +8,10 @@
     clear: both;
     display: block;
 }
-
 html {font-family: 'Source Sans Pro', sans-serif;}
+.canvas-bg-default {background-image: url("../images/game_background.png");}
+.canvas-bg-lvl2 {background-image: url("../images/game_background_2.gif");}
 
-.canvas-bg-default {
-    /*background-color: #000000;*/
-    background-image: url("../images/game_background.png");
-}
-.canvas-bg-lvl2 {
-    /*background-color: #000000;*/
-    background-image: url("../images/game_background_2.gif");
-}
 p {
     padding: 0;
     margin-left: 0;
@@ -26,28 +19,22 @@ p {
     margin-top: 1em;
     margin-bottom: 1em;
 }
-
 h3 {
     padding: 10px;
     margin: 0;
 }
-
 button{
     padding: 0;
     margin: 0;
 }
-
 .show{display: block;}
-
 body {
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #d0d0d0;
 }
-
 #body-shadow-container{box-shadow: 10px 8px 20px #aeaeae;}
-
 /* Top bar */
 header{
     background-color: #242424;
@@ -64,12 +51,10 @@ header h1{
     font-size: 3em;
 }
 /* Top bar end */
-
 main{
     position: relative;
     width: 1000px;
  }
-
 #start-page {
     /*border: 3px solid #333333;*/
     text-align: center;
@@ -80,7 +65,6 @@ main{
     margin: 0;
     padding: 2%;
 }
-
 #instruction-page{
 
     margin-top: 5px;
@@ -88,7 +72,6 @@ main{
     background-color: white;
     padding: 30px;
     line-height: 1.5em;
-
 }
 #instruction-page h2{
     padding-bottom: 10px;
@@ -106,7 +89,6 @@ main{
     top: 300px;
     left: 400px;
 }
-
 #pause-page{
     text-align: center;
     border: 3px solid #949494;
@@ -119,12 +101,10 @@ main{
     top: 300px;
     left: 450px;
 }
-
 .ib-item{
     min-height: 40px;
     max-height: 40px;
 }
-
 #info-bar{
     /*border: 3px solid #333333;*/
     border-bottom: 0;
@@ -133,33 +113,22 @@ main{
     background-color: #3a3a3a;
     color: #5ddbff;
 }
-
 #viewport{
     /*border: 3px solid #333333;*/
     height: 600px;
 }
-
 footer {
     background-color: #222222;
     text-align: center;
     padding: 25px;
     color: white;  
 }
-
-/* emphasis settings */
-
-footer em{
-    color: #ff7200;
-}
-
+footer em{color: #ff7200;}
 a, a:link, a:visited {
     text-decoration: none;
     color: #ff7200;
 }
-a:hover {
-    color: #5ddbff;
-}
-
+a:hover {color: #5ddbff;}
 #instruction-page em{
     font-weight: bold;
 }
@@ -176,15 +145,12 @@ a:hover {
     margin: 4px 2px;
     cursor: pointer;
 }
-
-/* Overwrites default */
+/* Overwrites above for certain buttons */
 #start-button, #reset-score, #instruction-button{
     padding: 1.5%;
     margin: 2%;
 }
-.button:hover{
-     background: #42bfff;
-}
+.button:hover{background: #42bfff;}
 
 [class*="col-"] {
     float: left;

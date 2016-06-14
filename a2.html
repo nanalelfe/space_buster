@@ -6,7 +6,7 @@
         <title>Space Buster!</title>
 
         <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-        <!-- Fix onload stuff -->
+        
         <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
         <script type="text/javascript" src="assets/scripts/main.js" async></script>
 
@@ -16,68 +16,74 @@
         <!-- This div adds shadow to header & main content without overlap --> 
         <div id="body-shadow-container">
             <header>
-            <h1> Space Buster! </h1>
+                <h1> Space Buster! </h1>
             </header>
             <main>
                 <!-- ############## START PAGE ########### --> 
-                <div id="start-page">
-                        <div id="high-score">
+                <article id="start-page">
+                        <section id="high-score">
                             <h2> HIGH SCORES: </h2>
                             <h2 id="show-score-1"></h2>
                             <h2 id="show-score-2"></h2>
                             <h2 id="show-score-3"></h2>
-                        </div>
+                        </section>
                         <button id="start-button" class="button"> START </button>
                         <button id="reset-score" class="button"> Reset Score </button>
                         <button id="instruction-button" class="button"> How to play </button>
-                </div>
+                </article>
 
                 <!-- ############## GAME PAGE ########### --> 
-                <div id="game-page">
+                <article id="game-page">
 
-                    <div id="info-bar" class="row"> <!-- Begin Info Bar -->
-                        <div class="col-d-4 ib-item">
+                    <!-- Begin Info Bar row -->
+                    <section id="info-bar" class="row"> 
+                        <!-- Level display --> 
+                        <section class="col-d-4 ib-item">
                             <h3 id="ib-level">Level</h3>
-                        </div>
-                        <div class="col-d-3 ib-item">
+                        </section>
+                        <!-- Score display --> 
+                        <section class="col-d-3 ib-item">
                             <h3 id="ib-score">Score:</h3>
-                        </div>
-                        <div class="col-d-2 ib-item">
+                        </section>
+                        <!-- Pause button --> 
+                        <section class="col-d-2 ib-item">
                             <button id="ib-pause-button" class="button">Pause</button>
-                        </div>
-                        <div class="col-d-3 ib-item">
+                        </section>
+                        <!-- Timer display --> 
+                        <section class="col-d-3 ib-item">
                             <h3>Timer: <span id="timer-display"></span></h3>
-                        </div>
-                    </div> <!-- End of info Bar -->
+                        </section>
+                    </section> 
+                    <!-- End of info Bar -->
 
-                    <div id="viewport">
+                    <!-- Game Canvas -->
+                    <section id="viewport">
                         <canvas id="main" width="1000" height="600" class="canvas-bg-default">
-                            <!-- Place a warning here as a fallback for older browsers -->
+                           <p> Sorry! Your browser does not support canvas </p>
                         </canvas>
-                    </div>
-
-                </div>
+                    </section>
+                    <!-- End Game Canvas -->
+                </article>
 
                 <!-- ############## TRANSITION POP UP ########### --> 
-
-                <div id="transition-page"> 
+                <section id="transition-page"> 
                     <h3 id="transition-message"></h3>
                     <h3 id="transition-score"></h3>
                     <button id="transition-button" class="button"></button>
-                </div>
+                </section>
 
                 <!-- ############## PAUSE POP-UP ########### -->
-                <div id="pause-page"> 
+                <section id="pause-page"> 
                     <h3 id="pause-message">PAUSED</h3>
-                </div>
+                </section>
 
-                <div id="instruction-page">
+                <section id="instruction-page">
                     <h2> How to play: </h2>
                     <p><em>Description:</em> Before you is a solar system filled with all sorts of objects: planets, moons, nebulae, asteroids, spacecraft, space junk, and more. However, black holes appear every few seconds and start to <em>pull objects</em> towards them! If an object hits the centre of a black hole, the black hole eats it, meaning a <em>loss of 50 points</em> from your starting total of <em>200 points</em>. Additionally, once a black hole has had its fill, it will <em>disappear</em> back into the ether.</p>
                     
                     <p>The game is time-based, and each level lasts 60 seconds. The game moves on to the next level or ends if it’s the last level when the time is up or when the black holes have eaten all of the objects in the solar system. If at least one object remains, you can move on to the next level.</p>
 
-                    <p>There are three types of black holes in the game: 
+                    <p>There are three types of black holes in the game:</p>
                     <ul>
                         <li>blue (slow pull)</li>
                         <li>purple (medium pull)</li>
@@ -89,12 +95,12 @@
                         <li>10 for purple</li>
                         <li>20 for black</li>
                     </ul>
-                    Once a black hole has eaten a certain number of
+                    <p>Once a black hole has eaten a certain number of
                     objects – 3 for blue, 2 for purple, and 1 for black - it will disappear, meaning you
                     lose the opportunity to earn points.</p>
-                </div>
+                </section>
 
-                <!-- ############## IMAGES PULLED FOR CANVAS ########### -->
+                <!-- ############## BH IMAGES PULLED FOR CANVAS ########### -->
                 <img id="bh-svg-blu" src="assets/images/blackhole_blue.svg" alt="blue black hole">
                 <img id="bh-svg-prp" src="assets/images/bh-purple.svg" alt="purple black hole">
                 <img id="bh-svg-blk" src="assets/images/bh-black.svg" alt="black blackhole">
