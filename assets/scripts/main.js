@@ -1,9 +1,7 @@
 var main = function (){
     "user strict";
 
-
-    // ----------- START PAGE ---------------// 
-
+    // On initial run hide pages not part of the start page
     $("#game-page").hide();
     $("#transition-page").hide();
     $("#bh-svg-blu").hide();
@@ -12,9 +10,12 @@ var main = function (){
     $("#pause-page").hide();
     $("#instruction-page").hide();
 
-    // ---------- High score --------------// 
+    //-------- High-Score variabls and functions --------//
     window.MINIMUM_SCORE = -1000; // Less than the lowest score possible
 
+    // Shows highscores on start-page, displays empty string for 
+    // 2nd and 3rd top scores, for first show 0. Otherwise show the user's
+    // scores accordingly. 
     function display_high_scores(){
         if(localStorage.hs_1 == window.MINIMUM_SCORE){
             $("#show-score-1").text("0");
@@ -31,9 +32,9 @@ var main = function (){
         }else{
            $("#show-score-3").text(String(localStorage.hs_3));  
         }
-        
-        
     }
+
+    // Reset to less than lowest possible score, for updating purposes.
     function reset_scores(){
         localStorage.hs_1 = window.MINIMUM_SCORE;
         localStorage.hs_2 = window.MINIMUM_SCORE;
@@ -41,7 +42,7 @@ var main = function (){
     }
 
     // Retrieve High Score in html5 local storage, if first time playing
-    // Set high score to default value 0. 
+    // Set high score to less than the lowest possible score. 
     if(typeof(Storage) !== "undefined") {
         if (!localStorage.hs_1){
             localStorage.hs_1 = window.MINIMUM_SCORE;
@@ -57,44 +58,57 @@ var main = function (){
         $("#show-score").text("Local Storage Not Supported");
     }
     
+    //-------- Start-Page Buttons --------//
     // Start button, replace start-page with game-page
     $("#start-button").click(function() {
-        // Set default levle background
+        
+        // Set default level background (accounts for restart case)
         $("#main").addClass("canvas-bg-default").removeClass("canvas-bg-lvl2");
+        
+        // Hide show necessary pages
         $("#start-page").hide();
         $("#instruction-page").hide();
         $("#game-page").show();
 
+        // Run necessary game functions for game-play
         run_game();
     });
 
+    // Reset score button; set high scores to default values, then update
+    // display
     $("#reset-score").click(function() {
         reset_scores();
-        //localStorage.clear();
-
         display_high_scores();
-
     });
-    // ----------- TOGGLE HOW TO PLAY PAGE --------------//
 
+    // Toggle how to play page
     $("#instruction-button").click(function(){
         $("#instruction-page").toggle();
     });
 
     // ----------- GAME PAGE --------------// 
+    
     // Global CONSTANTS
     window.GAME_LENGTH = 60;    // Game time 
-    window.STARTING_SCORE = 200 // Starting score every level
-
+    window.STARTING_SCORE = 200 // Starting score every level, if changed, then
+                                // also change MINIMUM_SCORE
+    
+    /* Declare game object, assign necessary game variables, and game object
+     * functions. Perform transition, start game loop, call draw functions and
+     * any other necessary functions pertaining to game logic. */                    
     function run_game(){
 
-        // --------------- The Game Object ---------------------//
+        // Create The Game Object, with default starting fields
         var Game = {}; 
         Game.current_level = 1; 
         Game.object_num = 10; 
         Game.score = window.STARTING_SCORE;
         Game.timer = window.GAME_LENGTH; 
-        Game.over = false;
+
+        // Signal for game over
+        Game.over = false;  
+
+        // Signal for game pause
         Game.pause = false; 
 
         // Resets the game, setting all pertinent values back to default
@@ -122,7 +136,6 @@ var main = function (){
                     if(!Game.pause && !Game.over){
                         Game.timer--;   
                     }
-                    
                     $("#timer-display").text(String(Game.timer) + " Seconds"); 
                 }
             }, 1000);
@@ -172,7 +185,6 @@ var main = function (){
         window.purp_eat = 2;
         window.black_eat = 1;
 
-
         // 1/Speed at which each blackhole pulls
         window.blue_delta = 60;
         window.purp_delta = 40;
@@ -198,7 +210,8 @@ var main = function (){
         c.addEventListener("click", user_click, false);
         Game.reset();
 
-        // Set pause click event: 
+        // Set pause click event. Activates/Deactivates pause signal and pop up.
+        // Also disable mouse-click handler on pause activate.
         $("#ib-pause-button").click(function() {
             if(Game.pause == false){
                 $("#ib-pause-button").text("Resume");
@@ -213,7 +226,11 @@ var main = function (){
             }
         });
 
+        /* Game transition handler */
         Game.transition = function(){
+
+            /* On game over or level clear, compare game score with the top 3 
+             * scores on storage, update accordingly */
             function compare_score(){
                 if(Game.score > localStorage.hs_1){
                     localStorage.hs_3 = localStorage.hs_2;
@@ -226,37 +243,52 @@ var main = function (){
                     localStorage.hs_3 = Game.score;
                 }
             }
+
+            /* Called when level is cleared successfully and the user must 
+             * transition to the next level via on click button. Set up fields 
+             * for next level. */
             function level_transition(){
 
                 // Update next level counter
                 Game.current_level++;
 
-                // Adjust speeds accordingly for level for difficulty
+                // Level 2 settings: Adjust speeds accordingly for level 
+                // for difficulty
                 if (Game.current_level == 2){
+
                     // Change to new background
                     $("#main").addClass("canvas-bg-lvl2").removeClass("canvas-bg-default");
               
 
-                    // Speed up black hole spawn times for next level
+                    // Speed up black hole spawn times for level 2
                     window.aprns_min_time = 150;
                     window.aprns_max_time = 400;
                     
-                    // Speed up object speed for next level
+                    // Speed up object speed for level 2
                     window.max_delta = 8;
                     window.min_delta = 4;
                 }
-                // Reset objects
+
+                // Reset game values to default
                 Game.reset();
 
-                // Retart Game loop and game timer (see function), retrieve id for clearing
-                Game.loop = setInterval(Game.run, 33);                
+                // Retart Game loop, retrieve id
+                Game.loop = setInterval(Game.run, 33); 
+
+                // Restart Game timer, see run_timer for details on reset               
                 Game.time_interval_id = Game.run_timer();
 
+                // Hide/Show windos for necessary transition
                 $("#transition-page").hide();
                 $("#game-page").show();
+
+                // Update info-bar values to reflect new level properties
                 $("#ib-level").text("Level: " + String(Game.current_level));
                 display_high_scores();
             }
+
+            /* Called when user fails to complete a level successfully,  
+             * return user to start page, and update high score data. */
             function return_transition(){
                 $("#transition-page").hide();
                 $("#game-page").hide();
@@ -266,6 +298,8 @@ var main = function (){
 
             var trans_msg, button_msg;
 
+            // Check for successfull/unsuccessfull completion of level. 
+            // Set appropriate transition functions listed above accordingly.
             if (!Game.object_num){
                 // If 0 objects, show game over transition
                 trans_msg = "Game Over";
@@ -287,17 +321,18 @@ var main = function (){
                 }
             }
 
+            // Set appropriate transition popup messages
             $("#transition-message").text(trans_msg);
             $("#transition-score").text("Score: " + String(Game.score));
             $("#transition-button").text(button_msg);
             $("#transition-page").show();
         }
 
-        // Game run operation
+        /* Game run operation */
         Game.run = function(){
             Game.object_num = objects.length;
             
-            // Updates thes core in info bar
+            // Updates the score in info bar
             if (Game.score != window.total_score){
                 Game.score = window.total_score;
                 $("#ib-score").text("Score: " + String(Game.score)); 
@@ -309,7 +344,7 @@ var main = function (){
                 Game.over = true;
             }
 
-            // If game over, end loop and transition
+            // If game over, end loop/timer and transition
             if (Game.over){
                 clearInterval(Game.loop);
                 clearInterval(Game.time_interval_id);
@@ -319,21 +354,19 @@ var main = function (){
             if(!Game.pause){
                 draw_objects();
             }
-            
         }
 
         // Game initial Loop runs ~30fps
         Game.loop = setInterval(Game.run, 33);
 
-        /************************************************/
-        /* ------------------INFO - BAR --------------- */ 
-        /************************************************/
+        // Info-Bar values, initial set. Updated continuously in game loop:
         // Timer 
         Game.timer = window.GAME_LENGTH;
 
         // Start game timer (see function), retrieve id for clearing
         Game.time_interval_id = Game.run_timer();
 
+        // Score
         $("#ib-score").text("Score: " + String(Game.score)); 
 
         // Level
@@ -696,18 +729,26 @@ var main = function (){
         window.counter = Math.floor(window.period/window.speed);    
     }
 
+    /* Iterate through every black hole consecutively until a co-ordinate is 
+     * found that satisfies enough space requirements for a new black hole 
+     * to be created. If overlaps occur, re-start search from the beginning. */
     function random_bh() {
+
+        // The new black-hole co-ordinate
         var coord = new Array();
 
+        // Retrieve initial testing point
         var x = random(0, window.c.width - window.event_w);
         var y = random(0, window.c.height - window.event_h);
 
+        // Compare for overlap with every blackhole on canvas
         var i = 0;
         while (i < current_bhs.length){
             var bh = current_bhs[i];
             
             var does_overlap = overlaps(x, y, bh.event_x, bh.event_y);
 
+            // If an overlap occurs, get new point, and restart search. 
             if(does_overlap){
                 x = random(0, window.c.width - window.event_w);
                 y = random(0, window.c.height - window.event_h);
@@ -721,22 +762,32 @@ var main = function (){
         coord.push(y);
 
         return coord;
-
     }
-
+    
     function overlaps(x, y, bhx, bhy) {
         var w = window.event_w; 
         var h = window.event_h;
         return !(x > (bhx + w) || (x + w) < bhx || y > (bhy + h) || (y + h) < bhy);
     }
 
+    /**
+     * Generates a random number between min and max. 
+     * @function
+     * @param {Number} min 
+     * @param {Number} max
+     * @returns {Number}
+     */
     function random(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min);
     }
 
-
-    /* This function is needed because the initial value of dx/dy
-    can be negative, however cannot be 0. This function takes this into account */
+    /**
+     * Generates a random number for the initial direction of space objects. 
+     * This function is needed because the initial value of dx/dy
+     * can be negative, however cannot be 0. This function takes this into account
+     * @function
+     * @returns {Number}
+     */
     function initial_random_direction() {
         var max = window.max_delta;
         var min = - window.max_delta;
@@ -754,7 +805,12 @@ var main = function (){
     /******************* SPRITE DRAWING FUNCTIONS *****************************/
 
     /*********** Black holes **************/
+    
+    // Convert to radians
     var convert_radians = Math.PI/180;
+
+    /* Translate image, rotate, and draw it in shifted point, without 
+     * affecting contexting. Re-scale to appropriate size before drawing. */
     function rotate_and_draw(img, x, y, angle_amnt)
     { 
         // save co-ords 
@@ -789,7 +845,11 @@ var main = function (){
         var h = window.object_h;
 
         var img = document.getElementById("bh-svg-blu");
+
+        // Update rotation counter of the blackhole bh.
         bh.update_rotation();
+
+        // Rotate/draw at new angle. 
         rotate_and_draw(img, x, y, bh.rotation_counter);   
     }
 
@@ -808,7 +868,11 @@ var main = function (){
         var h = window.object_h;
 
         var img = document.getElementById("bh-svg-prp");
+
+        // Update rotation counter of the blackhole bh.
         bh.update_rotation();
+
+        // Rotate/draw at new angle. 
         rotate_and_draw(img, x, y, bh.rotation_counter);
     }
 
@@ -828,7 +892,10 @@ var main = function (){
 
         var img = document.getElementById("bh-svg-blk");
         
+        // Update rotation counter of the blackhole bh.
         bh.update_rotation();
+
+        // Rotate/draw at new angle. 
         rotate_and_draw(img, x, y, bh.rotation_counter);
     }
 
