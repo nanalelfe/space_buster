@@ -41,7 +41,7 @@ button{
 
 body {
     position: absolute;
-    left: 25%;
+    left: 10%;
     background-color: #d0d0d0;
 }
 #body-shadow-container{box-shadow: 10px 8px 20px #aeaeae;}
