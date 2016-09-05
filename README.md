@@ -6,6 +6,11 @@ The game is time-based, and each level lasts 60 seconds. The game moves on to th
 
 There are three types of black holes in the game: blue (slow pull), purple (medium pull), and black (fast pull). Each time you destroy (mouse click) a black hole, you receive points (but all objects it’s eaten are gone forever): 5 for blue, 10 for purple, and 20 for black. Once a black hole has eaten a certain number of objects – 3 for blue, 2 for purple, and 1 for black - it will disappear, meaning you lose the opportunity to earn points.
 
+## Built With
+
+* HTML5/CSS3, HTML5 Canvas
+* Javascript/jQuery
+
 ## Authors
 * Nana Nosirova
 * Humair Khan
