@@ -1,5 +1,5 @@
 # Space Buster!
-A single player game where the objective is to prevent blackh2oles from eating the solar system by clicking on them before they disappear. 
+A single player game where the objective is to prevent blackholes from eating the solar system by clicking on them before they disappear. 
 ## Description
 Before you is a solar system filled with all sorts of objects: planets, stars, asteroids, spacecraft, aliens, and more. However, black holes appear every few seconds and start to pull those objects towards them! If an object hits the centre of a black hole, the black hole eats it, meaning a loss of 50 points from your starting total of 200 points. Additionally, once a black hole has had its fill, it will disappear back into the ether.
 
